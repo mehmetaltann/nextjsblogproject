@@ -1,7 +1,7 @@
 import { assets } from "@/Assets/assets";
 import Image from "next/image";
 
-const BlogTableItem = ({ title, date }) => {
+const BlogTableItem = ({ title, date, deleteBlog, mongoId }) => {
   const BlogDate = new Date(date);
 
   return (
@@ -19,7 +19,12 @@ const BlogTableItem = ({ title, date }) => {
       </th>
       <td className="px-6 py-4">{title ? title : "Başlık Yok"}</td>
       <td className="px-6 py-4">{BlogDate.toDateString()}</td>
-      <td className="px-6 py-4 cursor-pointer">X</td>
+      <td
+        className="px-6 py-4 cursor-pointer"
+        onClick={() => deleteBlog(mongoId)}
+      >
+        X
+      </td>
     </tr>
   );
 };

@@ -60,53 +60,11 @@ const page = ({ params }) => {
             height={720}
             className="border-4 border-white"
           />
-          <h1 className="my-8 text-[26px] font-semibold">Giriş</h1>
-          <p>{data.description}</p>
-          <h3 className="my-5 text-[18px] font-semibold">
-            Step-1: adasdasdasdasdasd
-          </h3>
-          <p className="my-3">
-            But I must explain to you how all this mistaken idea of denouncing
-            pleasure and praising pain was born and I will give you a complete
-            account of the system, and expound the actual teachings of the great
-            explorer of the truth, the master-builder of human happiness.
-          </p>
-          <p className="my-3">
-            But I must explain to you how all this mistaken idea of denouncing
-            pleasure and praising pain was born and I will give you a complete
-            account of the system, and expound the actual teachings of the great
-            explorer of the truth, the master-builder of human happiness.
-          </p>
-          <h3 className="my-5 text-[18px] font-semibold">
-            Step-2: adasdasdasdasdasd
-          </h3>
-          <p className="my-3">
-            But I must explain to you how all this mistaken idea of denouncing
-            pleasure and praising pain was born and I will give you a complete
-            account of the system, and expound the actual teachings of the great
-            explorer of the truth, the master-builder of human happiness.
-          </p>
-          <p className="my-3">
-            But I must explain to you how all this mistaken idea of denouncing
-            pleasure and praising pain was born and I will give you a complete
-            account of the system, and expound the actual teachings of the great
-            explorer of the truth, the master-builder of human happiness.
-          </p>
-          <h3 className="my-5 text-[18px] font-semibold">
-            Step-3: adasdasdasdasdasd
-          </h3>
-          <p className="my-3">
-            But I must explain to you how all this mistaken idea of denouncing
-            pleasure and praising pain was born and I will give you a complete
-            account of the system, and expound the actual teachings of the great
-            explorer of the truth, the master-builder of human happiness.
-          </p>
-          <p className="my-3">
-            But I must explain to you how all this mistaken idea of denouncing
-            pleasure and praising pain was born and I will give you a complete
-            account of the system, and expound the actual teachings of the great
-            explorer of the truth, the master-builder of human happiness.
-          </p>
+          <h1 className="my-8 text-[26px] font-semibold">{data.title}</h1>
+          <div
+            className="blog-content"
+            dangerouslySetInnerHTML={{ __html: data.description }}
+          ></div>
           <div className="my-24">
             <p className="text-black font-semibold my-4">Bu Yazıyı Paylaş</p>
             <div className="flex">

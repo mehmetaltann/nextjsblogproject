@@ -2,6 +2,7 @@ import BlogModel from "@/lib/models/BlogModel";
 import { ConnectDb } from "@/lib/config/db";
 import { writeFile } from "fs/promises";
 const { NextResponse } = require("next/server");
+const fs = require("fs");
 
 const LoadDb = async () => {
   await ConnectDb();
@@ -39,6 +40,13 @@ export async function POST(request) {
     image: `${imgUrl}`,
   };
   await BlogModel.create(blogData);
-  console.log("Blog Yazısı Kaydedildi");
   return NextResponse.json({ success: true, msg: "Blog Yazısı Kaydedildi" });
+}
+
+export async function DELETE(request) {
+  const id = await request.nextUrl.searchParams.get("id");
+  const blog = await BlogModel.findById(id);
+  fs.unlink(`./public${blog.image}`, () => {});
+  await BlogModel.findByIdAndDelete(id);
+  return NextResponse.json({ msg: "Blog Yazısı Silindi" });
 }
