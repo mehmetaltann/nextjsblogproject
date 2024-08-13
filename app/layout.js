@@ -1,4 +1,5 @@
 import { Outfit } from "next/font/google";
+import { AuthProvider } from "./provider";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -14,7 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={outfit.className}>{children}</body>
+      <body className={outfit.className}>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

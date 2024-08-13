@@ -1,7 +1,7 @@
 "use client";
-import BlogList from "@/Components/BlogList";
-import Footer from "@/Components/Footer";
-import Header from "@/Components/Header";
+import Footer from "@/Components/Layouts/Footer";
+import Header from "@/Components/Layouts/Header";
+import BlogList from "@/Components/HomePageComponents/BlogList";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
