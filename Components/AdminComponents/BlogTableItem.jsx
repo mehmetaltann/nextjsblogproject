@@ -1,5 +1,7 @@
-import { assets } from "@/Assets/assets";
+"use client";
 import Image from "next/image";
+import { assets } from "@/Assets/assets";
+
 
 const BlogTableItem = ({ title, date, deleteBlog, mongoId }) => {
   const BlogDate = new Date(date);

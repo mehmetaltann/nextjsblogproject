@@ -1,4 +1,4 @@
-
+"use client";
 
 const SubsTableItem = ({ email, mongoId, date, deleteHandler }) => {
   const emailDate = new Date(date);

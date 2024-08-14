@@ -9,6 +9,7 @@ import Comments from "@/Components/BlogDetailComponents/Comments";
 
 const page = ({ params }) => {
   const [data, setData] = useState(null);
+  const [comments, setComments] = useState(null);
 
   const fetchBlogData = async () => {
     const response = await axios.get("/api/blog", {
@@ -17,9 +18,18 @@ const page = ({ params }) => {
     setData(response.data);
   };
 
+  const fetchCommentData = async () => {
+    const response = await axios.get("/api/comment", {
+      params: { id: params.id },
+    });
+    setComments(response.data);
+  };
+
   useEffect(() => {
     fetchBlogData();
+    fetchCommentData();
   }, []);
+
 
   return data ? (
     <>
@@ -61,7 +71,11 @@ const page = ({ params }) => {
           </div>
 
           <div>
-            <Comments />
+            <Comments
+              postId={params.id}
+              comments={comments}
+              fetchCommentData={fetchCommentData}
+            />
           </div>
         </div>
       </div>

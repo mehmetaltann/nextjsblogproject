@@ -1,3 +1,4 @@
+"use client";
 import BlogItem from "./BlogItem";
 import axios from "axios";
 import { useEffect, useState } from "react";
