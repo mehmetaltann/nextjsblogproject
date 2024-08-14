@@ -30,7 +30,7 @@ const ContactForm = () => {
       setTitle("");
       setMessage("");
     } else {
-      toast.error("Bir Sıkıntı Var, Yorum Kaydedilemedi");
+      toast.error("Bir Sıkıntı Var, Mesajınız Gönderilemedi");
     }
   };
 

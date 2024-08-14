@@ -1,11 +1,11 @@
 "use client";
 import Footer from "@/Components/Layouts/Footer";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { assets } from "@/Assets/assets";
 import axios from "axios";
 import Header from "@/Components/Layouts/Header";
 import Comments from "@/Components/BlogDetailComponents/Comments";
+import SocialMediaShareSet from "@/Components/Layouts/SocialMediaShareSet";
+import { useEffect, useState } from "react";
 
 const page = ({ params }) => {
   const [data, setData] = useState(null);
@@ -29,7 +29,6 @@ const page = ({ params }) => {
     fetchBlogData();
     fetchCommentData();
   }, []);
-
 
   return data ? (
     <>
@@ -59,20 +58,16 @@ const page = ({ params }) => {
 
           <div className="my-5">
             <p className="text-black font-semibold my-4">Bu Yazıyı Paylaş</p>
-            <div className="flex">
-              <Image src={assets.facebook_icon} width={50} alt="face icon" />
-              <Image src={assets.twitter_icon} width={50} alt="twitter icon" />
-              <Image
-                src={assets.googleplus_icon}
-                width={50}
-                alt="google icon"
-              />
-            </div>
+            <SocialMediaShareSet
+              shareURL={`http://localhost:3000/blogs/${params.id}`}
+              title={data.title}
+              size={36}
+            />
           </div>
-
           <div>
             <Comments
               postId={params.id}
+              postTitle={data.title}
               comments={comments}
               fetchCommentData={fetchCommentData}
             />

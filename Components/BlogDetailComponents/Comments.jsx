@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Comments = ({ postId, comments, fetchCommentData }) => {
+const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
   const [authorName, setAuthorName] = useState("");
   const [authorEmail, setAuthorEmail] = useState("");
   const [comment, setComment] = useState("");
@@ -24,6 +24,7 @@ const Comments = ({ postId, comments, fetchCommentData }) => {
       authorEmail,
       comment,
       postId,
+      postTitle,
     });
 
     if (response.data.success) {
