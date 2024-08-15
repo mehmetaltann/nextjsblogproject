@@ -23,7 +23,7 @@ const AdminHeader = () => {
           alt="profile_icon_side"
           id="avatarButton"
           type="button"
-          className="cursor-pointer"
+          className="cursor-pointer rounded-full"
         />
       </div>
 

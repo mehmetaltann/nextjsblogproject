@@ -1,0 +1,226 @@
+[
+  {
+    "_id": {
+      "$oid": "66b606a0e01df02d5f25b9e9"
+    },
+    "title": "A detailed step by step guide to manage your lifestyle",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Tatil",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712427/next-cloudinary-uploads/blog_pic_1_pfoigv.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b6074ee01df02d5f25b9eb"
+    },
+    "title": "How to create an effective startup roadmap or ideas",
+    "description": "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using",
+    "category": "Yaşam",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712427/next-cloudinary-uploads/blog_pic_2_ajclvm.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b60763e01df02d5f25b9ed"
+    },
+    "title": "Learning new technology to boost your career in software",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Tatil",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_3_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b60775e01df02d5f25b9ef"
+    },
+    "title": "Tips for getting the most out of apps and software",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Teknoloji",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_4_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b607b1e01df02d5f25b9f1"
+    },
+    "title": "Enhancing your skills and capturing memorable moments",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Yaşam",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_5_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b607c2e01df02d5f25b9f3"
+    },
+    "title": "Maximizing returns by minimizing resources in your startup",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Yaşam",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_6_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b607d9e01df02d5f25b9f5"
+    },
+    "title": "Technology for Career advancement in development",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Teknoloji",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_7_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b607ece01df02d5f25b9f7"
+    },
+    "title": "A comprehensive roadmap for effective lifestyle management",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Teknoloji",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_8_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b607fbe01df02d5f25b9f9"
+    },
+    "title": "Achieving maximum returns with minimal resources",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Teknoloji",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_9_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b6080ce01df02d5f25b9fb"
+    },
+    "title": "Beyond the Ordinary: Crafting Your Exceptional Lifestyle",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Tatil",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_10_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b6081fe01df02d5f25b9fd"
+    },
+    "title": "Unveiling the Secrets of Successful Startups in Technolgy",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Tatil",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_11_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b6083be01df02d5f25b9ff"
+    },
+    "title": "How to design an online Learning Platform today",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Tatil",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_12_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b60853e01df02d5f25ba01"
+    },
+    "title": "Tomorrow's Algorithms: Shaping the Landscape of Future AI",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Yaşam",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_13_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b6086ae01df02d5f25ba03"
+    },
+    "title": "Balance & Bliss: Navigating Life's Journey with Style",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Tatil",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_14_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b60881e01df02d5f25ba05"
+    },
+    "title": "Exploring the Evolution of social networking in the Future",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Yaşam",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_15_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66b60893e01df02d5f25ba07"
+    },
+    "title": "Shaping the Future of statup ecosystem in the world",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..",
+    "category": "Tatil",
+    "author": "Mehmet Altan",
+    "cloudinaryImageId": "https://res.cloudinary.com/duixszfkd/image/upload/v1723712426/next-cloudinary-uploads/blog_pic_16_ggdq1r.png",
+    "date": {
+      "$date": "2024-08-09T08:19:56.958Z"
+    },
+    "__v": 0
+  }
+]

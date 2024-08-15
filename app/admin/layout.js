@@ -1,5 +1,5 @@
-import SideBar from "@/Components/AdminComponents/SideBar";
-import AdminHeader from "@/Components/AdminComponents/AdminHeader";
+import SideBar from "@/Components/AdminComponents/Layout/SideBar";
+import AdminHeader from "@/Components/AdminComponents/Layout/AdminHeader";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "../provider";

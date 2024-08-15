@@ -1,5 +1,5 @@
 "use client";
-import AddPostForm from "@/Components/AdminComponents/AddPostForm";
+import AddPostForm from "@/Components/AdminComponents/AddPost/AddPostForm";
 
 const page = () => {
   return <AddPostForm />;

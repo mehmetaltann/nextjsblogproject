@@ -1,10 +1,10 @@
 "use client";
 import Footer from "@/Components/Layouts/Footer";
-import Image from "next/image";
 import axios from "axios";
 import Header from "@/Components/Layouts/Header";
 import Comments from "@/Components/BlogDetailComponents/Comments";
 import SocialMediaShareSet from "@/Components/Layouts/SocialMediaShareSet";
+import { CldImage } from "next-cloudinary";
 import { useEffect, useState } from "react";
 
 const page = ({ params }) => {
@@ -36,8 +36,8 @@ const page = ({ params }) => {
       <div className="flex flex-col bg-gray-200 py-5 px-5 md:px-12 lg:px-28">
         <div className=" flex flex-col first-letter:mx-5 max-w-[1000px] md:mx-auto mb-10">
           <div>
-            <Image
-              src={data.image}
+            <CldImage
+              src={data.cloudinaryImageId}
               alt="blog Image"
               width={1280}
               height={720}

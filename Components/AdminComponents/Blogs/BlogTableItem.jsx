@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { assets } from "@/Assets/assets";
 
-
 const BlogTableItem = ({ title, date, deleteBlog, mongoId }) => {
   const BlogDate = new Date(date);
 
@@ -15,8 +14,9 @@ const BlogTableItem = ({ title, date, deleteBlog, mongoId }) => {
         <Image
           src={assets.profile_icon}
           alt="author img"
-          width={50}
-          height={50}
+          width={40}
+          height={40}
+          className="rounded-full"
         />
       </th>
       <td className="px-6 py-4">{title ? title : "Başlık Yok"}</td>

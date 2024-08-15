@@ -16,22 +16,29 @@ const SideBar = () => {
             href="/admin/addProduct"
             className="flex items-center border border-black gap-3 font-medium px-3 py-2 bg-white shadow-[-5px_5px_0px_#000000]"
           >
-            <Image src={assets.add_icon} width={28} alt="sidebar_add_item" />
+            <Image src={assets.add_item} width={28} alt="sidebar_add_item" />
             <p className="flex">Blog Ekle</p>
           </Link>
           <Link
             href="/admin/blogList"
             className="mt-5 flex items-center border border-black gap-3 font-medium px-3 py-2 bg-white shadow-[-5px_5px_0px_#000000]"
           >
-            <Image src={assets.blog_icon} width={28} alt="sidebar_add_item" />
+            <Image src={assets.list} width={28} alt="sidebar_add_item" />
             <p className="flex">Blog Listesi</p>
           </Link>
           <Link
             href="/admin/subscription"
             className="mt-5 flex items-center border border-black gap-3 font-medium px-3 py-2 bg-white shadow-[-5px_5px_0px_#000000]"
           >
-            <Image src={assets.email_icon} width={28} alt="sidebar_add_item" />
+            <Image src={assets.followers} width={28} alt="sidebar_add_item" />
             <p className="flex">Takipçiler</p>
+          </Link>
+          <Link
+            href="/admin/category"
+            className="mt-5 flex items-center border border-black gap-3 font-medium px-3 py-2 bg-white shadow-[-5px_5px_0px_#000000]"
+          >
+            <Image src={assets.category} width={28} alt="sidebar_add_item" />
+            <p className="flex">Kategoriler</p>
           </Link>
         </div>
       </div>
