@@ -1,10 +1,7 @@
 "use client";
-import Footer from "@/Components/Layouts/Footer";
 import axios from "axios";
-import Header from "@/Components/Layouts/Header";
-import Comments from "@/Components/BlogDetailComponents/Comments";
-import SocialMediaShareSet from "@/Components/Layouts/SocialMediaShareSet";
-import { CldImage } from "next-cloudinary";
+import SinglePageContent from "@/Components/SinglePostComponents/SinglePageContent";
+import SinglePageMenu from "@/Components/SinglePostComponents/SinglePageMenu";
 import { useEffect, useState } from "react";
 
 const page = ({ params }) => {
@@ -31,51 +28,14 @@ const page = ({ params }) => {
   }, []);
 
   return data ? (
-    <>
-      <Header />
-      <div className="flex flex-col bg-gray-200 py-5 px-5 md:px-12 lg:px-28">
-        <div className=" flex flex-col first-letter:mx-5 max-w-[1000px] md:mx-auto mb-10">
-          <div>
-            <CldImage
-              src={data.cloudinaryImageId}
-              alt="blog Image"
-              width={1280}
-              height={720}
-              className="border-4 border-white"
-            />
-          </div>
-
-          <div>
-            <h1 className="text-center my-8 text-[26px] font-semibold">
-              {data.title}
-            </h1>
-          </div>
-
-          <div
-            className="blog-content"
-            dangerouslySetInnerHTML={{ __html: data.description }}
-          ></div>
-
-          <div className="my-5">
-            <p className="text-black font-semibold my-4">Bu Yazıyı Paylaş</p>
-            <SocialMediaShareSet
-              shareURL={`http://localhost:3000/blogs/${params.id}`}
-              title={data.title}
-              size={36}
-            />
-          </div>
-          <div>
-            <Comments
-              postId={params.id}
-              postTitle={data.title}
-              comments={comments}
-              fetchCommentData={fetchCommentData}
-            />
-          </div>
-        </div>
-      </div>
-      <Footer />
-    </>
+    <div className="flex gap-[50px] w-2/3">
+      <SinglePageContent
+        data={data}
+        comments={comments}
+        fetchCommentData={fetchCommentData}
+      />
+      <SinglePageMenu />
+    </div>
   ) : (
     <></>
   );

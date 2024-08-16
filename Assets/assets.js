@@ -2,6 +2,8 @@ import category from "./category.svg";
 import add_item from "./add_item.svg";
 import followers from "./followers.svg";
 import list from "./list.svg";
+import edit from "./edit.svg";
+import deleteIcon from "./delete.svg";
 import facebook_icon from "./facebook_icon.png";
 import googleplus_icon from "./googleplus_icon.png";
 import twitter_icon from "./twitter_icon.png";
@@ -14,6 +16,8 @@ import upload_area from "./upload_area.png";
 export const assets = {
   facebook_icon,
   googleplus_icon,
+  deleteIcon,
+  edit,
   twitter_icon,
   profile_icon,
   logo,

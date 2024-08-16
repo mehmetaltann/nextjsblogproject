@@ -1,9 +1,9 @@
 "use client";
 import Footer from "@/Components/Layouts/Footer";
 import Header from "@/Components/Layouts/Header";
-import BlogList from "@/Components/HomePageComponents/BlogList";
 import CategorySelect from "@/Components/HomePageComponents/CategorySelect";
 import axios from "axios";
+import HomeBlogList from "@/Components/HomePageComponents/HomeBlogList";
 import { useCallback, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -31,20 +31,14 @@ export default function Home() {
   console.log(categories);
 
   return (
-    <>
-      <div className="flex flex-col justify-between h-screen">
-        <div>
-          <Header />
-          <CategorySelect
-            menu={menu}
-            setMenu={setMenu}
-            categories={categories}
-          />
-        </div>
-        <BlogList menu={menu} blogs={blogs} />
-        <ToastContainer theme="dark" />
-        <Footer />
+    <div className="flex flex-col items-center justify-between">
+      <div className="w-full">
+        <Header />
+        <CategorySelect menu={menu} setMenu={setMenu} categories={categories} />
       </div>
-    </>
+      <HomeBlogList menu={menu} blogs={blogs} />
+      <ToastContainer theme="dark" />
+      <Footer />
+    </div>
   );
 }

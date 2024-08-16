@@ -12,7 +12,7 @@ const CommentItem = ({ authorName, comment, date }) => {
       <div className="bg-white p-4 rounded-lg shadow">
         <div className="flex items-center mb-2">
           <div>
-            <h3 className="font-semibold">{authorName}</h3>
+            <h3 className="font-semibold text-[#333]">{authorName}</h3>
             <p className="text-sm text-gray-500">
               <span className="font-semibold">{gecenZaman}</span> -{" "}
               {commentDate}

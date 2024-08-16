@@ -6,7 +6,46 @@ import { CldImage } from "next-cloudinary";
 
 const BlogItem = ({ title, description, category, cloudinaryImageId, id }) => {
   return (
-    <div
+    <div className="group w-full max-lg:max-w-[900px] lg:w-[1000px] border border-gray-300 rounded-2xl">
+      <div className="flex items-center">
+        <Link href={"/blogs/" + id}>
+          <CldImage
+            src={cloudinaryImageId}
+            alt="blog image"
+            width={700}
+            height={700}
+            className="rounded-t-2xl w-full"
+            priority={true}
+          />
+        </Link>
+      </div>
+      {}
+      <div className="p-4 lg:p-6 transition-all duration-300 rounded-b-2xl group-hover:bg-gray-50">
+        <span className="text-indigo-600 font-medium mb-3 block">
+          Jan 01, 2023
+        </span>
+        <h4 className="text-xl text-gray-900 font-medium leading-8 mb-5">
+          {title}
+        </h4>
+        <p
+          className="text-gray-500 leading-6 mb-10"
+          dangerouslySetInnerHTML={{ __html: description.slice(0, 120) }}
+        ></p>
+        <a
+          href={"/blogs/" + id}
+          class="cursor-pointer text-lg text-indigo-600 font-semibold"
+        >
+          Devamı..
+        </a>
+      </div>
+    </div>
+  );
+};
+
+export default BlogItem;
+
+/*    
+ <div
       className="max-w-[330px] sm:max-w-[300px]
      bg-white border border-black hover:shadow-[-7px_7px_0px_#000000]"
     >
@@ -52,7 +91,7 @@ const BlogItem = ({ title, description, category, cloudinaryImageId, id }) => {
         </Link>
       </div>
     </div>
-  );
-};
 
-export default BlogItem;
+
+
+*/

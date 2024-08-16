@@ -39,7 +39,7 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
   };
 
   return (
-    <section className="bg-gray-100 py-8">
+    <section className="bg-[#e9f2f2] py-8">
       <ToastContainer
         theme="dark"
         closeOnClick
@@ -47,7 +47,7 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
         position="bottom-left"
       />
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-4">Yorumlar</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-[#333]">Yorumlar</h2>
 
         {comments ? (
           <div className="flex flex-col gap-3">
@@ -63,20 +63,20 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
             })}
           </div>
         ) : (
-          <div>Henüz Hiç Bir Youm Yapılmamıştır</div>
+          <div className=" text-[#333]">Bu gönderiye henüz hiç bir youm yapılmamıştır</div>
         )}
 
         <form
           onSubmit={submitHandler}
           className="mt-4 bg-white p-4 rounded-lg shadow"
         >
-          <h3 className="text-lg font-semibold mb-2">Yorum Ekle</h3>
+          <h3 className="text-lg font-semibold mb-2 text-[#333]">Yorum Ekle</h3>
           <div className="mb-4">
             <input
               type="text"
               id="authorName"
               name="authorName"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:[#36d1d1]"
               required
               placeholder="İsim ..."
               onChange={(e) => setAuthorName(e.target.value)}
@@ -88,9 +88,9 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
               type="email"
               id="authorEmail"
               name="authorEmail"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:[#36d1d1]"
               required
-              placeholder="Mail ... (gözükmeyecek)"
+              placeholder="Mail ... (yorumda gözükmez)"
               onChange={(e) => setAuthorEmail(e.target.value)}
               value={authorEmail}
             />
@@ -100,7 +100,7 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
               id="comment"
               name="comment"
               rows="4"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:[#36d1d1]"
               required
               placeholder="Yorumunuz ..."
               onChange={(e) => setComment(e.target.value)}
@@ -109,7 +109,7 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
           </div>
           <button
             type="submit"
-            className="bg-black text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="bg-[#5ad6d6] text-white px-4 py-2 rounded-md hover:bg-[#36d1d1] focus:outline-none focus:ring-2 focus:[#36d1d1] focus:ring-offset-2"
           >
             Gönder
           </button>
