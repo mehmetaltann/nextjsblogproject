@@ -6,13 +6,15 @@ import { useEffect, useState } from "react";
 
 const page = ({ params }) => {
   const [data, setData] = useState(null);
+  const [similarPostsData, setSimilarPostsData] = useState(null);
   const [comments, setComments] = useState(null);
 
   const fetchBlogData = async () => {
     const response = await axios.get("/api/blog", {
       params: { id: params.id },
     });
-    setData(response.data);
+    setData(response.data.blog);
+    setSimilarPostsData(response.data.sameCategoryFilteredData);
   };
 
   const fetchCommentData = async () => {
@@ -28,13 +30,17 @@ const page = ({ params }) => {
   }, []);
 
   return data ? (
-    <div className="flex gap-[50px] w-2/3">
-      <SinglePageContent
-        data={data}
-        comments={comments}
-        fetchCommentData={fetchCommentData}
-      />
-      <SinglePageMenu />
+    <div className="flex flex-col mb-4 md:mb-0 md:flex-row md:gap-[50px] w-2/3">
+      <div className="flex-[5] flex flex-col gap-5 mb-16">
+        <SinglePageContent
+          data={data}
+          comments={comments}
+          fetchCommentData={fetchCommentData}
+        />
+      </div>
+      <div className="flex-[2] flex flex-col gap-[20px]">
+        <SinglePageMenu similarPostsData={similarPostsData} />
+      </div>
     </div>
   ) : (
     <></>

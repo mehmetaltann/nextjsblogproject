@@ -13,7 +13,7 @@ const SinglePageContent = ({ data, comments, fetchCommentData }) => {
   const gecenZaman = moment(data.date).startOf("day").fromNow();
 
   return (
-    <div className="flex-[5] flex flex-col gap-5 mb-16">
+    <>
       <CldImage
         src={data.cloudinaryImageId}
         alt="blog Image"
@@ -21,7 +21,6 @@ const SinglePageContent = ({ data, comments, fetchCommentData }) => {
         height={720}
         className="w-full h-[500px] object-cover rounded-md"
       />
-
       <div className="flex items-center gap-2.5 text-sm">
         <Image
           src={assets.profile_icon}
@@ -63,6 +62,15 @@ const SinglePageContent = ({ data, comments, fetchCommentData }) => {
             />
           </Link>
         </div>
+        <div className="flex justify-center items-center  gap-2 ">
+          {data.category.map((item, index) => {
+            return (
+              <div className="py-2 px-2 border rounded-xl " key={index}>
+                {item.name}
+              </div>
+            );
+          })}
+        </div>
       </div>
       <h1 className="text-[42px] text-[#333]">{data.title}</h1>
       <p className="text-justify leading-[30px]">{data.description}</p>
@@ -76,7 +84,7 @@ const SinglePageContent = ({ data, comments, fetchCommentData }) => {
         fetchCommentData={fetchCommentData}
         postTitle={data.title}
       />
-    </div>
+    </>
   );
 };
 

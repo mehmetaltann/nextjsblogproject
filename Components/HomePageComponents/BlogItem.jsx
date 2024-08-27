@@ -19,7 +19,6 @@ const BlogItem = ({ title, description, category, cloudinaryImageId, id }) => {
           />
         </Link>
       </div>
-      {}
       <div className="p-4 lg:p-6 transition-all duration-300 rounded-b-2xl group-hover:bg-gray-50">
         <span className="text-indigo-600 font-medium mb-3 block">
           Jan 01, 2023
@@ -91,7 +90,5 @@ export default BlogItem;
         </Link>
       </div>
     </div>
-
-
 
 */

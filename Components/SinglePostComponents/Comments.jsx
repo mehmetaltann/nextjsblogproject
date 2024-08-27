@@ -39,7 +39,7 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
   };
 
   return (
-    <section className="bg-[#e9f2f2] py-8">
+    <section className="bg-[#e9f2f2] py-8 rounded-md">
       <ToastContainer
         theme="dark"
         closeOnClick

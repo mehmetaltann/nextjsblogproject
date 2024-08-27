@@ -7,7 +7,18 @@ export async function GET(request) {
   if (blogId) {
     await ConnectDb();
     const blog = await BlogModel.findById(blogId);
-    return NextResponse.json(blog);
+    const categoryArray = blog.category.map(function (obj) {
+      return obj.name;
+    });
+    const sameCategoryData = await BlogModel.find({
+      "category.name": {
+        $in: categoryArray,
+      },
+    });
+    const sameCategoryFilteredData = sameCategoryData.filter((item) => {
+      return item.title !== blog.title;
+    });
+    return NextResponse.json({ blog, sameCategoryFilteredData });
   } else {
     await ConnectDb();
     const blogs = await BlogModel.find({});

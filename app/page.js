@@ -28,8 +28,6 @@ export default function Home() {
     fetchBlogs();
   }, []);
 
-  console.log(categories);
-
   return (
     <div className="flex flex-col items-center justify-between">
       <div className="w-full">
