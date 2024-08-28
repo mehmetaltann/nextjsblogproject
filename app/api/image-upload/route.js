@@ -8,6 +8,7 @@ cloudinary.config({
 });
 
 export async function POST(request) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
   try {
     const formData = await request.formData();
     const file = formData.get("file");

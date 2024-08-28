@@ -19,18 +19,6 @@
   scrollbar-width: none;
 }
 
-.dropDownProfile {
-  position: absolute;
-  top: 4rem;
-  right: 1.5rem;
-  width: 120px;
-  padding: 15px;
-  border-radius: 15px;
-  background-color: white;
-  border: 1px solid gray;
-  border-color: grey;
-}
-
 /* HOME PAGE BLOGS */
 
 .post {

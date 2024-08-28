@@ -11,11 +11,13 @@ export async function POST(request) {
 }
 
 export async function GET(request) {
+  await ConnectDb();
   const categories = await CategoryModel.find({});
   return NextResponse.json({ categories });
 }
 
 export async function DELETE(request) {
+  await ConnectDb();
   const id = await request.nextUrl.searchParams.get("id");
   await CategoryModel.findByIdAndDelete(id);
   return NextResponse.json({ msg: "Kategori Silindi", success: true });

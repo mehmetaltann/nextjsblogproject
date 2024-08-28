@@ -73,7 +73,12 @@ const SinglePageContent = ({ data, comments, fetchCommentData }) => {
         </div>
       </div>
       <h1 className="text-[42px] text-[#333]">{data.title}</h1>
-      <p className="text-justify leading-[30px]">{data.description}</p>
+      <p
+        className="text-justify leading-[30px]"
+        dangerouslySetInnerHTML={{ __html:data.description }}
+      >
+    
+      </p>
       <SocialMediaShareSet
         shareURL={`http://localhost:3000/blogs/${data._id}`}
         title={data.title}
