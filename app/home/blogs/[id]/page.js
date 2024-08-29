@@ -30,7 +30,7 @@ const page = ({ params }) => {
   }, []);
 
   return data ? (
-    <div className="flex flex-col mb-4 md:mb-0 md:flex-row md:gap-[50px] w-2/3">
+    <div className="flex flex-col mb-2 mt-4 md:mb-0 md:flex-row md:gap-[50px] w-2/3">
       <div className="flex-[5] flex flex-col gap-5 mb-16">
         <SinglePageContent
           data={data}

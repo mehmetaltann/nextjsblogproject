@@ -1,6 +1,8 @@
-import React, { useRef, useMemo, createRef } from "react";
+import React, { useRef, useMemo } from "react";
 import dynamic from "next/dynamic";
-const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
+const JoditEditor = dynamic(() => import("./WrappedTextEditor"), {
+  ssr: false,
+});
 
 const TextEditor = ({ placeholder, setDescription, description }) => {
   const editor = useRef(null);
@@ -15,7 +17,7 @@ const TextEditor = ({ placeholder, setDescription, description }) => {
 
   return (
     <JoditEditor
-      ref={editor}
+      editorRef={editor}
       value={description}
       config={config}
       tabIndex={1} // tabIndex of textarea

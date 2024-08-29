@@ -1,5 +1,6 @@
 import { Outfit } from "next/font/google";
 import { AuthProvider } from "./provider";
+import { BlogContextProvider } from "@/store/BlogContext";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -16,7 +17,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={outfit.className}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <BlogContextProvider>{children}</BlogContextProvider>
+        </AuthProvider>
       </body>
     </html>
   );

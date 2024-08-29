@@ -1,8 +1,8 @@
 "use client";
 import { assets } from "@/Assets/assets";
 import Image from "next/image";
-import Link from "next/link";
 import SocialMediaShareSet from "./SocialMediaShareSet";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -11,12 +11,8 @@ const Footer = () => {
       <div className="flex flex-col items-center">
         <p className="text-sm text-white">
           Bütün Hakları Saklıdır Copyright mehmetaltann@gmail.com
-        </p>{" "}
-        <Link href="/login" className="text-red-400">
-          Giriş
-        </Link>
+        </p>
       </div>
-
       <div className="flex">
         <SocialMediaShareSet
           shareURL="http://localhost:3000/"

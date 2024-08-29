@@ -1,7 +1,11 @@
 import ContactForm from "@/Components/ContactpageComponents/ContactForm";
 
 const page = () => {
-  return <ContactForm />;
+  return (
+    <div className="flex flex-col justify-between">
+      <ContactForm />
+    </div>
+  );
 };
 
 export default page;

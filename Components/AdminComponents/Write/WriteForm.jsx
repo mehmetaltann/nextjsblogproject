@@ -3,21 +3,24 @@ import Image from "next/image";
 import axios from "axios";
 import Select from "react-select";
 import TextEditor from "./TextEditor";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import { assets } from "@/Assets/assets";
 import { CldImage } from "next-cloudinary";
+import { BlogContext } from "@/store/BlogContext";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const WriteForm = () => {
-  const [uploadedImageId, setUploadedImageId] = useState(null);
+  const { blogCont, setBlogCont } = useContext(BlogContext);
+  const [uploadedImageId, setUploadedImageId] = useState(
+    blogCont?.cloudinaryImageId || null
+  );
   const [isUploading, setIsUploading] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [title, setTitle] = useState([]);
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState([]);
+  const [title, setTitle] = useState(blogCont?.title || []);
+  const [description, setDescription] = useState(blogCont?.description || "");
+  const [category, setCategory] = useState(blogCont?.category || []);
 
   const fetchCategories = async () => {
     const response = await axios.get("/api/category");
@@ -127,10 +130,10 @@ const WriteForm = () => {
               <>
                 <label htmlFor="image">
                   <Image
-                    className="mt-3 mx-auto"
+                    className="mt-3 mx-auto w-full h-auto"
                     src={assets.upload_area}
-                    width={200}
-                    height={140}
+                    width="0"
+                    height="0"
                     alt="upload_img"
                     priority
                   />

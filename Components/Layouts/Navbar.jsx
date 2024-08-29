@@ -4,18 +4,12 @@ import Link from "next/link";
 import clsx from "clsx";
 import { assets } from "@/Assets/assets";
 import { useState } from "react";
-import { signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
-const sidebarMenus = [
-  { id: 1, linkpage: "write", src: "add_item", title: "Blog Ekle" },
-  { id: 2, linkpage: "blogList", src: "list", title: "Blog Listesi" },
-  { id: 3, linkpage: "subscription", src: "followers", title: "Takipçiler" },
-  { id: 4, linkpage: "category", src: "category", title: "Kategoriler" },
-];
-
-const AdminNavbar = () => {
+const Navbar = ({ menus, way }) => {
   const [openProfile, setOpenProfile] = useState(false);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   return (
     <main className="w-full lg:px-24">
@@ -33,10 +27,10 @@ const AdminNavbar = () => {
               <Image src={assets.logo} width={120} alt="navbar_logo" />
             </Link>
           </section>
-          {sidebarMenus.map(({ id, linkpage, title }) => (
+          {menus.map(({ id, linkpage, title }) => (
             <Link
               key={id}
-              href={`/admin/${linkpage}`}
+              href={linkpage}
               className="hidden  md:block text-gray-400 hover:text-black"
             >
               <p>{title}</p>
@@ -57,8 +51,8 @@ const AdminNavbar = () => {
               alt="navbar_close"
               onClick={() => setIsSideMenuOpen(false)}
             />
-            {sidebarMenus.map(({ id, linkpage, title }) => (
-              <Link key={id} href={`/admin/${linkpage}`} className="font-bold">
+            {menus.map(({ id, linkpage, title }) => (
+              <Link key={id} href={linkpage} className="font-bold">
                 <p>{title}</p>
               </Link>
             ))}
@@ -93,28 +87,63 @@ const AdminNavbar = () => {
                   mehmetaltann@gmail.com
                 </span>
               </div>
-              <ul className="py-2" aria-labelledby="user-menu-button">
-                <li>
-                  <Link
-                    href="/admin/register"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  >
-                    Kullanıcı Kayıt
-                  </Link>
-                </li>
 
-                <li>
-                  <Link
-                    onClick={() =>
-                      signOut({ callbackUrl: "http://localhost:3000" })
-                    }
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  >
-                    Çıkış Yap
-                  </Link>
-                </li>
-              </ul>
+              {way === "home" ? (
+                session ? (
+                  <ul className="py-2" aria-labelledby="user-menu-button">
+                    <li>
+                      <Link
+                        href="/admin"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                      >
+                        Yönetici Paneli
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => signOut()}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                      >
+                        Çıkış Yap
+                      </button>
+                    </li>
+                  </ul>
+                ) : (
+                  <ul className="py-2" aria-labelledby="user-menu-button">
+                    <li>
+                      <button
+                        onClick={() => signIn()}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                      >
+                        Giriş Yap
+                      </button>
+                    </li>
+                  </ul>
+                )
+              ) : (
+                <ul className="py-2" aria-labelledby="user-menu-button">
+                  <li>
+                    <Link
+                      href="/admin/register"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >
+                      Kullanıcı Kayıt
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      onClick={() =>
+                        signOut({ callbackUrl: "http://localhost:3000" })
+                      }
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >
+                      Çıkış Yap
+                    </Link>
+                  </li>
+                </ul>
+              )}
             </div>
           )}
         </section>
@@ -124,33 +153,4 @@ const AdminNavbar = () => {
   );
 };
 
-export default AdminNavbar;
-
-/* ,
-
-{openProfile && (
-            <div className="flex flex-col dropDownProfile">
-              <ul className="flex flex-col gap-4">
-                <li>
-                  <Link
-                    href="/admin/register"
-                    className="text-sm text-gray-400 font-semibold tracking-tight"
-                  >
-                    Kullanıcı Kayıt
-                  </Link>
-                </li>
-                <li>
-                  <button
-                    onClick={() =>
-                      signOut({ callbackUrl: "http://localhost:3000" })
-                    }
-                    className="text-sm text-gray-400 font-semibold tracking-tight"
-                  >
-                    Çıkış Yap
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
-
-*/
+export default Navbar;

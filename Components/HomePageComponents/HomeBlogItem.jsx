@@ -1,20 +1,12 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
-import { assets } from "@/Assets/assets";
 import { CldImage } from "next-cloudinary";
 
-const HomeBlogItem = ({
-  title,
-  description,
-  category,
-  cloudinaryImageId,
-  id,
-}) => {
+const HomeBlogItem = ({ title, description, cloudinaryImageId, id }) => {
   return (
     <div className="post">
       <div className="img">
-        <Link href={"/blogs/" + id}>
+        <Link href={"/home/blogs/" + id}>
           <CldImage
             src={cloudinaryImageId}
             alt="blog image"
@@ -31,7 +23,7 @@ const HomeBlogItem = ({
           className="text-md"
           dangerouslySetInnerHTML={{ __html: description.slice(0, 120) }}
         ></p>
-        <a href={"/blogs/" + id}>Devamı..</a>
+        <a href={"/home/blogs/" + id}>Devamı..</a>
       </div>
     </div>
   );

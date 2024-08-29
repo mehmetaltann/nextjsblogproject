@@ -8,7 +8,7 @@ const SinglePageMenu = ({ similarPostsData }) => {
       <h1 className="text-xl text-[#555]">Beğenebileceğiniz Diğer Yazılar</h1>
       {similarPostsData.map(({ _id, title, cloudinaryImageId }) => (
         <div className="flex flex-col gap-2.5" key={_id}>
-          <Link href={"/blogs/" + _id}>
+          <Link href={"/home/blogs/" + _id}>
             <CldImage
               src={cloudinaryImageId}
               alt="similar Pages image"
@@ -19,9 +19,12 @@ const SinglePageMenu = ({ similarPostsData }) => {
             />
           </Link>
           <h2 className="text-[#555]">{title}</h2>
-          <button className="w-max cursor-pointer text-[teal] bg-[white] border px-[15px] py-[7.5px] border-[none] border-solid border-[teal] hover:border hover:bg-[$lightGreen] hover:text-[#555] hover:border-b-gray-50 hover:border-[white]">
+          <a
+            href={"/home/blogs/" + _id}
+            className="w-max cursor-pointer text-[teal] bg-[white] border px-[15px] py-[7.5px] border-[none] border-solid border-[teal] hover:border hover:bg-[$lightGreen] hover:text-[#555] hover:border-b-gray-50 hover:border-[white]"
+          >
             Devamını Oku ...
-          </button>
+          </a>
         </div>
       ))}
     </>

@@ -44,74 +44,57 @@ const RegisterForm = () => {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Kayıt Formu
-            </h1>
-            <form onSubmit={submitHandler} className="space-y-4 md:space-y-6">
-              <div>
-                <input
-                  type="text"
-                  name="isim"
-                  id="isim"
-                  onChange={(e) => setIsim(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="İsim ..."
-                  required=""
-                />
-              </div>
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Email ..."
-                  required=""
-                />
-              </div>
-              <div>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Şifre ..."
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required=""
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-              >
-                Hesap Oluştur
-              </button>
+    <div className="flex flex-col items-center justify-center w-full h-screen bg-[$lightGreen]">
+      <h1 className="text-xl text-[teal] mb-2 border px-4 py-6 rounded-full">Kayıt Formu</h1>
+      <form className="flex flex-col bg-[white] w-full md:w-2/3 lg:w-1/4 gap-5 p-[50px]">
+        <input
+          required
+          type="text"
+          placeholder="İsim ..."
+          name="isim"
+          onChange={(e) => setIsim(e.target.value)}
+          className="p-2.5 border-b-[gray] border-[none] border-b border-solid"
+        />
+        <input
+          required
+          type="email"
+          placeholder="Email ..."
+          name="email"
+          onChange={(e) => setEmail(e.target.value)}
+          className="p-2.5 border-b-[gray] border-[none] border-b border-solid"
+        />
+        <input
+          required
+          type="password"
+          placeholder="Şifre ..."
+          name="password"
+          onChange={(e) => setPassword(e.target.value)}
+          className="p-2.5 border-b-[gray] border-[none] border-b border-solid"
+        />
+        <button
+          type="submit"
+          className="bg-[teal] cursor-pointer text-[white] p-2.5 border-[none]"
+        >
+          Kayıt Ol
+        </button>
 
-              {error && (
-                <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
-                  {error}
-                </div>
-              )}
-
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Mevcut Hesabınız Var mı ?{" "}
-                <Link
-                  href="/login"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Giriş
-                </Link>
-              </p>
-            </form>
+        {error && (
+          <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
+            {error}
           </div>
-        </div>
-      </div>
-    </section>
+        )}
+
+        <p className="text-xs text-center">
+          Mevcut Hesabınız Var mı ?
+          <Link
+            href="/login"
+            className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+          >
+            Giriş
+          </Link>
+        </p>
+      </form>
+    </div>
   );
 };
 

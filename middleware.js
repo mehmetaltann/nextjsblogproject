@@ -5,7 +5,7 @@ export const config = {
     "/admin",
     "/admin/register",
     "/admin/blogList",
-    "/admin/addProduct",
+    "/admin/write",
     "/admin/subscription",
   ],
 };

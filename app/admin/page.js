@@ -1,6 +1,6 @@
 const page = () => {
   return (
-    <></>
+    <>Yönetici Paneli</>
   )
 }
 
