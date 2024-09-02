@@ -11,7 +11,7 @@ const menus = [
 
 export default function Layout({ children }) {
   return (
-    <div className="flex flex-col items-center justify-between w-full h-screen">
+    <div className="mx-auto flex flex-col items-center justify-between w-full h-screen">
       <ToastContainer theme="dark" />
       <Navbar menus={menus} way="home" />
       {children}

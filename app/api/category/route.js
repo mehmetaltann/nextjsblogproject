@@ -3,8 +3,9 @@ import { ConnectDb } from "@/lib/config/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const { categoryName } = await request.json();
-  const categoryData = { name: categoryName };
+  const { categoryName, categoryColor } = await request.json();
+  const categoryData = { name: categoryName, color: categoryColor };
+  console.log(categoryData);
   await ConnectDb();
   await CategoryModel.create(categoryData);
   return NextResponse.json({ msg: "Kategori Kaydedildi", success: true });

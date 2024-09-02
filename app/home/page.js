@@ -2,6 +2,8 @@
 import axios from "axios";
 import CategorySelect from "@/Components/HomePageComponents/CategorySelect";
 import HomeBlogList from "@/Components/HomePageComponents/HomeBlogList";
+import BlogPostPreview from "@/Components/HomePageComponents/BlogPostPreview";
+import BlogPosts from "@/Components/HomePageComponents/BlogPosts";
 import { useCallback, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,12 +29,15 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-between">
-      <div className="w-full">
-        <CategorySelect menu={menu} setMenu={setMenu} categories={categories} />
-      </div>
-      <HomeBlogList menu={menu} blogs={blogs} />
-      <ToastContainer theme="dark" />
+    <div className="w-2/3 mb-10">
+      <BlogPosts menu={menu} blogs={blogs} />
     </div>
   );
 }
+
+/*  
+
+<div className="w-full">
+        <CategorySelect menu={menu} setMenu={setMenu} categories={categories} />
+      </div>
+*/

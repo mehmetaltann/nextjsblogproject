@@ -12,7 +12,7 @@ const Navbar = ({ menus, way }) => {
   const { data: session } = useSession();
 
   return (
-    <main className="w-full lg:px-24">
+    <main className="space-x-4 sticky top-0 bg-white/20 dark:bg-black/20 backdrop-blur-lg w-full md:w-3/4 z-[9999]">
       <nav className="flex justify-between px-12 items-center py-4">
         <div className="flex items-center gap-8 ">
           <section className="flex items-center gap-4">
@@ -148,7 +148,6 @@ const Navbar = ({ menus, way }) => {
           )}
         </section>
       </nav>
-      <hr />
     </main>
   );
 };

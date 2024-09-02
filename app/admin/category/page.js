@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 const page = () => {
   const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState("");
+  const [categoryColor, setCategoryColor] = useState("");
 
   const fetchCategories = async () => {
     const response = await axios.get("/api/category");
@@ -41,24 +42,33 @@ const page = () => {
       return;
     }
 
+    if (!categoryColor) {
+      setError("Tüm alanlar dolu olmalıdır !");
+      return;
+    }
+
     const response = await axios.post("/api/category", {
       categoryName,
+      categoryColor,
     });
     if (response.data.success) {
       toast.success(response.data.msg);
       fetchCategories();
       setCategoryName("");
+      setCategoryColor("");
     } else {
       setError("Kategory Kaydedilemedi");
     }
   };
 
   return (
-    <div className="flex flex-col max-w-[400px] gap-1 pt-10 px-5 sm:pt-12 sm:pl-17">
+    <div className="flex flex-col gap-1 w-full md:w-2/4 sm:pt-12 sm:pl-17">
       <CategoryForm
         onSubmitHandler={onSubmitHandler}
         categoryName={categoryName}
         setCategoryName={setCategoryName}
+        categoryColor={categoryColor}
+        setCategoryColor={setCategoryColor}
       />
       <CategoryTable categories={categories} deleteCategory={deleteCategory} />
       <ToastContainer

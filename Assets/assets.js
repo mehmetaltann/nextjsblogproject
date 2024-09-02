@@ -3,6 +3,7 @@ import add_item from "./add_item.svg";
 import followers from "./followers.svg";
 import menuIcon from "./menuIcon.svg";
 import closeIcon from "./closeIcon.svg";
+import author from "./author.svg";
 import list from "./list.svg";
 import edit from "./edit.svg";
 import deleteIcon from "./delete.svg";
@@ -18,6 +19,7 @@ import upload_area from "./upload_area.png";
 export const assets = {
   facebook_icon,
   googleplus_icon,
+  author,
   closeIcon,
   deleteIcon,
   menuIcon,
