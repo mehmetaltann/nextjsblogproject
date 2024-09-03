@@ -4,13 +4,29 @@
 
 @layer base {
   :root {
-    --color-primary: #b9e7e7;
+    --color-primary: #5EDFFF;
     --color-secondary: #b9e7e7;
     /* ... */
+    --color-theme1: #284494;
+    --color-theme2: #205ca9;
+    --color-theme3: #1b69b4;
+    --color-theme4: #137dc5;
+    --color-theme5: #0b94d8;
+    --color-theme6: #02a6e8;
+    --color-theme7: #9ddff8;
+    --color-theme8: #ef4136;
+    --color-theme9: #f25738;
+    --color-theme10: ##f36539;
+    --color-theme11: #f6833c;
+    --color-theme12: #f7923e;
+    --color-theme13: #faa33f;
+    --color-theme14: #fee6c3;
+
 
     --primary-txt: 240 5.9% 10%;
   }
 }
+
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;

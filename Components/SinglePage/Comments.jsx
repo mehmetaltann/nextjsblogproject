@@ -13,7 +13,6 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
         autoClose={2000}
         position="bottom-left"
       />
-      <h2 className="mb-4 text-2xl">Yorumlar</h2>
       {comments ? (
         <>
           {comments.map(({ _id, authorName, comment, createdAt }) => {

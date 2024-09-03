@@ -3,8 +3,7 @@ import CategoryForm from "@/Components/AdminComponents/Category/CategoryForm";
 import CategoryTable from "@/Components/AdminComponents/Category/CategoryTable";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const page = () => {

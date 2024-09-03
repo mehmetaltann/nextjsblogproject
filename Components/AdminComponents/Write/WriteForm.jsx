@@ -1,14 +1,13 @@
 "use client";
-import Image from "next/image";
 import axios from "axios";
 import Select from "react-select";
 import TextEditor from "./TextEditor";
 import { useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
-import { assets } from "@/Assets/assets";
 import { CldImage } from "next-cloudinary";
 import { BlogContext } from "@/store/BlogContext";
+import { IoIosCloudUpload } from "react-icons/io";
 import "react-toastify/dist/ReactToastify.css";
 
 const WriteForm = () => {
@@ -86,7 +85,7 @@ const WriteForm = () => {
       >
         <div className="flex-[5] flex flex-col gap-5">
           <input
-            className="p-3 border border-b-primary"
+            className="p-3 border border-b-primary text-lg"
             type="text"
             id="title"
             placeholder="Başlık"
@@ -111,7 +110,7 @@ const WriteForm = () => {
                 instanceId="categoryType"
                 placeholder="Kategori ..."
                 options={categories}
-                className="basic-multi-select mt-4 w-full "
+                className="basic-multi-select mt-4 w-full text-xl"
                 classNamePrefix="select"
                 onChange={(value) => setCategory(value)}
               />
@@ -129,14 +128,7 @@ const WriteForm = () => {
             {!uploadedImageId && !isUploading && (
               <>
                 <label htmlFor="image">
-                  <Image
-                    className="mt-3 mx-auto w-full h-auto"
-                    src={assets.upload_area}
-                    width="0"
-                    height="0"
-                    alt="upload_img"
-                    priority
-                  />
+                  <IoIosCloudUpload className="mt-3 mx-auto" size={240} />
                 </label>
                 <input
                   onChange={handleFileUpload}
@@ -155,13 +147,14 @@ const WriteForm = () => {
                 height={600}
                 width={600}
                 alt="down-pic"
+                priority={true}
               />
             )}
           </div>
           <hr />
           <button
             type="submit"
-            className="w-full h-10 bg-primary text-gray-800 hover:text-black"
+            className="w-full h-10 bg-primary border hover:bg-white text-gray-600 text-xl"
           >
             EKLE
           </button>

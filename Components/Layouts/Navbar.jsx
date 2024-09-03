@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { assets } from "@/Assets/assets";
 import { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { RiMenuLine, RiCloseLine } from "react-icons/ri";
 
 const Navbar = ({ menus, way }) => {
   const [openProfile, setOpenProfile] = useState(false);
@@ -16,22 +17,19 @@ const Navbar = ({ menus, way }) => {
       <nav className="flex justify-between px-12 items-center py-4">
         <div className="flex items-center gap-8 ">
           <section className="flex items-center gap-4">
-            <Image
-              className="text-3xl cursor-pointer md:hidden"
-              src={assets.menuIcon}
-              width={30}
-              alt="navbar_open"
+            <RiMenuLine
+              className="text-3xl cursor-pointer md:hidden "
               onClick={() => setIsSideMenuOpen(true)}
             />
             <Link href="/" className="text-4xl font-mono">
-              <Image src={assets.logo} width={120} alt="navbar_logo" />
+              <Image src={assets.logo} width={250} alt="navbar_logo" />
             </Link>
           </section>
           {menus.map(({ id, linkpage, title }) => (
             <Link
               key={id}
               href={linkpage}
-              className="hidden  md:block text-gray-400 hover:text-black"
+              className="hidden md:block text-color1 hover:text-color5 text-lg font-semibold opacity-55 hover:opacity-100"
             >
               <p>{title}</p>
             </Link>
@@ -44,11 +42,8 @@ const Navbar = ({ menus, way }) => {
           )}
         >
           <section className="text-black bg-white flex flex-col w-56 absolute left-0 top-0 h-screen p-8 gap-8">
-            <Image
+            <RiCloseLine
               className="text-3xl mt-0 mb-8 cursor-pointer"
-              src={assets.closeIcon}
-              width={30}
-              alt="navbar_close"
               onClick={() => setIsSideMenuOpen(false)}
             />
             {menus.map(({ id, linkpage, title }) => (
@@ -78,9 +73,9 @@ const Navbar = ({ menus, way }) => {
             />
           </button>
           {openProfile && (
-            <div className="absolute mt-16 right-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
+            <div className="absolute mt-16 right-4 text-base list-none text-color1 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
               <div className="px-4 py-3">
-                <span className="block text-sm text-gray-900 dark:text-white">
+                <span className="block text-sm font-semibold text-gray-900 dark:text-white">
                   Mehmet ALTAN
                 </span>
                 <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">

@@ -1,28 +1,27 @@
 "use client";
 import moment from "moment";
-import Image from "next/image";
 import Comments from "./Comments";
 import SocialMediaShareSet from "../Layouts/SocialMediaShareSet";
 import Link from "next/link";
-import randomColor from "randomcolor";
+import parse from "html-react-parser";
 import { useContext } from "react";
 import { BlogContext } from "@/store/BlogContext";
 import { CldImage } from "next-cloudinary";
-import { assets } from "@/Assets/assets";
 import { useSession } from "next-auth/react";
+import { RiEdit2Line } from "react-icons/ri";
+import { FaTrashAlt } from "react-icons/fa";
 import "moment/locale/tr";
 
-const SingleBlog = ({ data, comments, fetchCommentData }) => {
+const SingleBlog = ({ data, comments, fetchCommentData, randomNumber }) => {
   const postDate = moment(data.date).format("Do MMMM YYYY");
-  const gecenZaman = moment(data.date).startOf("day").fromNow();
   const { data: session } = useSession();
   const { setBlogCont } = useContext(BlogContext);
 
   return (
-    <section className="m-auto grid items-center pb-8 md:container">
+    <section className="m-auto grid items-center pb-8 md:container md:min-w-[1250px]">
       <div className="relative m-auto flex max-w-[750px] flex-col items-start">
         {/* Başlık */}
-        <h1 className="mb-6 text-3xl font-extrabold leading-tight tracking-tighter text-black dark:text-white md:text-4xl">
+        <h1 className="mb-8 text-3xl font-extrabold leading-tight tracking-tighter text-color1 md:text-4xl">
           {data.title}
         </h1>
         {/* Blog Resim */}
@@ -33,26 +32,21 @@ const SingleBlog = ({ data, comments, fetchCommentData }) => {
             width={960}
             height={720}
             className="aspect-video w-full object-cover"
+            priority={true}
           />
         </div>
         {/* Yazar Bilgileri */}
         <div className="mb-4 md:flex">
           <div className="mb-4 flex flex-col">
             {/* Yazı Tarihi */}
-            <span className="text-zinc-500 dark:text-zinc-400">{postDate}</span>
+            <span className="text-zinc-500">{postDate}</span>
           </div>
           <div className="flex gap-2 items-center justify-center md:absolute md:right-0">
             <div>
               {data.category.map((item, index) => {
-                var color = randomColor({ luminosity: "light" });
-                const categoryBackgroundColor = `${color}`;
                 return (
                   <span
-                    style={{
-                      borderColor: categoryBackgroundColor,
-                      border: `1px solid ${color}`,
-                    }}
-                    className="mb-1 mr-1 rounded-xl px-3 py-1 text-black/70 dark:text-white/70"
+                    className={`mb-1 mr-1 rounded-xl px-3 py-1 opacity-60 hover:opacity-100 text-color${randomNumber} border border-color${randomNumber}`}
                     key={index}
                   >
                     {item.name}
@@ -68,25 +62,17 @@ const SingleBlog = ({ data, comments, fetchCommentData }) => {
                     href={"/admin/write"}
                     onClick={async () => await setBlogCont(data)}
                   >
-                    <Image
-                      src={assets.edit}
-                      width={20}
-                      height={20}
-                      alt="editbutton"
-                      id="editbutton"
-                      type="button"
+                    <RiEdit2Line
+                      size={20}
                       className="cursor-pointer"
+                      color="#295F98"
                     />
                   </Link>
-                  <Link href={"/addProduct"}>
-                    <Image
-                      src={assets.deleteIcon}
-                      width={20}
-                      height={20}
-                      alt="deletebutton"
-                      id="deletebutton"
-                      type="button"
+                  <Link href={"/"}>
+                    <FaTrashAlt
+                      size={20}
                       className="cursor-pointer"
+                      color="#C75B7A"
                     />
                   </Link>
                 </div>
@@ -95,10 +81,9 @@ const SingleBlog = ({ data, comments, fetchCommentData }) => {
           </div>
         </div>
         {/*  Blog Yazısı */}
-        <p
-          className="space-y-4 text-zinc-700 mb-4 dark:text-zinc-300"
-          dangerouslySetInnerHTML={{ __html: data.description }}
-        ></p>
+        <p className="space-y-4 text-zinc-700 mb-4">
+          {parse(data.description)}
+        </p>
 
         {/*  Paylaş Butonları */}
         <div className="mt-2">
