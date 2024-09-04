@@ -1,10 +1,11 @@
 "use client";
-import SubsTableItem from "@/Components/AdminComponents/Subscribers/SubsTableItem";
+import SubsTableItem from "@/Components/Admin/Subscribers/SubsTableItem";
 import axios from "axios";
+import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const page = () => {
+const page = ({ type }) => {
   const [emails, setEmails] = useState([]);
 
   const fetchEmails = async () => {
@@ -31,9 +32,12 @@ const page = () => {
   }, []);
 
   return (
-    <div className="flex-1 pt-5 px-5 sm:pt-12 sm:pl-17">
+    <AnimationWrapper
+      keyValue={type}
+      className="flex-1 pt-5 px-5 sm:pt-12 sm:pl-17"
+    >
       <h1>Tüm Kayıtlı Emailler</h1>
-      <div className="relative max-w-[600px] h-[80vh] overflow-x-auto mt-4 border border-gray-400 scrollbar-hide">
+      <div className="relative max-w-[600px] h-[70vh] overflow-x-auto mt-4 border border-gray-400 scrollbar-hide">
         <table className="w-full text-sm text-gray-500">
           <thead className="text-xs text-left text-gray-700 uppercase bg-gray-50">
             <tr>
@@ -63,7 +67,7 @@ const page = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </AnimationWrapper>
   );
 };
 

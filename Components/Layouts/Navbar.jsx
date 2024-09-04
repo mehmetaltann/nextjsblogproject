@@ -1,11 +1,10 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
-import { assets } from "@/Assets/assets";
 import { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { RiMenuLine, RiCloseLine } from "react-icons/ri";
+import { CldImage } from "next-cloudinary";
 
 const Navbar = ({ menus, way }) => {
   const [openProfile, setOpenProfile] = useState(false);
@@ -13,7 +12,7 @@ const Navbar = ({ menus, way }) => {
   const { data: session } = useSession();
 
   return (
-    <main className="space-x-4 sticky top-0 bg-white/20 dark:bg-black/20 backdrop-blur-lg w-full md:w-3/4 z-[9999]">
+    <main className="space-x-4 sticky top-0 bg-white/20 backdrop-blur-lg w-full md:w-3/4 z-[9999]">
       <nav className="flex justify-between px-12 items-center py-4">
         <div className="flex items-center gap-8 ">
           <section className="flex items-center gap-4">
@@ -22,7 +21,13 @@ const Navbar = ({ menus, way }) => {
               onClick={() => setIsSideMenuOpen(true)}
             />
             <Link href="/" className="text-4xl font-mono">
-              <Image src={assets.logo} width={250} alt="navbar_logo" />
+              <CldImage
+                src="https://res.cloudinary.com/duixszfkd/image/upload/v1725431523/logo.png"
+                alt="navbar_logo"
+                priority={true}
+                height={250}
+                width={250}
+              />
             </Link>
           </section>
           {menus.map(({ id, linkpage, title }) => (
@@ -62,13 +67,12 @@ const Navbar = ({ menus, way }) => {
               setOpenProfile((prev) => !prev);
             }}
           >
-            <Image
-              src={assets.profile_icon}
-              width={50}
+            <CldImage
+              src="https://res.cloudinary.com/duixszfkd/image/upload/v1725431524/profile_icon.png"
+              alt="profil_logo"
+              priority={true}
               height={50}
-              alt="profile_icon_side"
-              id="avatarButton"
-              type="button"
+              width={50}
               className="cursor-pointer rounded-full"
             />
           </button>

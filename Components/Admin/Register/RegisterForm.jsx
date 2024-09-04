@@ -44,8 +44,10 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-screen bg-[$lightGreen]">
-      <h1 className="text-xl text-[teal] mb-2 border px-4 py-6 rounded-full">Kayıt Formu</h1>
+    <>
+      <h1 className="text-xl text-[teal] mb-2 border border-white px-4 py-6 rounded-lg">
+        Kayıt Formu
+      </h1>
       <form className="flex flex-col bg-[white] w-full md:w-2/3 lg:w-1/4 gap-5 p-[50px]">
         <input
           required
@@ -87,14 +89,14 @@ const RegisterForm = () => {
         <p className="text-xs text-center">
           Mevcut Hesabınız Var mı ?
           <Link
-            href="/login"
-            className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+            href="/auth"
+            className="font-medium text-color1 hover:underline dark:text-primary-500"
           >
             Giriş
           </Link>
         </p>
       </form>
-    </div>
+    </>
   );
 };
 

@@ -29,8 +29,10 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-screen bg-[$lightGreen]">
-      <h1 className="text-xl text-[teal] border px-4 py-6 rounded-full">Giriş</h1>
+    <div className="flex flex-col items-center justify-center w-full h-screen bg-color7">
+      <h1 className="text-xl text-[teal] border border-white px-4 py-6 rounded-lg">
+        Giriş
+      </h1>
       <form
         className="flex flex-col bg-[white] w-full md:w-2/3 lg:w-1/4 gap-5 p-[50px]"
         onSubmit={submitHandler}

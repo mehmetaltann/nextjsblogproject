@@ -1,5 +1,5 @@
 "use client";
-import BlogsTableItem from "@/Components/AdminComponents/BlogsList/BlogsTableItem";
+import BlogsTableItem from "@/Components/Admin/BlogsList/BlogsTableItem";
 
 
 const BlogsTable = ({ blogs, deleteBlog }) => {

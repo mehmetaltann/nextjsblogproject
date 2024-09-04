@@ -1,7 +1,8 @@
-const page = () => {
-  return (
-    <>Yönetici Paneli</>
-  )
-}
+"use client";
+import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 
-export default page
+const page = ({ type }) => {
+  return <AnimationWrapper keyValue={type}>Yönetici Paneli</AnimationWrapper>;
+};
+
+export default page;

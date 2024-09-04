@@ -1,10 +1,12 @@
-import ContactForm from "@/Components/ContactpageComponents/ContactForm";
+"use client";
+import ContactForm from "@/Components/Contact/ContactForm";
+import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 
-const page = () => {
+const page = ({ type }) => {
   return (
-    <div className="flex flex-col justify-between">
+    <AnimationWrapper keyValue={type} className="flex flex-col justify-between">
       <ContactForm />
-    </div>
+    </AnimationWrapper>
   );
 };
 

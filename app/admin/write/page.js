@@ -1,11 +1,15 @@
-"use client"
-import WriteForm from "@/Components/AdminComponents/Write/WriteForm";
+"use client";
+import WriteForm from "@/Components/Admin/Write/WriteForm";
+import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 
-const page = () => {
+const page = ({ type }) => {
   return (
-    <div className="flex w-full items-center justify-center">
+    <AnimationWrapper
+      keyValue={type}
+      className="flex w-full items-center justify-center"
+    >
       <WriteForm />
-    </div>
+    </AnimationWrapper>
   );
 };
 

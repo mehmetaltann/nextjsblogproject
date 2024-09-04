@@ -1,12 +1,13 @@
 "use client";
-import CategoryForm from "@/Components/AdminComponents/Category/CategoryForm";
-import CategoryTable from "@/Components/AdminComponents/Category/CategoryTable";
+import CategoryForm from "@/Components/Admin/Category/CategoryForm";
+import CategoryTable from "@/Components/Admin/Category/CategoryTable";
 import axios from "axios";
+import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const page = () => {
+const page = ({ type }) => {
   const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const [categoryColor, setCategoryColor] = useState("");
@@ -61,7 +62,10 @@ const page = () => {
   };
 
   return (
-    <div className="flex flex-col gap-1 w-full md:w-2/4 sm:pt-12 sm:pl-17">
+    <AnimationWrapper
+      keyValue={type}
+      className="flex flex-col gap-1 w-full md:w-2/4 sm:pt-12 sm:pl-17"
+    >
       <CategoryForm
         onSubmitHandler={onSubmitHandler}
         categoryName={categoryName}
@@ -76,7 +80,7 @@ const page = () => {
         autoClose={2000}
         position="bottom-left"
       />
-    </div>
+    </AnimationWrapper>
   );
 };
 

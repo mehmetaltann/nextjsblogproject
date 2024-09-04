@@ -15,6 +15,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
+    "framer-motion": "^11.4.0",
     "html-react-parser": "^5.1.15",
     "jodit-react": "^4.1.2",
     "moment": "^2.30.1",

@@ -1,11 +1,13 @@
 "use client";
 import axios from "axios";
-import SingleBlog from "@/Components/SinglePage/SingleBlog";
-import { useEffect, useState } from "react";
+import SingleBlog from "@/Components/SingleBlog/SingleBlog";
+import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
+import { useEffect, useState, Suspense } from "react";
+import { Loader } from "@/Components/Layouts/Loader";
 
 const numberArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
-const page = ({ params }) => {
+const page = ({ params, type }) => {
   const [data, setData] = useState(null);
   const [randomNumber, setRandomNumber] = useState("");
   const [similarPostsData, setSimilarPostsData] = useState(null);
@@ -35,14 +37,19 @@ const page = ({ params }) => {
   }, []);
 
   return data ? (
-    <div className="flex flex-col gap-3 mb-16 min-w-full mt-2">
-      <SingleBlog
-        data={data}
-        comments={comments}
-        fetchCommentData={fetchCommentData}
-        randomNumber={randomNumber}
-      />
-    </div>
+    <Suspense fallback={<Loader />}>
+      <AnimationWrapper
+        keyValue={type}
+        className="flex flex-col gap-3 mb-16 min-w-full mt-2"
+      >
+        <SingleBlog
+          data={data}
+          comments={comments}
+          fetchCommentData={fetchCommentData}
+          randomNumber={randomNumber}
+        />
+      </AnimationWrapper>
+    </Suspense>
   ) : (
     <></>
   );
