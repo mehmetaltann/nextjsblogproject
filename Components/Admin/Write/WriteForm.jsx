@@ -16,6 +16,7 @@ const WriteForm = () => {
     blogCont?.cloudinaryImageId || null
   );
   const [isUploading, setIsUploading] = useState(false);
+  const [isHomeCheck, setIsHomeCheck] = useState(blogCont?.isHome || false);
   const [categories, setCategories] = useState([]);
   const [title, setTitle] = useState(blogCont?.title || []);
   const [description, setDescription] = useState(blogCont?.description || "");
@@ -56,6 +57,7 @@ const WriteForm = () => {
     const postData = {
       title,
       description,
+      isHome: isHomeCheck,
       author: "Mehmet Altan",
       cloudinaryImageId: uploadedImageId,
       category: category.map((o) => {
@@ -70,11 +72,14 @@ const WriteForm = () => {
       setDescription("");
       setCategory(null);
       setUploadedImageId(null);
+      setIsHomeCheck(false);
       document.getElementById("blog-submit").reset();
     } else {
       toast.error("Bir Sıkıntı Var");
     }
   };
+
+  console.log(isHomeCheck);
 
   return (
     <>
@@ -152,9 +157,27 @@ const WriteForm = () => {
             )}
           </div>
           <hr />
+
+          <div class="flex ms-2 items-center">
+            <input
+              id="default-checkbox"
+              type="checkbox"
+              value={isHomeCheck}
+              onChange={() => setIsHomeCheck(!isHomeCheck)}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  "
+            />
+            <label
+              htmlFor="default-checkbox"
+              class="ms-2 font-semibold text-lg"
+            >
+              Anasayfada Gözüksün
+            </label>
+          </div>
+
+          <hr />
           <button
             type="submit"
-            className="w-full h-10 bg-primary border hover:bg-white text-gray-600 text-xl"
+            className="w-full opacity-90 h-8 bg-color1 text-white text-xl border hover:bg-white hover:text-color1 "
           >
             EKLE
           </button>

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
+import { FaMailBulk } from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
 
 const ContactForm = () => {
@@ -38,22 +39,25 @@ const ContactForm = () => {
     <section className="bg-white">
       <ToastContainer theme="dark" closeOnClick autoClose={2000} />
       <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 ">
-          İletişim
-        </h2>
-        <p className="mb-8 lg:mb-14 font-light text-center text-gray-500 sm:text-xl">
-          Blogumuzda gördüğünüz, aklınıza takılan bir konu varsa yazmaktan
-          lütfen çekinmeyiniz. Farklı konularda da yardımcı olmamızı isterseniz
-          yazabilirsiniz.
+        <div className="mb-4 flex items-center justify-center gap-2 text-color1">
+          <FaMailBulk size={50} />
+          <h2 className="text-4xl tracking-tight font-extrabold text-center ">
+            İletişim
+          </h2>
+        </div>
+        <p className="mb-8 lg:mb-12 font-light text-center text-gray-500 sm:text-xl">
+          Blogumuzda gördüğünüz, aklınıza takılan, sormak istediğiniz, merak
+          ettiğiniz bir konu varsa yazmaktan lütfen çekinmeyin. Farklı konularda
+          da yardımcı olmamızı isterseniz yazabilirsiniz.
         </p>
         <form
           onSubmit={submitHandler}
-          className="flex flex-col gap-5 mb-8 lg:mb-10"
+          className="flex flex-col gap-3 mb-8 lg:mb-10"
         >
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-900 "
+              className="block text-sm font-medium text-color1"
             >
               Mail Adresiniz
             </label>
@@ -70,7 +74,7 @@ const ContactForm = () => {
           <div>
             <label
               htmlFor="title"
-              className="block  text-sm font-medium text-gray-900"
+              className="block  text-sm font-medium text-color1"
             >
               Konu
             </label>
@@ -87,7 +91,7 @@ const ContactForm = () => {
           <div className="sm:col-span-2">
             <label
               htmlFor="message"
-              className="block mb-1 text-sm font-medium text-gray-900"
+              className="block mb-1 text-sm font-medium text-color1"
             >
               Mesajınız
             </label>
@@ -102,7 +106,7 @@ const ContactForm = () => {
           </div>
           <button
             type="submit"
-            className="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-black sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300"
+            className="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-color1 sm:w-fit hover:bg-color5 "
           >
             Gönder
           </button>

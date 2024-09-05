@@ -40,7 +40,7 @@ const page = ({ params, type }) => {
     <Suspense fallback={<Loader />}>
       <AnimationWrapper
         keyValue={type}
-        className="flex flex-col gap-3 mb-16 min-w-full mt-2"
+        className="mb-10 mt-6 items-center w-full px-3 md:px-0 md:w-3/4 lg:w-2/4"
       >
         <SingleBlog
           data={data}

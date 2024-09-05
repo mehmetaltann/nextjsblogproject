@@ -1,8 +1,10 @@
 "use client";
 import Link from "next/link";
 import parse from "html-react-parser";
+import { BlogContext } from "@/store/BlogContext";
 import { CldImage } from "next-cloudinary";
 import { formatDate } from "date-fns";
+import { useContext } from "react";
 
 const BlogPostPreview = ({
   title,
@@ -10,7 +12,10 @@ const BlogPostPreview = ({
   cloudinaryImageId,
   id,
   date,
+  category,
 }) => {
+  const { setSelectedCategory } = useContext(BlogContext);
+
   return (
     <div className="break-words">
       <Link href={"/home/blogs/" + id}>
@@ -35,20 +40,21 @@ const BlogPostPreview = ({
         <div className="prose lg:prose-lg leading-relaxed md:text-lg line-clamp-4 text-muted-foreground">
           {parse(description)}
         </div>
+        <div className="text-sm text-muted-foreground">
+          {category.map((cat, index) => (
+            <div key={index} className="mr-2 inline-block">
+              <Link
+                href={`/home/bloglist`}
+                onClick={() => setSelectedCategory(cat.name)}
+              >
+                #{cat.name}
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 export default BlogPostPreview;
-
-/* 
-<div className="text-sm text-muted-foreground">
-          {post.tags.map((tag) => (
-            <div key={tag.id} className="mr-2 inline-block">
-              <Link href={`/tag/${tag.name}`}>#{tag.name}</Link>
-            </div>
-          ))}
-        </div>
-
-*/

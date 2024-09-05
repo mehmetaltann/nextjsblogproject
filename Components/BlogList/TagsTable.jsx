@@ -29,7 +29,7 @@ const TagsTable = ({
   });
 
   return (
-    <div className="flex-[2] max-h-screen sm:min-w-[280px] sm:max-w-[280px] flex-wrap overflow-auto rounded bg-gray-50 pt-5 shadow-md sm:flex">
+    <div className="flex-[2] max-h-screen sm:min-w-[200px] sm:max-w-[240px] flex-wrap overflow-auto rounded bg-gray-50 pt-5 shadow-md sm:flex">
       <div className="px-6 py-4">
         <button
           onClick={() => setSelectedCategory("Tümü")}

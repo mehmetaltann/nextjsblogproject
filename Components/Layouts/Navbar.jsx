@@ -13,7 +13,7 @@ const Navbar = ({ menus, way }) => {
 
   return (
     <main className="space-x-4 sticky top-0 bg-white/20 backdrop-blur-lg w-full md:w-3/4 z-[9999]">
-      <nav className="flex justify-between px-12 items-center py-4">
+      <nav className="flex justify-between px-12 items-center pt-4 gap-4">
         <div className="flex items-center gap-8 ">
           <section className="flex items-center gap-4">
             <RiMenuLine
@@ -27,6 +27,7 @@ const Navbar = ({ menus, way }) => {
                 priority={true}
                 height={250}
                 width={250}
+                style={{ width: "100%", height: "auto" }}
               />
             </Link>
           </section>

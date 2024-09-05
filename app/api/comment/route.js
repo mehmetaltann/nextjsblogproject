@@ -22,12 +22,12 @@ export async function POST(request) {
   try {
     await ConnectDb();
     await CommentModel.create(commentData);
-    /* await transporter.sendMail({
+    await transporter.sendMail({
       ...mailOptions,
       from: authorEmail,
       subject: "Blog Post Yorumu",
       text: `Gönderen: ${authorEmail}\nPost Konusu: ${postTitle}\n\nYorumu: ${comment}`,
-    }); */
+    });
     return NextResponse.json({ msg: "Yorumunuz Kaydedildi", success: true });
   } catch (error) {
     console.log(error);

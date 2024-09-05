@@ -6,7 +6,7 @@ export default function PostCard({ data }) {
   return (
     <div>
       {data.cloudinaryImageId && (
-        <Link href={`/posts/${data._id}`}>
+        <Link href={`/home/blogs/${data._id}`}>
           <CldImage
             src={data.cloudinaryImageId}
             alt={data.title}
@@ -18,22 +18,17 @@ export default function PostCard({ data }) {
         </Link>
       )}
       <h2 className="text-xl font-semibold tracking-tight text-zinc-800 ">
-        <Link href={`/posts/${data._id}`}>{data.title}</Link>
+        <Link href={`/home/blogs/${data._id}`}>{data.title}</Link>
       </h2>
       <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
         <div className="flex select-none justify-start space-x-2 md:hidden md:justify-end">
           {data.category &&
             data.category.map((category) => (
-              <>
-                <div
-                  key={category.name}
-                  className="flex rounded-full border border-zinc-200 bg-zinc-50 px-3 py-2 "
-                >
-                  <span className="pt-[3px] text-xs leading-none text-color9 ">
-                    {category.name}
-                  </span>
-                </div>
-              </>
+              <div key={category.name} className="flex mt-2">
+                <span className="pt-[3px] text-xs leading-none text-color9 ">
+                  #{category.name}
+                </span>
+              </div>
             ))}
         </div>
       </div>
@@ -44,7 +39,7 @@ export default function PostCard({ data }) {
         }}
       />
       <div className="flex items-center justify-between font-medium text-color9">
-        <Link href={`/posts/${data._id}`}>
+        <Link href={`/home/blogs/${data._id}`}>
           <div className="flex items-center space-x-2">
             <span>Devamı</span>
             <FaArrowRight className="h-4 w-4 text-inherit" />
@@ -53,16 +48,11 @@ export default function PostCard({ data }) {
         <div className="hidden select-none justify-end space-x-2 md:flex ">
           {data.category &&
             data.category.map((category) => (
-              <>
-                <div
-                  key={category.name}
-                  className="flex rounded-full border border-zinc-200 bg-zinc-50 px-3 py-2 "
-                >
-                  <span className="pt-[3px] text-xs leading-none text-color9 ">
-                    {category.name}
-                  </span>
-                </div>
-              </>
+              <div key={category.name} className="flex">
+                <span className="pt-[3px] text-xs leading-none text-color9 ">
+                  #{category.name}
+                </span>
+              </div>
             ))}
         </div>
       </div>

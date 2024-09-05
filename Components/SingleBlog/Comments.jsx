@@ -6,13 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
   return (
-    <div className="flex flex-col gap-2 w-full mt-4">
-      <ToastContainer
-        theme="dark"
-        closeOnClick
-        autoClose={2000}
-        position="bottom-left"
-      />
+    <div className="flex flex-col gap-1 w-full mt-6">
       {comments ? (
         <>
           {comments.map(({ _id, authorName, comment, createdAt }) => {
@@ -31,11 +25,16 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
           Bu gönderiye henüz hiç bir youm yapılmamıştır
         </div>
       )}
-
       <CommentForm
         postId={postId}
         postTitle={postTitle}
         fetchCommentData={fetchCommentData}
+      />
+      <ToastContainer
+        theme="dark"
+        closeOnClick
+        autoClose={2000}
+        position="bottom-left"
       />
     </div>
   );

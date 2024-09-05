@@ -96,7 +96,7 @@ const CommentForm = ({ postId, postTitle, fetchCommentData }) => {
         </div>
         <button
           type="submit"
-          className="text-[#36d1d1] px-4 py-2 border border-[#36d1d1] rounded-md hover:bg-[#36d1d1] hover:text-white focus:outline-none focus:ring-2 focus:[#36d1d1] focus:ring-offset-2"
+          className="text-color3 px-4 py-2 border border-color1/70 rounded-md hover:bg-color3 hover:text-white focus:outline-none focus:ring-2 focus:[#36d1d1] focus:ring-offset-2"
         >
           Gönder
         </button>

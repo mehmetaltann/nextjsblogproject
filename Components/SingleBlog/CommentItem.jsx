@@ -8,10 +8,10 @@ const CommentItem = ({ authorName, comment, date }) => {
   const commentDate = moment(date).format("Do MMMM YYYY, h:mm:ss");
   const gecenZaman = moment(date).startOf("day").fromNow();
   return (
-    <div className="mb-2 flex flex-col rounded-xl border border-zinc-300 p-4 pb-6 dark:border-zinc-700">
-      <div className="mb-4 flex w-full flex-col md:items-center justify-between gap-2 text-gray-500 dark:text-gray-200 sm:flex-row">
-        <div className="flex items-center justify-center gap-2 text-black dark:text-white">
-          <CgProfile className="opacity-60 mt-1" color="blue" />
+    <div className="mb-2 flex flex-col rounded-xl border border-zinc-300 p-4 pb-6 ">
+      <div className="mb-4 flex w-full flex-col md:items-center justify-between gap-2 text-gray-500  sm:flex-row">
+        <div className="flex items-center justify-center gap-2 text-black ">
+          <CgProfile className="opacity-60 mt-1 text-color9" />
           <p className="text-lg">{authorName}</p>
         </div>
         <div className="text-xs">

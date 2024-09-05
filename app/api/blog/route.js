@@ -35,6 +35,7 @@ export async function POST(request) {
     category,
     author,
     cloudinaryImageId,
+    isHome,
   };
   await ConnectDb();
   await BlogModel.create(blogData);

@@ -17,7 +17,7 @@ export async function POST(request) {
     console.log(error);
     return NextResponse.json({
       msg: "Mesajınız Gönderilemedi",
-      success: error,
+      success: false,
     });
   }
 }
