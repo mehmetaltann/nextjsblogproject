@@ -5,7 +5,7 @@ import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import Pagination from "@/Components/Layouts/Pagination";
 import axios from "axios";
 import { useState, useContext, useEffect, Suspense, useCallback } from "react";
-import { BlogContext } from "@/store/BlogContext";
+import { BlogContext } from "@/store/ClientContext";
 import { getAttCount } from "@/lib/utils/helpers";
 import { Loader } from "@/Components/Layouts/Loader";
 

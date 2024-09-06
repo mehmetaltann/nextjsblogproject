@@ -1,6 +1,6 @@
 import Generator from "next/font/local";
 import { AuthProvider } from "./provider";
-import { BlogContextProvider } from "@/store/BlogContext";
+import { ClientContextProvider } from "@/store/ClientContext";
 import "./globals.css";
 
 const sans = Generator({
@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${sans.variable} font-sans`}>
       <body>
         <AuthProvider>
-          <BlogContextProvider>{children}</BlogContextProvider>
+          <ClientContextProvider>{children}</ClientContextProvider>
         </AuthProvider>
       </body>
     </html>

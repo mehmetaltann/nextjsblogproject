@@ -27,7 +27,7 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  const { title, description, author, cloudinaryImageId, category } =
+  const { title, description, author, cloudinaryImageId, category, isHome } =
     await request.json();
   const blogData = {
     title,

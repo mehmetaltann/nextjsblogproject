@@ -2,21 +2,14 @@
 import moment from "moment";
 import Comments from "./Comments";
 import SocialMediaShareSet from "../Layouts/SocialMediaShareSet";
-import Link from "next/link";
 import parse from "html-react-parser";
-import { useContext } from "react";
-import { BlogContext } from "@/store/BlogContext";
 import { CldImage } from "next-cloudinary";
-import { useSession } from "next-auth/react";
-import { RiEdit2Line } from "react-icons/ri";
-import { FaTrashAlt } from "react-icons/fa";
+
 import "moment/locale/tr";
 
 const SingleBlog = ({ data, comments, fetchCommentData, randomNumber }) => {
   const postDate = moment(data.date).format("Do MMMM YYYY");
-  const { data: session } = useSession();
-  const { setBlogCont } = useContext(BlogContext);
-
+  
   return (
     <div className="relative m-auto flex max-w-[820px] flex-col items-start">
       {/* Blog Başlık */}
@@ -52,30 +45,6 @@ const SingleBlog = ({ data, comments, fetchCommentData, randomNumber }) => {
                 </span>
               );
             })}
-          </div>
-          <div>
-            {/* Yazı Edit */}
-            {session && (
-              <div className="flex gap-2">
-                <Link
-                  href={"/admin/write"}
-                  onClick={() => setBlogCont(data)}
-                >
-                  <RiEdit2Line
-                    size={20}
-                    className="cursor-pointer"
-                    color="#295F98"
-                  />
-                </Link>
-                <Link href={"/"}>
-                  <FaTrashAlt
-                    size={20}
-                    className="cursor-pointer"
-                    color="#C75B7A"
-                  />
-                </Link>
-              </div>
-            )}
           </div>
         </div>
       </div>

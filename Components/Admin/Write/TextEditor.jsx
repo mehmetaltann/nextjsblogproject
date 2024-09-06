@@ -1,18 +1,20 @@
-import React, { useRef, useMemo } from "react";
+import { useRef, useMemo, useContext } from "react";
+import { AdminContext } from "@/store/AdminContext";
 import dynamic from "next/dynamic";
 const JoditEditor = dynamic(() => import("./WrappedTextEditor"), {
   ssr: false,
 });
 
-const TextEditor = ({ placeholder, setDescription, description }) => {
+const TextEditor = () => {
+  const { setDescription, description } = useContext(AdminContext);
   const editor = useRef(null);
   const config = useMemo(
     () => ({
       readonly: false, // all options from https://xdsoft.net/jodit/docs/,
-      placeholder: placeholder || "Start typings...",
+      placeholder: "Yazınız ...",
       height: 600,
     }),
-    [placeholder]
+    []
   );
 
   return (

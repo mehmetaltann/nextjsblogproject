@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import parse from "html-react-parser";
-import { BlogContext } from "@/store/BlogContext";
+import { ClientContext } from "@/store/ClientContext";
 import { CldImage } from "next-cloudinary";
 import { formatDate } from "date-fns";
 import { useContext } from "react";
@@ -14,7 +14,7 @@ const BlogPostPreview = ({
   date,
   category,
 }) => {
-  const { setSelectedCategory } = useContext(BlogContext);
+  const { setSelectedCategory } = useContext(ClientContext);
 
   return (
     <div className="break-words">

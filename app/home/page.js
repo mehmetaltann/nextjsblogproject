@@ -2,12 +2,12 @@
 import axios from "axios";
 import BlogPosts from "@/Components/Home/BlogPosts";
 import Pagination from "@/Components/Layouts/Pagination";
-import { BlogContext } from "@/store/BlogContext";
+import { ClientContext } from "@/store/ClientContext";
 import { useEffect, useContext, useCallback, useState } from "react";
 
 export default function Home() {
   //data
-  const { allBlogs, setAllBlogs } = useContext(BlogContext);
+  const { allBlogs, setAllBlogs } = useContext(ClientContext);
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
