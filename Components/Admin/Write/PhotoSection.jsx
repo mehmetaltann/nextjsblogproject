@@ -5,10 +5,9 @@ import { AdminContext } from "@/store/AdminContext";
 import { useContext, useState } from "react";
 import { IoIosCloudUpload } from "react-icons/io";
 
-const PhotoSection = () => {
+const PhotoSection = ({ isNewPost }) => {
   const [isUploading, setIsUploading] = useState(false);
-  const { cloudinaryImageId, setCloudinaryImageId } =
-    useContext(AdminContext);
+  const { cloudinaryImageId, setCloudinaryImageId } = useContext(AdminContext);
 
   const handleFileUpload = async (event) => {
     const file = event.target.files?.[0];
@@ -51,7 +50,7 @@ const PhotoSection = () => {
         </>
       )}
 
-      {cloudinaryImageId && !isUploading && (
+      {cloudinaryImageId && !isUploading && isNewPost && (
         <CldImage
           src={cloudinaryImageId}
           description="image upload"
@@ -60,6 +59,28 @@ const PhotoSection = () => {
           alt="down-pic"
           priority={true}
         />
+      )}
+
+      {cloudinaryImageId && !isUploading && !isNewPost && (
+        <>
+          <label htmlFor="image" className="text-center">
+            <CldImage
+              src={cloudinaryImageId}
+              description="image upload"
+              height={600}
+              width={600}
+              alt="down-pic"
+              priority={true}
+            />
+          </label>
+          <input
+            onChange={handleFileUpload}
+            type="file"
+            id="image"
+            name="image"
+            hidden
+          />
+        </>
       )}
     </div>
   );

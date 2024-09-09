@@ -1,15 +1,12 @@
 "use client";
-import moment from "moment";
 import Comments from "./Comments";
 import SocialMediaShareSet from "../Layouts/SocialMediaShareSet";
 import parse from "html-react-parser";
+import SimilarPosts from "./SimilarPosts";
 import { CldImage } from "next-cloudinary";
+import { getFormatDate } from "@/lib/utils/helpers";
 
-import "moment/locale/tr";
-
-const SingleBlog = ({ data, comments, fetchCommentData, randomNumber }) => {
-  const postDate = moment(data.date).format("Do MMMM YYYY");
-  
+const SingleBlog = ({ data, comments, fetchCommentData, similarPostsData }) => {
   return (
     <div className="relative m-auto flex max-w-[820px] flex-col items-start">
       {/* Blog Başlık */}
@@ -31,14 +28,14 @@ const SingleBlog = ({ data, comments, fetchCommentData, randomNumber }) => {
       <div className="mb-4 md:flex">
         <div className="mb-4 flex flex-col">
           {/* Yazı Tarihi */}
-          <span className="text-zinc-500">{postDate}</span>
+          <span className="text-zinc-500">{getFormatDate(data.date)}</span>
         </div>
-        <div className="flex gap-2 items-center justify-center md:absolute md:right-0">
+        <div className="flex gap-1 items-center justify-center md:absolute md:right-0">
           <div>
             {data.category.map((item, index) => {
               return (
                 <span
-                  className={`mb-1 mr-1 rounded-xl px-3 py-1 opacity-60 hover:opacity-100 text-color${randomNumber}`}
+                  className={`mb-1 mr-1 rounded-xl px-3 py-1 opacity-60 hover:opacity-100 text-color6`}
                   key={index}
                 >
                   #{item.name}
@@ -65,8 +62,12 @@ const SingleBlog = ({ data, comments, fetchCommentData, randomNumber }) => {
         comments={comments}
         fetchCommentData={fetchCommentData}
         postTitle={data.title}
-        className="mt-10"
+        className="mt-10 mb-2"
       />
+      {/*  Benzer Yazılar */}
+      <hr />
+      <div className="mt-2 font-semibold mb-2 text-lg">Benzer Yazılar</div>
+      <SimilarPosts similarPostsData={similarPostsData} />
     </div>
   );
 };

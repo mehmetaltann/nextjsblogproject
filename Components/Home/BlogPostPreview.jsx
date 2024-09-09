@@ -3,8 +3,8 @@ import Link from "next/link";
 import parse from "html-react-parser";
 import { ClientContext } from "@/store/ClientContext";
 import { CldImage } from "next-cloudinary";
-import { formatDate } from "date-fns";
 import { useContext } from "react";
+import { getFormatDate } from "@/lib/utils/helpers";
 
 const BlogPostPreview = ({
   title,
@@ -35,7 +35,7 @@ const BlogPostPreview = ({
           <Link href={"/home/blogs/" + id}>{title}</Link>
         </h2>
         <div className="prose lg:prose-lg italic tracking-tighter text-muted-foreground">
-          {formatDate(date, "dd MMMM yyyy")}
+          {getFormatDate(date, "dd MMMM yyyy")}
         </div>
         <div className="prose lg:prose-lg leading-relaxed md:text-lg line-clamp-4 text-muted-foreground">
           {parse(description)}

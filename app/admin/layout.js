@@ -3,14 +3,26 @@ import Navbar from "@/Components/Layouts/Navbar";
 import { AdminContextProvider } from "@/store/AdminContext";
 
 const menus = [
-  { id: 1, linkpage: "/admin/write", title: "Yeni Yazı" },
-  { id: 2, linkpage: "/admin/blogList", title: "Blog Listesi" },
+  {
+    id: 1,
+    linkpage: "/admin",
+    title: "Yönetici Ana Sayfa",
+  },
+  {
+    id: 2,
+    linkpage: "/admin/write",
+    title: "Yeni Yazı",
+  },
   {
     id: 3,
-    linkpage: "/admin/subscription",
-    title: "Takipçiler",
+    linkpage: "/admin/category",
+    title: "Kategoriler",
   },
-  { id: 4, linkpage: "/admin/category", title: "Kategoriler" },
+  {
+    id: 4,
+    linkpage: "/admin/register",
+    title: "Kullanıcı Kayıt",
+  },
 ];
 
 export default function Layout({ children }) {

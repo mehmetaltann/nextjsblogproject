@@ -4,32 +4,31 @@ import TagsTable from "@/Components/BlogList/TagsTable";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import Pagination from "@/Components/Layouts/Pagination";
 import axios from "axios";
-import { useState, useContext, useEffect, Suspense, useCallback } from "react";
-import { BlogContext } from "@/store/ClientContext";
+import { useState, useContext, useEffect, useCallback } from "react";
+import { ClientContext } from "@/store/ClientContext";
 import { getAttCount } from "@/lib/utils/helpers";
-import { Loader } from "@/Components/Layouts/Loader";
 
 const page = ({ type }) => {
-  const { allBlogs, setAllBlogs, selectedCategory, setSelectedCategory } =
-    useContext(BlogContext);
+  const { allPosts, setAllPosts, selectedCategory, setSelectedCategory } =
+    useContext(ClientContext);
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 3;
 
-  const fetchBlogs = useCallback(async () => {
+  const fetchPosts = useCallback(async () => {
     const response = await axios.get("/api/blog");
-    setAllBlogs(response.data.blogs);
+    setAllPosts(response.data.blogs);
   }, []);
 
   useEffect(() => {
-    fetchBlogs();
+    fetchPosts();
   }, []);
 
   //Category List
-  const categoryCountObj = getAttCount(allBlogs);
+  const categoryCountObj = getAttCount(allPosts);
 
-  const filteredPosts = allBlogs.filter((item) =>
+  const filteredPosts = allPosts.filter((item) =>
     selectedCategory === "Tümü"
       ? true
       : item.category.some((insItem) => insItem.name === selectedCategory)
@@ -53,19 +52,19 @@ const page = ({ type }) => {
         categoryCountObj={categoryCountObj}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
+        setCurrentPage={setCurrentPage}
       />
-      <Suspense fallback={<Loader />}>
-        <div className="flex flex-col gap-4">
-          <PostList posts={displayPosts} />
-          {totalPages > 1 && (
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              onPageChange={onPageChange}
-            />
-          )}
-        </div>
-      </Suspense>
+
+      <div className="flex flex-col gap-4">
+        <PostList posts={displayPosts} />
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={onPageChange}
+          />
+        )}
+      </div>
     </AnimationWrapper>
   );
 };

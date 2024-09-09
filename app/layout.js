@@ -1,6 +1,7 @@
 import Generator from "next/font/local";
 import { AuthProvider } from "./provider";
 import { ClientContextProvider } from "@/store/ClientContext";
+import { connectToMongoDB } from "@/lib/config/db";
 import "./globals.css";
 
 const sans = Generator({
@@ -14,6 +15,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  connectToMongoDB();
   return (
     <html lang="en" className={`${sans.variable} font-sans`}>
       <body>

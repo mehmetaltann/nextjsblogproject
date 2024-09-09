@@ -4,15 +4,13 @@ import { createContext, useMemo, useState } from "react";
 export const AdminContext = createContext("");
 
 export const AdminContextProvider = (props) => {
+  const [selectDefaultValue, setSelectDefaultValue] = useState();
   const [options, setOptions] = useState([]);
   const [isNewPost, setIsNewPost] = useState(true);
-  const [selectDefaultValue, setSelectDefaultValue] = useState({
-    label: "",
-    value: "",
-  });
   const [categories, setCategories] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [postId, setPostId] = useState("");
   const [isHome, setIsHome] = useState(false);
   const [cloudinaryImageId, setCloudinaryImageId] = useState(null);
 
@@ -34,6 +32,8 @@ export const AdminContextProvider = (props) => {
       setSelectDefaultValue,
       isNewPost,
       setIsNewPost,
+      postId,
+      setPostId,
     }),
     [
       categories,
@@ -52,6 +52,8 @@ export const AdminContextProvider = (props) => {
       setOptions,
       isNewPost,
       setIsNewPost,
+      postId,
+      setPostId,
     ]
   );
 

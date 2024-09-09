@@ -48,7 +48,10 @@ const RegisterForm = () => {
       <h1 className="text-xl text-[teal] mb-2 border border-white px-4 py-6 rounded-lg">
         Kayıt Formu
       </h1>
-      <form className="flex flex-col bg-[white] w-full md:w-2/3 lg:w-1/4 gap-5 p-[50px]">
+      <form
+        onSubmit={submitHandler}
+        className="flex flex-col w-full gap-3 bg-[white]"
+      >
         <input
           required
           type="text"
@@ -90,7 +93,7 @@ const RegisterForm = () => {
           Mevcut Hesabınız Var mı ?
           <Link
             href="/auth"
-            className="font-medium text-color1 hover:underline dark:text-primary-500"
+            className="font-medium text-color1 hover:underline"
           >
             Giriş
           </Link>

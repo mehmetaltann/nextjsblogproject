@@ -1,63 +1,44 @@
 "use client";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
-import Link from "next/link";
-import NewPost from "@/Components/Admin/Start/NewPost";
-import PostList from "@/Components/BlogList/PostList";
-import { RiEdit2Line } from "react-icons/ri";
-import { FaTrashAlt } from "react-icons/fa";
-import { AdminContext } from "@/store/AdminContext";
-import { useContext } from "react";
+import axios from "axios";
+import PostList from "@/Components/Admin/Start/PostList";
+import NewPostButton from "@/Components/Admin/Start/NewPostButton";
+import { useState, useEffect } from "react";
 
 const page = ({ type }) => {
-  const {
-    setCategories,
-    setTitle,
-    setDescription,
-    setIsHome,
-    setCloudinaryImageId,
-    setSelectDefaultValue,
-    setIsNewPost,
-  } = useContext(AdminContext);
+  const [posts, setPosts] = useState([]);
 
-  const handleEdit = () => {
-    setIsNewPost(false);
-    const { _id, title, isHome, description, category, cloudinaryImageId } =
-      data;
-    const optionDefaultData = category.map((o) => {
-      return { label: o.name, value: o.name };
-    });
-    setSelectDefaultValue(optionDefaultData);
-    setCategories(category);
-    setTitle(title);
-    setDescription(description);
-    setIsHome(isHome);
-    setCloudinaryImageId(cloudinaryImageId);
+  const fetchPosts = async () => {
+    const response = await axios.get("/api/blog");
+    setPosts(response.data.blogs);
   };
 
-  return (
-    <AnimationWrapper keyValue={type}>
-      <div>Yeni Yazı</div>
-      <div>
+  const deleteBlog = async (mongoId) => {
+    const response = await axios.delete(`/api/blog`, {
+      params: {
+        id: mongoId,
+      },
+    });
+    if (response.data.success) {
+      toast.success(response.data.msg);
+      fetchPosts();
+    } else {
+      toast.error("İşlem Gerçekleşmedi");
+    }
+  };
 
-        <div>
-          <div className="flex gap-2">
-            <Link href={"/admin/write"} onClick={handleEdit}>
-              <RiEdit2Line
-                size={20}
-                className="cursor-pointer"
-                color="#295F98"
-              />
-            </Link>
-            <Link href={"/"}>
-              <FaTrashAlt
-                size={20}
-                className="cursor-pointer"
-                color="#C75B7A"
-              />
-            </Link>
-          </div>
-        </div>
-      </div>
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  return (
+    <AnimationWrapper
+      keyValue={type}
+      className="p-3 md:p-0 md:ms-48 mt-8 mb-8 self-start flex flex-col gap-3 w-2/3"
+    >
+      <NewPostButton />
+      <hr />
+      <PostList posts={posts} deleteBlog={deleteBlog} />
     </AnimationWrapper>
   );
 };

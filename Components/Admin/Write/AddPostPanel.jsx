@@ -20,11 +20,13 @@ const AddPostPanel = () => {
     setCloudinaryImageId,
     setDescription,
     isNewPost,
+    postId,
   } = useContext(AdminContext);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const postData = {
+      _id: postId,
       title,
       description,
       isHome,
@@ -47,11 +49,14 @@ const AddPostPanel = () => {
         toast.error("Bir Sıkıntı Var");
       }
     } else {
-      
+      const response = await axios.put("/api/blog", postData);
+      if (response.data.success) {
+        toast.success(response.data.msg);
+      } else {
+        toast.error("Güncellenemedi Bir Sıkıntı Var");
+      }
     }
   };
-
-  console.log(isNewPost);
 
   return (
     <form
@@ -59,7 +64,7 @@ const AddPostPanel = () => {
       id="blog-submit"
       className="flex flex-col w-full md:w-3/4 gap-3 mt-6 mb-16"
     >
-      <PhotoSection />
+      <PhotoSection isNewPost={isNewPost} />
       <input
         className="bg-gray-50 border text-xl border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 "
         type="text"

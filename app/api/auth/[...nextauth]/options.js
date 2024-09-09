@@ -1,7 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import brcrypt from "bcryptjs";
 import UserModel from "@/lib/models/UserModel";
-import { ConnectDb } from "@/lib/config/db";
 
 export const options = {
   providers: [
@@ -14,7 +13,7 @@ export const options = {
       async authorize(credentials) {
         const { email, password } = credentials;
         try {
-          await ConnectDb();
+   
           const user = await UserModel.findOne({ email });
 
           if (!user) {

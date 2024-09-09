@@ -1,11 +1,9 @@
 import BlogModel from "@/lib/models/BlogModel";
-import { ConnectDb } from "@/lib/config/db";
 const { NextResponse } = require("next/server");
 
 export async function GET(request) {
   const blogId = request.nextUrl.searchParams.get("id");
   if (blogId) {
-    await ConnectDb();
     const blog = await BlogModel.findById(blogId);
     const categoryArray = blog.category.map(function (obj) {
       return obj.name;
@@ -20,31 +18,66 @@ export async function GET(request) {
     });
     return NextResponse.json({ blog, sameCategoryFilteredData });
   } else {
-    await ConnectDb();
     const blogs = await BlogModel.find({});
     return NextResponse.json({ blogs });
   }
 }
 
 export async function POST(request) {
-  const { title, description, author, cloudinaryImageId, category, isHome } =
-    await request.json();
-  const blogData = {
-    title,
-    description,
-    category,
-    author,
-    cloudinaryImageId,
-    isHome,
-  };
-  await ConnectDb();
-  await BlogModel.create(blogData);
-  return NextResponse.json({ success: true, msg: "Blog Yazısı Kaydedildi" });
+  try {
+    const { title, description, author, cloudinaryImageId, category, isHome } =
+      await request.json();
+    const blogData = {
+      title,
+      description,
+      category,
+      author,
+      cloudinaryImageId,
+      isHome,
+    };
+    await BlogModel.create(blogData);
+    return NextResponse.json({ success: true, msg: "Blog Yazısı Kaydedildi" });
+  } catch (error) {
+    return NextResponse.json({ success: false, msg: error });
+  }
+}
+
+export async function PUT(request) {
+  try {
+    const {
+      _id,
+      title,
+      description,
+      author,
+      cloudinaryImageId,
+      category,
+      isHome,
+    } = await request.json();
+    const filter = { _id };
+    const update = {
+      _id,
+      title,
+      description,
+      category,
+      author,
+      cloudinaryImageId,
+      isHome,
+    };
+    await BlogModel.findByIdAndUpdate(filter, update, {
+      new: true,
+    });
+    return NextResponse.json({ success: true, msg: "Blog Yazısı Güncellendi" });
+  } catch (error) {
+    return NextResponse.json({ success: false, msg: error });
+  }
 }
 
 export async function DELETE(request) {
-  const id = await request.nextUrl.searchParams.get("id");
-  await ConnectDb();
-  await BlogModel.findByIdAndDelete(id);
-  return NextResponse.json({ msg: "Blog Yazısı Silindi" });
+  try {
+    const id = await request.nextUrl.searchParams.get("id");
+    await BlogModel.findByIdAndDelete(id);
+    return NextResponse.json({ success: true, msg: "Blog Yazısı Silindi" });
+  } catch (error) {
+    return NextResponse.json({ success: false, msg: error });
+  }
 }

@@ -17,15 +17,6 @@ const CommentForm = ({ postId, postTitle, fetchCommentData }) => {
       toast.error("Tüm Alanları Doldurunuz");
       return;
     }
-
-    console.log({
-      authorName,
-      authorEmail,
-      comment,
-      postId,
-      postTitle,
-    });
-
     const response = await axios.post("/api/comment", {
       authorName,
       authorEmail,

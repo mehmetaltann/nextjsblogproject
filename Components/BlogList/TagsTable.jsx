@@ -2,8 +2,10 @@ const TagsTable = ({
   categoryCountObj,
   selectedCategory,
   setSelectedCategory,
+  setCurrentPage,
 }) => {
   const handleCategoryChange = (category) => {
+    setCurrentPage(1);
     setSelectedCategory(category === selectedCategory ? "" : category);
   };
 

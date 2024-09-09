@@ -4,11 +4,8 @@ import SingleBlog from "@/Components/SingleBlog/SingleBlog";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import { useEffect, useState } from "react";
 
-const numberArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-
 const page = ({ params, type }) => {
   const [data, setData] = useState(null);
-  const [randomNumber, setRandomNumber] = useState("");
   const [similarPostsData, setSimilarPostsData] = useState(null);
   const [comments, setComments] = useState(null);
 
@@ -30,9 +27,6 @@ const page = ({ params, type }) => {
   useEffect(() => {
     fetchBlogData();
     fetchCommentData();
-    setRandomNumber(
-      numberArray[Math.floor(Math.random() * numberArray.length)]
-    );
   }, []);
 
   return data ? (
@@ -44,7 +38,7 @@ const page = ({ params, type }) => {
         data={data}
         comments={comments}
         fetchCommentData={fetchCommentData}
-        randomNumber={randomNumber}
+        similarPostsData={similarPostsData}
       />
     </AnimationWrapper>
   ) : (

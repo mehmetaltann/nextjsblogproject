@@ -1,26 +1,30 @@
 import CommentModel from "@/lib/models/CommentsModel";
-import { ConnectDb } from "@/lib/config/db";
 import { NextResponse } from "next/server";
 import { mailOptions, transporter } from "@/lib/config/nodemailer";
 
 export async function GET(request) {
-  const blogId = request.nextUrl.searchParams.get("id");
-  const comments = await CommentModel.find({ postId: blogId });
-  return NextResponse.json(comments);
+  try {
+    const blogId = request.nextUrl.searchParams.get("id");
+    const comments = await CommentModel.find({ postId: blogId });
+    return NextResponse.json(comments);
+  } catch (error) {
+    return NextResponse.json({
+      msg: "Bir Sorun var, Yorumunuz Kaydedildi",
+      success: false,
+    });
+  }
 }
 
 export async function POST(request) {
-  const { authorName, authorEmail, comment, postId, postTitle } =
-    await request.json();
-  const commentData = {
-    authorName,
-    authorEmail,
-    comment,
-    postId,
-  };
-
   try {
-    await ConnectDb();
+    const { authorName, authorEmail, comment, postId, postTitle } =
+      await request.json();
+    const commentData = {
+      authorName,
+      authorEmail,
+      comment,
+      postId,
+    };
     await CommentModel.create(commentData);
     await transporter.sendMail({
       ...mailOptions,
@@ -30,6 +34,9 @@ export async function POST(request) {
     });
     return NextResponse.json({ msg: "Yorumunuz Kaydedildi", success: true });
   } catch (error) {
-    console.log(error);
+    return NextResponse.json({
+      msg: "Bir Sorun var, Yorumunuz Kaydedilemedi",
+      success: false,
+    });
   }
 }

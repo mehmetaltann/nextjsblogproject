@@ -7,7 +7,7 @@ import { useEffect, useContext, useCallback, useState } from "react";
 
 export default function Home() {
   //data
-  const { allBlogs, setAllBlogs } = useContext(ClientContext);
+  const { allPosts, setAllPosts } = useContext(ClientContext);
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,18 +15,20 @@ export default function Home() {
 
   const fetchBlogs = useCallback(async () => {
     const response = await axios.get("/api/blog");
-    setAllBlogs(response.data.blogs);
+    setAllPosts(response.data.blogs);
   }, []);
 
   useEffect(() => {
     fetchBlogs();
   }, []);
 
+  const filteredPosts = allPosts.filter((item) => item.isHome && item);
+
   //Pagination
-  const totalPages = Math.ceil(allBlogs.length / postsPerPage);
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
   const startIndex = (currentPage - 1) * postsPerPage;
   const endIndex = startIndex + postsPerPage;
-  const displayPosts = allBlogs.slice(startIndex, endIndex);
+  const displayPosts = filteredPosts.slice(startIndex, endIndex);
   const onPageChange = (page) => {
     setCurrentPage(page);
   };

@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import clsx from "clsx";
+import useOnclickOutside from "react-cool-onclickoutside";
 import { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { RiMenuLine, RiCloseLine } from "react-icons/ri";
@@ -10,6 +11,10 @@ const Navbar = ({ menus, way }) => {
   const [openProfile, setOpenProfile] = useState(false);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const { data: session } = useSession();
+
+  const ref = useOnclickOutside(() => {
+    setOpenProfile(false);
+  });
 
   return (
     <main className="space-x-4 sticky top-0 bg-white/20 backdrop-blur-lg w-full md:w-3/4 z-[9999]">
@@ -62,7 +67,7 @@ const Navbar = ({ menus, way }) => {
         <section className="flex flex-col items-center gap-4">
           <button
             type="button"
-            className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 "
             id="user-menu-button"
             onClick={() => {
               setOpenProfile((prev) => !prev);
@@ -78,12 +83,15 @@ const Navbar = ({ menus, way }) => {
             />
           </button>
           {openProfile && (
-            <div className="absolute mt-16 right-4 text-base list-none text-color1 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
+            <div
+              ref={ref}
+              className="absolute mt-16 right-4 text-base list-none text-color1 bg-white divide-y divide-gray-100 rounded-lg shadow"
+            >
               <div className="px-4 py-3">
-                <span className="block text-sm font-semibold text-gray-900 dark:text-white">
+                <span className="block text-sm font-semibold text-gray-900 ">
                   Mehmet ALTAN
                 </span>
-                <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
+                <span className="block text-sm  text-gray-500 truncate ">
                   mehmetaltann@gmail.com
                 </span>
               </div>
@@ -94,7 +102,7 @@ const Navbar = ({ menus, way }) => {
                     <li>
                       <Link
                         href="/admin"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                       >
                         Yönetici Paneli
                       </Link>
@@ -102,7 +110,7 @@ const Navbar = ({ menus, way }) => {
                     <li>
                       <button
                         onClick={() => signOut()}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                       >
                         Çıkış Yap
                       </button>
@@ -113,7 +121,7 @@ const Navbar = ({ menus, way }) => {
                     <li>
                       <button
                         onClick={() => signIn()}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                       >
                         Giriş Yap
                       </button>
@@ -124,10 +132,34 @@ const Navbar = ({ menus, way }) => {
                 <ul className="py-2" aria-labelledby="user-menu-button">
                   <li>
                     <Link
+                      href="/admin"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                    >
+                      Yönetici Ana Sayfa
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
                       href="/admin/register"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                     >
                       Kullanıcı Kayıt
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/admin/category"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 e"
+                    >
+                      Kategoriler
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/admin/subscribers"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 e"
+                    >
+                      Takipçiler
                     </Link>
                   </li>
 
@@ -137,7 +169,7 @@ const Navbar = ({ menus, way }) => {
                         signOut({ callbackUrl: "http://localhost:3000" })
                       }
                       href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                     >
                       Çıkış Yap
                     </Link>
