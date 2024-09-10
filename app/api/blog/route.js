@@ -18,7 +18,7 @@ export async function GET(request) {
     });
     return NextResponse.json({ blog, sameCategoryFilteredData });
   } else {
-    const blogs = await BlogModel.find({});
+    const blogs = await BlogModel.find({}).sort({ date: -1 });
     return NextResponse.json({ blogs });
   }
 }

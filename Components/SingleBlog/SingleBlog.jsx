@@ -30,12 +30,12 @@ const SingleBlog = ({ data, comments, fetchCommentData, similarPostsData }) => {
           {/* Yazı Tarihi */}
           <span className="text-zinc-500">{getFormatDate(data.date)}</span>
         </div>
-        <div className="flex gap-1 items-center justify-center md:absolute md:right-0">
+        <div className="flex items-center justify-center md:absolute md:right-0">
           <div>
             {data.category.map((item, index) => {
               return (
                 <span
-                  className={`mb-1 mr-1 rounded-xl px-3 py-1 opacity-60 hover:opacity-100 text-color6`}
+                  className={`mb-1 mr-1 rounded-xl px-1 py-1 opacity-60 hover:opacity-100 text-color6`}
                   key={index}
                 >
                   #{item.name}
@@ -57,13 +57,20 @@ const SingleBlog = ({ data, comments, fetchCommentData, similarPostsData }) => {
       </div>
       {/*  Yorumlar */}
       <hr />
-      <Comments
-        postId={data._id}
-        comments={comments}
-        fetchCommentData={fetchCommentData}
-        postTitle={data.title}
-        className="mt-10 mb-2"
-      />
+      {comments ? (
+        <Comments
+          postId={data._id}
+          comments={comments}
+          fetchCommentData={fetchCommentData}
+          postTitle={data.title}
+          className="mt-10 mb-2"
+        />
+      ) : (
+        <div className=" text-[#333]">
+          Bu gönderiye henüz hiç bir youm yapılmamıştır
+        </div>
+      )}
+
       {/*  Benzer Yazılar */}
       <hr />
       <div className="mt-2 font-semibold mb-2 text-lg">Benzer Yazılar</div>

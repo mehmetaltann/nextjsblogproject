@@ -23,7 +23,7 @@ const BlogPostPreview = ({
           <CldImage
             src={cloudinaryImageId}
             alt={title}
-            className="object-cover"
+            className="object-cover rounded-lg"
             priority={true}
             fill={true}
             sizes="100w"
@@ -31,7 +31,7 @@ const BlogPostPreview = ({
         </div>
       </Link>
       <div className="grid grid-cols-1 gap-3 md:col-span-2 mt-4">
-        <h2 className="font-sans font-semibold tracking-tighter text-primary-txt text-2xl md:text-3xl">
+        <h2 className="font-semibold tracking-tighter text-primary-txt text-2xl md:text-3xl">
           <Link href={"/home/blogs/" + id}>{title}</Link>
         </h2>
         <div className="prose lg:prose-lg italic tracking-tighter text-muted-foreground">

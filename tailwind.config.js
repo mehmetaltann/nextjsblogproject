@@ -7,6 +7,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        inter: ["var(--font-inter)"],
+        roboto: ["var(--font-roboto)"],
+        tinos: ["var(--font-tinos)"],
+        montserrat: ["var(--font-montserrat)"],
+        notosans: ["var(--font-notosans)"],
+        raleway: ["var(--font-raleway)"]
+      },
       colors: {
         primary: "var(--color-primary)",
         secondary: "var(--color-secondary)",

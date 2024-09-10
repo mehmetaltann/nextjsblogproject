@@ -6,12 +6,12 @@ const Footer = () => {
   return (
     <div className="flex w-full justify-around mx-auto flex-col gap-2 sm:gap-0 sm:flex-row bg-color1 py-5 items-center">
       <CldImage
-        src="https://res.cloudinary.com/duixszfkd/image/upload/v1725431523/logo_light.png"
+        src="https://res.cloudinary.com/duixszfkd/image/upload/v1725431523/logoLight.png"
         alt="footer_logo"
         priority={true}
-        height={50}
-        width={100}
-        style={{ width: "auto", height: "auto" }}
+        height={100}
+        width={150}
+        sizes="150vw"
       />
       <div className="flex flex-col items-center text-sm text-white">
         <p>Bütün Hakları Saklıdır @2024</p>

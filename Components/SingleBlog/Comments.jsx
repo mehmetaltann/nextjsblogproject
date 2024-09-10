@@ -10,7 +10,7 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const commentsPerPage = 5;
 
-  const totalComments = Math.ceil(comments.length / commentsPerPage);
+  const totalComments = Math.ceil(comments?.length / commentsPerPage);
   const startIndex = (currentPage - 1) * commentsPerPage;
   const endIndex = startIndex + commentsPerPage;
   const displayComments = comments.slice(startIndex, endIndex);
@@ -20,30 +20,22 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
 
   return (
     <div className="flex flex-col gap-1 w-full mt-6">
-      {comments ? (
-        <>
-          {displayComments.map(({ _id, authorName, comment, createdAt }) => {
-            return (
-              <CommentItem
-                key={_id}
-                authorName={authorName}
-                comment={comment}
-                date={createdAt}
-              />
-            );
-          })}
-          {totalComments > 1 && (
-            <Pagination
-              totalPages={totalComments}
-              currentPage={currentPage}
-              onPageChange={onPageChange}
-            />
-          )}
-        </>
-      ) : (
-        <div className=" text-[#333]">
-          Bu gönderiye henüz hiç bir youm yapılmamıştır
-        </div>
+      {displayComments.map(({ _id, authorName, comment, createdAt }) => {
+        return (
+          <CommentItem
+            key={_id}
+            authorName={authorName}
+            comment={comment}
+            date={createdAt}
+          />
+        );
+      })}
+      {totalComments > 1 && (
+        <Pagination
+          totalPages={totalComments}
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+        />
       )}
       <CommentForm
         postId={postId}
