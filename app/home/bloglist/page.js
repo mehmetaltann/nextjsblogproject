@@ -1,20 +1,17 @@
 "use client";
+import axios from "axios";
 import PostList from "@/Components/BlogList/PostList";
 import TagsTable from "@/Components/BlogList/TagsTable";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import Pagination from "@/Components/Layouts/Pagination";
-import axios from "axios";
-import { useState, useContext, useEffect, useCallback } from "react";
+import { usePagination } from "@/store/usePagination";
+import { useContext, useEffect, useCallback } from "react";
 import { ClientContext } from "@/store/ClientContext";
 import { getAttCount } from "@/lib/utils/helpers";
 
 const page = ({ type }) => {
   const { allPosts, setAllPosts, selectedCategory, setSelectedCategory } =
     useContext(ClientContext);
-
-  //Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 3;
 
   const fetchPosts = useCallback(async () => {
     const response = await axios.get("/api/blog");
@@ -35,13 +32,13 @@ const page = ({ type }) => {
   );
 
   //Pagination
-  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const displayPosts = filteredPosts.slice(startIndex, endIndex);
-  const onPageChange = (page) => {
-    setCurrentPage(page);
-  };
+  const {
+    totalPages,
+    displayPosts,
+    onPageChange,
+    setCurrentPage,
+    currentPage,
+  } = usePagination(filteredPosts, 3);
 
   return (
     <AnimationWrapper

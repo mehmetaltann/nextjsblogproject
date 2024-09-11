@@ -1,5 +1,5 @@
 "use client";
-import Comments from "./Comments";
+import Comments from "./Comments/Comments";
 import SocialMediaShareSet from "../Layouts/SocialMediaShareSet";
 import parse from "html-react-parser";
 import SimilarPosts from "./SimilarPosts";
@@ -25,12 +25,12 @@ const SingleBlog = ({ data, comments, fetchCommentData, similarPostsData }) => {
         />
       </div>
       {/* Yazar Bilgileri */}
-      <div className="mb-4 md:flex">
-        <div className="mb-4 flex flex-col">
+      <div className="mb-6 md:flex items-center">
+        <div className="flex flex-col ">
           {/* Yazı Tarihi */}
           <span className="text-zinc-500">{getFormatDate(data.date)}</span>
         </div>
-        <div className="flex items-center justify-center md:absolute md:right-0">
+        <div className="flex md:absolute mt-2 md:right-0  md:mt-0">
           <div>
             {data.category.map((item, index) => {
               return (
@@ -46,13 +46,13 @@ const SingleBlog = ({ data, comments, fetchCommentData, similarPostsData }) => {
         </div>
       </div>
       {/*  Blog Yazısı */}
-      <p className="space-y-4 text-zinc-700 mb-4">{parse(data.description)}</p>
+      <div className="space-y-4 text-zinc-700 mb-4">{parse(data.description)}</div>
       {/*  Paylaş Butonları */}
-      <div className="mt-2">
+      <div className="mt-2 self-end">
         <SocialMediaShareSet
           shareURL={`http://localhost:3000/blogs/${data._id}`}
           title={data.title}
-          size={24}
+          size={20}
         />
       </div>
       {/*  Yorumlar */}
@@ -72,8 +72,9 @@ const SingleBlog = ({ data, comments, fetchCommentData, similarPostsData }) => {
       )}
 
       {/*  Benzer Yazılar */}
-      <hr />
-      <div className="mt-2 font-semibold mb-2 text-lg">Benzer Yazılar</div>
+      <div className="font-semibold text-xl py-4 opacity-80 text-color1">
+        Benzer Yazılar
+      </div>
       <SimilarPosts similarPostsData={similarPostsData} />
     </div>
   );

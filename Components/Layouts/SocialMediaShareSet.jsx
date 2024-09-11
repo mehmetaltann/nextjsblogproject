@@ -14,9 +14,9 @@ import {
 } from "react-icons/fa6";
 import IconButton from "./IconButton";
 
-const SocialMediaShareSet = ({ shareURL, title, size = 32 }) => {
+const SocialMediaShareSet = ({ shareURL, title, size = 20 }) => {
   return (
-    <div className="flex gap-2">
+    <div className="flex  gap-2">
       <WhatsappShareButton
         url={shareURL}
         title={title}
@@ -24,7 +24,7 @@ const SocialMediaShareSet = ({ shareURL, title, size = 32 }) => {
         className="cursor-pointer"
       >
         <IconButton text="Whatsapp" color="bg-[#25D366]">
-          <FaWhatsapp size={20} />
+          <FaWhatsapp size={size} />
         </IconButton>
       </WhatsappShareButton>
       <TwitterShareButton
@@ -33,19 +33,19 @@ const SocialMediaShareSet = ({ shareURL, title, size = 32 }) => {
         className="Demo__some-network__share-button"
       >
         <IconButton text="Twitter" color="bg-black">
-          <FaXTwitter size={20} />
+          <FaXTwitter size={size} />
         </IconButton>
       </TwitterShareButton>
 
       <FacebookShareButton url={shareURL} className="cursor-pointer">
         <IconButton text="Facebook" color="bg-[#4267B2]">
-          <FaFacebook size={20} />
+          <FaFacebook size={size} />
         </IconButton>
       </FacebookShareButton>
 
       <LinkedinShareButton url={shareURL} className="cursor-pointer">
         <IconButton text="LinkedIn" color="bg-[#0a66c2]">
-          <FaLinkedin size={20} />
+          <FaLinkedin size={size} />
         </IconButton>
       </LinkedinShareButton>
       <TelegramShareButton
@@ -54,7 +54,7 @@ const SocialMediaShareSet = ({ shareURL, title, size = 32 }) => {
         className="cursor-pointer"
       >
         <IconButton text="Telegram" color="bg-[#2AABEE]">
-          <FaTelegram size={20} />
+          <FaTelegram size={size} />
         </IconButton>
       </TelegramShareButton>
     </div>

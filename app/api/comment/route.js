@@ -17,20 +17,29 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const { authorName, authorEmail, comment, postId, postTitle } =
-      await request.json();
+    const {
+      authorName,
+      authorEmail,
+      content,
+      postId,
+      postTitle,
+      parentCommentId,
+    } = await request.json();
+
     const commentData = {
       authorName,
       authorEmail,
-      comment,
+      content,
       postId,
+      parentCommentId,
     };
+
     await CommentModel.create(commentData);
     await transporter.sendMail({
       ...mailOptions,
       from: authorEmail,
       subject: "Blog Post Yorumu",
-      text: `Gönderen: ${authorEmail}\nPost Konusu: ${postTitle}\n\nYorumu: ${comment}`,
+      text: `Gönderen: ${authorEmail}\nPost Konusu: ${postTitle}\n\nYorumu: ${content}`,
     });
     return NextResponse.json({ msg: "Yorumunuz Kaydedildi", success: true });
   } catch (error) {
