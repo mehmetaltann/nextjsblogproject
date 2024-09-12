@@ -31,8 +31,13 @@ const page = ({ type }) => {
     fetchPosts();
   }, []);
 
-  return (
-    <AnimationWrapper
+  return <div>Deneme</div>;
+};
+
+export default page;
+
+/*
+ <AnimationWrapper
       keyValue={type}
       className="p-3 md:p-0 md:ms-48 mt-8 mb-8 self-start flex flex-col gap-3 w-2/3"
     >
@@ -40,7 +45,5 @@ const page = ({ type }) => {
       <hr />
       <PostList posts={posts} deleteBlog={deleteBlog} />
     </AnimationWrapper>
-  );
-};
 
-export default page;
+*/

@@ -1,5 +1,4 @@
 import CategoryModel from "@/lib/models/CategoryModel";
-import BlogModel from "@/lib/models/BlogModel";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {

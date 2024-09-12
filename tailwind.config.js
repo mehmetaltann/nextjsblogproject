@@ -1,5 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  plugins: [
+    require('daisyui'),
+  ],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,7 +16,7 @@ module.exports = {
         tinos: ["var(--font-tinos)"],
         montserrat: ["var(--font-montserrat)"],
         notosans: ["var(--font-notosans)"],
-        raleway: ["var(--font-raleway)"]
+        raleway: ["var(--font-raleway)"],
       },
       colors: {
         primary: "var(--color-primary)",
@@ -35,5 +38,4 @@ module.exports = {
       },
     },
   },
-  plugins: [],
 };

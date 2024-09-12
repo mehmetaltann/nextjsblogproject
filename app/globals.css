@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --color-primary: #5EDFFF;
+    --color-primary: #5edfff;
     --color-secondary: #b9e7e7;
     /* ... */
     --color-theme1: #284494;
@@ -22,17 +22,7 @@
     --color-theme13: #faa33f;
     --color-theme14: #fee6c3;
 
-
     --primary-txt: 240 5.9% 10%;
   }
 }
 
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}

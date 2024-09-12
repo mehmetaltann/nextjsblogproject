@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 import { FaArrowRight } from "react-icons/fa6";

@@ -4,9 +4,12 @@ import BlogPosts from "@/Components/Home/BlogPosts";
 import Pagination from "@/Components/Layouts/Pagination";
 import { usePagination } from "@/store/usePagination";
 import { ClientContext } from "@/store/ClientContext";
-import { useEffect, useContext, useCallback, useState } from "react";
+import { useEffect, useContext, useCallback, useState, Suspense } from "react";
+import { unstable_noStore } from "next/cache";
+import { Loader } from "@/Components/Layouts/Loader";
 
 export default function Home() {
+  unstable_noStore();
   //data
   const { allPosts, setAllPosts } = useContext(ClientContext);
 
@@ -29,7 +32,10 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-2/3 mb-10">
-      <BlogPosts blogs={displayPosts} />
+      <Suspense fallback={Loader}>
+        <BlogPosts blogs={displayPosts} />
+      </Suspense>
+
       {totalPages > 1 && (
         <Pagination
           totalPages={totalPages}

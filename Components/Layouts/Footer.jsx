@@ -4,7 +4,7 @@ import { CldImage } from "next-cloudinary";
 
 const Footer = () => {
   return (
-    <div className="flex w-full justify-around mx-auto flex-col gap-2 sm:gap-0 sm:flex-row bg-color1 py-5 items-center">
+    <div className="w-full bg-color1 flex flex-col justify-around items-center md:flex-row gap-3 py-3 px-auto ">
       <CldImage
         src="https://res.cloudinary.com/duixszfkd/image/upload/v1725431523/logoLight.png"
         alt="footer_logo"

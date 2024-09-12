@@ -36,13 +36,29 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
   };
 
   const deleteCommentHandler = async (commentId) => {
-    console.log(commentId);
+    const response = await axios.delete(`/api/comment`, {
+      params: {
+        id: commentId,
+      },
+    });
+    if (response.data.success) {
+      toast.success(response.data.msg);
+      fetchCommentData();
+    } else {
+      toast.error("İşlem Gerçekleşmedi");
+    }
     setAffectedComment(null);
   };
 
   const updateCommentHandler = async (value, commentId) => {
-    console.log(value.content);
-    console.log(commentId);
+    const updateData = { content: value.content, _id: commentId };
+    const response = await axios.put("/api/comment", updateData);
+    if (response.data.success) {
+      toast.success(response.data.msg);
+      fetchCommentData();
+    } else {
+      toast.error("Bir Sıkıntı Var, Yorum Kaydedilemedi");
+    }
     setAffectedComment(null);
   };
 

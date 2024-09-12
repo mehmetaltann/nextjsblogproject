@@ -2,15 +2,20 @@
 import CategoryForm from "@/Components/Admin/Category/CategoryForm";
 import CategoryTable from "@/Components/Admin/Category/CategoryTable";
 import axios from "axios";
+import useSWR from "swr";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
 const page = ({ type }) => {
   const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const [categoryColor, setCategoryColor] = useState("");
+  const { data, error, isLoading } = useSWR("/api/category", fetcher);
+  console.log(data);
 
   const fetchCategories = async () => {
     const response = await axios.get("/api/category");

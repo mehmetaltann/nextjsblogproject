@@ -43,7 +43,7 @@ const CommentItem = ({
 
       {isEditing && (
         <CommentForm
-          btnLabel="Düzenle"
+          btnLabel="Güncelle"
           formSubmitHandler={(value) => updateCommentHandler(value, _id)}
           formCancelHandler={() => setAffectedComment(null)}
           initialText={content}
@@ -52,7 +52,11 @@ const CommentItem = ({
       <div className="flex items-center gap-x-4 font-roboto text-color9 text-sm mt-3 opacity-80">
         <button
           className="flex items-center space-x-2"
-          onClick={() => setAffectedComment({ type: "replying", _id })}
+          onClick={
+            affectedComment === null
+              ? () => setAffectedComment({ type: "replying", _id })
+              : () => setAffectedComment(null)
+          }
         >
           <FiMessageSquare className="w-4 h-auto" />
           <span>Yanıtla</span>
@@ -61,7 +65,11 @@ const CommentItem = ({
           <>
             <button
               className="flex items-center space-x-2"
-              onClick={() => setAffectedComment({ type: "editing", _id })}
+              onClick={
+                affectedComment === null
+                  ? () => setAffectedComment({ type: "editing", _id })
+                  : () => setAffectedComment(null)
+              }
             >
               <FiEdit2 className="w-4 h-auto" />
               <span>Güncelle</span>
@@ -86,7 +94,7 @@ const CommentItem = ({
         />
       )}
       {replies.length > 0 && (
-        <div className="mt-6 ms-24">
+        <div className="mt-6 ms-6 md:ms-24">
           {replies.map((reply) => (
             <CommentItem
               key={reply._id}

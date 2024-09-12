@@ -1,3 +1,4 @@
+"use client"
 import Select from "react-select";
 import axios from "axios";
 import { AdminContext } from "@/store/AdminContext";

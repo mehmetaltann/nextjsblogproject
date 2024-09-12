@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import { FaPencilAlt } from "react-icons/fa";
 import { AdminContext } from "@/store/AdminContext";
