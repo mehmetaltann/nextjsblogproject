@@ -1,4 +1,3 @@
-"use client";
 import clsx from "clsx";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";

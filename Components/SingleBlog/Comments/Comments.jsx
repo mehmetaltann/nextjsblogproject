@@ -1,16 +1,28 @@
-"use client";
 import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
 import Pagination from "../../Layouts/Pagination";
 import axios from "axios";
+import useSWR from "swr";
+import { useParams } from "next/navigation";
 import { usePagination } from "@/store/usePagination";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
-const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
+const Comments = ({ postId, postTitle }) => {
+  const params = useParams();
   const [affectedComment, setAffectedComment] = useState(null);
-  const mainComments = comments.filter((item) => item.parentCommentId === null);
+
+  const { data: comments, mutate } = useSWR("/api/comment", async () => {
+    const response = await axios.get("/api/comment", {
+      params: { id: params.id },
+    });
+    return response.data;
+  });
+
+  const mainComments = comments?.filter(
+    (item) => item.parentCommentId === null
+  );
 
   //Pagination
   const {
@@ -28,7 +40,7 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
     const response = await axios.post("/api/comment", postData);
     if (response.data.success) {
       toast.success(response.data.msg);
-      fetchCommentData();
+      mutate();
     } else {
       toast.error("Bir Sıkıntı Var, Yorum Kaydedilemedi");
     }
@@ -43,7 +55,7 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
     });
     if (response.data.success) {
       toast.success(response.data.msg);
-      fetchCommentData();
+      mutate();
     } else {
       toast.error("İşlem Gerçekleşmedi");
     }
@@ -55,7 +67,7 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
     const response = await axios.put("/api/comment", updateData);
     if (response.data.success) {
       toast.success(response.data.msg);
-      fetchCommentData();
+      mutate();
     } else {
       toast.error("Bir Sıkıntı Var, Yorum Kaydedilemedi");
     }
@@ -67,47 +79,51 @@ const Comments = ({ postId, comments, fetchCommentData, postTitle }) => {
   };
 
   return (
-    <div className="flex flex-col gap-1 w-full mt-6">
-      <CommentForm
-        btnLabel="Gönder"
-        formSubmitHandler={(value) => addCommentHandler(value)}
-      />
-      {mainComments.length > 0 && (
-        <>
-          <p className="font-semibold text-xl py-2 opacity-80 text-color1">
-            Tüm Yorumlar ({mainComments.length})
-          </p>
-          {displayComments.map((comment) => {
-            return (
-              <CommentItem
-                key={comment._id}
-                comment={comment}
-                affectedComment={affectedComment}
-                setAffectedComment={setAffectedComment}
-                addCommentHandler={addCommentHandler}
-                updateCommentHandler={updateCommentHandler}
-                deleteCommentHandler={deleteCommentHandler}
-                replies={getRepliesHandler(comment._id)}
-              />
-            );
-          })}
-          {totalComments > 1 && (
-            <Pagination
-              totalPages={totalComments}
-              currentPage={currentPage}
-              onPageChange={onPageChange}
-            />
+    <>
+      {comments && (
+        <div className="flex flex-col gap-1 w-full mt-6">
+          <CommentForm
+            btnLabel="Gönder"
+            formSubmitHandler={(value) => addCommentHandler(value)}
+          />
+          {mainComments.length > 0 && (
+            <>
+              <p className="font-semibold text-xl py-2 opacity-80 text-color1">
+                Tüm Yorumlar ({mainComments.length})
+              </p>
+              {displayComments.map((comment) => {
+                return (
+                  <CommentItem
+                    key={comment._id}
+                    comment={comment}
+                    affectedComment={affectedComment}
+                    setAffectedComment={setAffectedComment}
+                    addCommentHandler={addCommentHandler}
+                    updateCommentHandler={updateCommentHandler}
+                    deleteCommentHandler={deleteCommentHandler}
+                    replies={getRepliesHandler(comment._id)}
+                  />
+                );
+              })}
+              {totalComments > 1 && (
+                <Pagination
+                  totalPages={totalComments}
+                  currentPage={currentPage}
+                  onPageChange={onPageChange}
+                />
+              )}
+            </>
           )}
-        </>
-      )}
 
-      <ToastContainer
-        theme="dark"
-        closeOnClick
-        autoClose={2000}
-        position="bottom-left"
-      />
-    </div>
+          <ToastContainer
+            theme="dark"
+            closeOnClick
+            autoClose={2000}
+            position="bottom-left"
+          />
+        </div>
+      )}
+    </>
   );
 };
 

@@ -1,4 +1,3 @@
-"use client";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 
 const page = ({ type }) => {

@@ -1,8 +1,22 @@
 "use client";
-
 import CategoryTableItem from "./CategoryTableItem";
+import axios from "axios";
+import useSWR from "swr";
+import { Loader } from "@/Components/Layouts/Loader";
+const CategoryTable = () => {
+  const {
+    data: categories,
+    error,
+    isLoading,
+    mutate,
+  } = useSWR("/api/category", async () => {
+    const response = await axios.get("/api/category");
+    return response.data.categories;
+  });
 
-const CategoryTable = ({ categories, deleteCategory }) => {
+  if (isLoading) return <Loader />;
+  if (error) return <div>failed to load</div>;
+
   return (
     <div className="relative rounded-lg overflow-x-auto mt-4 border border-gray-400 scrollbar-hide">
       <table className="w-full text-sm text-gray-500">
@@ -27,7 +41,7 @@ const CategoryTable = ({ categories, deleteCategory }) => {
                 name={item.name}
                 mongoId={item._id}
                 color={item.color}
-                deleteHandler={deleteCategory}
+                mutate={mutate}
               />
             );
           })}

@@ -2,7 +2,6 @@
 import Link from "next/link";
 import NavItem from "./NavItem";
 import NavItemCollapse from "./NavItemCollapse";
-import useOnclickOutside from "react-cool-onclickoutside";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { CldImage } from "next-cloudinary";
 import { useEffect, useState } from "react";
@@ -45,11 +44,6 @@ const AdminHeader = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
   const [activeNavName, setActiveNavName] = useState("dashboard");
   const windowSize = useWindowSize();
-
-  const ref = useOnclickOutside(() => {
-    setIsMenuActive(false);
-  });
-
   const toggleMenuHandler = () => {
     setIsMenuActive((prevState) => !prevState);
   };
@@ -64,7 +58,6 @@ const AdminHeader = () => {
 
   return (
     <header
-      ref={ref}
       className="flex h-fit w-full items-center justify-between p-4 lg:h-full lg:max-w-[300px] lg:flex-col lg:items-start lg:justify-start lg:p-0"
     >
       <Link href="/home">
@@ -77,7 +70,7 @@ const AdminHeader = () => {
           className="w-50 lg:hidden"
         />
       </Link>
-      <div ref={ref} className="cursor-pointer z-50 lg:hidden">
+      <div className="cursor-pointer z-50 lg:hidden">
         {isMenuActive ? (
           <RiCloseLine
             className="w-6 h-6 cursor-pointer"

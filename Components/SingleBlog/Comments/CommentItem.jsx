@@ -1,4 +1,3 @@
-"use client";
 import CommentForm from "./CommentForm";
 import { CgProfile } from "react-icons/cg";
 import { getFormatLeftTime, getFormatLongDate } from "@/lib/utils/helpers";

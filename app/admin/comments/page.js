@@ -3,11 +3,19 @@ import useSWR from "swr";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function Home() {
-  const { data, error, isLoading } = useSWR(
-    "http://localhost:3000//api/category",
-    fetcher
+const page = () => {
+  const { data, error } = useSWR("/api/category", fetcher);
+
+  if (error) return <div>Failed to load</div>;
+  if (!data) return <div>Loading...</div>;
+
+  console.log("data")
+
+  return (
+    <div>
+      <h1>{data.name}</h1>
+    </div>
   );
-  console.log(data);
-  return <div>data</div>;
-}
+};
+
+export default page;

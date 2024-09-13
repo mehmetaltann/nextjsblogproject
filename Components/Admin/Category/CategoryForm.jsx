@@ -1,31 +1,22 @@
 "use client";
+import { addCategory } from "@/app/actions/postActions";
 
-const CategoryForm = ({
-  onSubmitHandler,
-  categoryName,
-  setCategoryName,
-  categoryColor,
-  setCategoryColor,
-}) => {
+const CategoryForm = () => {
   return (
-    <form onSubmit={onSubmitHandler}>
+    <form action={addCategory}>
       <div className="flex gap-2 rounded-lg shadow-sm">
         <input
           type="text"
-          id="category-add"
-          name="hs-trailing-button-add-on"
+          id="catName"
+          name="catName"
           placeholder="Kategori İsmi"
-          onChange={(e) => setCategoryName(e.target.value)}
-          value={categoryName}
           className="py-3 px-4 block w-full border border-gray-400 shadow-sm rounded-s-lg focus:z-10  dark:bg-neutral-900 "
         />
         <input
           type="text"
-          id="category-add"
-          name="hs-trailing-button-add-on"
+          id="catColor"
+          name="catColor"
           placeholder="Renk #"
-          onChange={(e) => setCategoryColor(e.target.value)}
-          value={categoryColor}
           className="py-3 px-4 block w-full border border-gray-400 shadow-sm rounded-e-lg focus:z-10  dark:bg-neutral-900 "
         />
         <button

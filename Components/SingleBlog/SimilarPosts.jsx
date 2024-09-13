@@ -1,7 +1,9 @@
 import SimilarPostItem from "./SimilarPostItem";
 
-const SimilarPosts = ({ similarPostsData }) => {
-  const shuffled = similarPostsData.sort(() => 0.5 - Math.random());
+const SimilarPosts = ({ similarposts }) => {
+  if (!similarposts || similarposts.length === 0) return <div></div>;
+  
+  const shuffled = similarposts.sort(() => 0.5 - Math.random());
 
   return (
     <div className="flex flex-col w-full md:flex-row gap-2">
