@@ -3,8 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    const { categoryName, categoryColor } = await request.json();
-    const categoryData = { name: categoryName, color: categoryColor };
+    const categoryData = await request.json();
     await CategoryModel.create(categoryData);
     return NextResponse.json({ msg: "Kategori Kaydedildi", success: true });
   } catch (error) {

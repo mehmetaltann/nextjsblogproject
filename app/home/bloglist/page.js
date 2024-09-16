@@ -1,26 +1,19 @@
 "use client";
-import axios from "axios";
 import PostList from "@/Components/BlogList/PostList";
 import TagsTable from "@/Components/BlogList/TagsTable";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import Pagination from "@/Components/Layouts/Pagination";
-import useSWR from "swr";
 import { ClientContext } from "@/store/ClientContext";
-import { usePagination } from "@/store/usePagination";
+import { usePagination } from "@/app/hooks/usePagination";
 import { getAttCount } from "@/lib/utils/helpers";
 import { useContext } from "react";
 import { Loader } from "@/Components/Layouts/Loader";
+import { usePosts } from "@/app/hooks/usePosts";
 
 const page = ({ type }) => {
   const { selectedCategory, setSelectedCategory } = useContext(ClientContext);
-  const {
-    data: allPosts,
-    error,
-    isLoading,
-  } = useSWR("/api/blogs", async () => {
-    const response = await axios.get("/api/blog");
-    return response.data.blogs;
-  });
+
+  const { blogs: allPosts, isLoading, error } = usePosts();
 
   //Category List
   const categoryCountObj = !isLoading && getAttCount(allPosts);

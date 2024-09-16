@@ -1,24 +1,23 @@
 import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
 import Pagination from "../../Layouts/Pagination";
-import axios from "axios";
-import useSWR from "swr";
 import { useParams } from "next/navigation";
-import { usePagination } from "@/store/usePagination";
+import { usePagination } from "@/app/hooks/usePagination";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
+import { useComment } from "@/app/hooks/useComment";
 import "react-toastify/dist/ReactToastify.css";
 
 const Comments = ({ postId, postTitle }) => {
   const params = useParams();
   const [affectedComment, setAffectedComment] = useState(null);
 
-  const { data: comments, mutate } = useSWR("/api/comment", async () => {
-    const response = await axios.get("/api/comment", {
-      params: { id: params.id },
-    });
-    return response.data;
-  });
+  const {
+    data: comments,
+    addComment,
+    deleteComment,
+    updateComment,
+  } = useComment(params.id);
 
   const mainComments = comments?.filter(
     (item) => item.parentCommentId === null
@@ -36,46 +35,36 @@ const Comments = ({ postId, postTitle }) => {
     postData.postId = postId;
     postData.postTitle = postTitle;
     postData.parentCommentId = parentCommentId;
-
-    const response = await axios.post("/api/comment", postData);
-    if (response.data.success) {
-      toast.success(response.data.msg);
-      mutate();
-    } else {
-      toast.error("Bir Sıkıntı Var, Yorum Kaydedilemedi");
-    }
+    const { isSuccess, resMessage } = await addComment(postData);
+    toastHandler(isSuccess, resMessage);
     setAffectedComment(null);
   };
 
   const deleteCommentHandler = async (commentId) => {
-    const response = await axios.delete(`/api/comment`, {
-      params: {
-        id: commentId,
-      },
-    });
-    if (response.data.success) {
-      toast.success(response.data.msg);
-      mutate();
-    } else {
-      toast.error("İşlem Gerçekleşmedi");
-    }
+    const { isSuccess, resMessage } = await deleteComment(commentId);
+    toastHandler(isSuccess, resMessage);
     setAffectedComment(null);
   };
 
   const updateCommentHandler = async (value, commentId) => {
-    const updateData = { content: value.content, _id: commentId };
-    const response = await axios.put("/api/comment", updateData);
-    if (response.data.success) {
-      toast.success(response.data.msg);
-      mutate();
-    } else {
-      toast.error("Bir Sıkıntı Var, Yorum Kaydedilemedi");
-    }
+    const { isSuccess, resMessage } = await updateComment({
+      content: value.content,
+      _id: commentId,
+    });
+    toastHandler(isSuccess, resMessage);
     setAffectedComment(null);
   };
 
   const getRepliesHandler = (commentId) => {
     return comments.filter((comment) => comment.parentCommentId === commentId);
+  };
+
+  const toastHandler = (isSuccess, msg) => {
+    if (isSuccess) {
+      toast.success(msg);
+    } else {
+      toast.error("Bir Sıkıntı Var, İşlem Gerçekleşmedi");
+    }
   };
 
   return (

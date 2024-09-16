@@ -23,8 +23,6 @@ const SingleBlog = () => {
   if (isLoading) return <Loader />;
   if (error) return <div>failed to load</div>;
 
-  
-
   return (
     <div className="relative m-auto flex max-w-[820px] flex-col items-start">
       {/* Blog Başlık */}

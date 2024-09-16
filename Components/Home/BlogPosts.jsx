@@ -1,21 +1,13 @@
 "use client";
 import BlogPostPreview from "./BlogPostPreview";
-import useSWR from "swr";
-import axios from "axios";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import Pagination from "@/Components/Layouts/Pagination";
-import { usePagination } from "@/store/usePagination";
+import { usePagination } from "@/app/hooks/usePagination";
 import { Loader } from "../Layouts/Loader";
+import { usePosts } from "@/app/hooks/usePosts";
 
 const BlogPosts = ({ type }) => {
-  const {
-    data: blogs,
-    error,
-    isLoading,
-  } = useSWR("/api/blogs", async () => {
-    const response = await axios.get("/api/blog");
-    return response.data.blogs;
-  });
+  const { blogs, isLoading, error } = usePosts();
 
   const filteredPosts =
     !isLoading && blogs.filter((item) => item.isHome && item);

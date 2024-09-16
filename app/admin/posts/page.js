@@ -1,4 +1,3 @@
-"use client";
 
 const posts = () => {
   return <div> Posts</div>;

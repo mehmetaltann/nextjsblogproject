@@ -1,18 +1,11 @@
-import axios from "axios";
+import { useCategory } from "@/app/hooks/useCategory";
 
-const CategoryTableItem = ({ name, mongoId, color, mutate }) => {
+const CategoryTableItem = ({ name, mongoId, color }) => {
   const divStyle = {
     backgroundColor: "#" + color,
   };
 
-  const handleDelete = async () => {
-    const response = await axios.delete(`/api/category`, {
-      params: {
-        id: mongoId,
-      },
-    });
-    mutate();
-  };
+  const { deleteCategory } = useCategory();
 
   return (
     <tr className="bg-white border-b">
@@ -29,7 +22,7 @@ const CategoryTableItem = ({ name, mongoId, color, mutate }) => {
         <div style={divStyle} className={`py-2 px-0.2 rounded-full`}></div>
       </th>
       <td
-        onClick={handleDelete}
+        onClick={() => deleteCategory(mongoId)}
         className="px-6 py-4 cursor-pointer text-center"
       >
         X

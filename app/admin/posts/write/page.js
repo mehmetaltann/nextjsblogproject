@@ -1,5 +1,3 @@
-"use client";
-
 const write = () => {
   return <div> Comments</div>;
 };

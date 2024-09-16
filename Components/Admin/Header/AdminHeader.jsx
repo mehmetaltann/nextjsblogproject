@@ -30,8 +30,8 @@ const MENU_ITEMS = [
   {
     id: 3,
     content: [
-      { title: "Yeni", link: "/admin/posts/write" },
-      { title: "Yönet", link: "/admin/posts/manage" },
+      { title: "Post Editör", link: "/admin/posts/write" },
+      { title: "Post Yönetimi", link: "/admin/posts/manage" },
     ],
     title: "Yazılar",
     name: "posts",
@@ -57,9 +57,7 @@ const AdminHeader = () => {
   }, [windowSize.width]);
 
   return (
-    <header
-      className="flex h-fit w-full items-center justify-between p-4 lg:h-full lg:max-w-[300px] lg:flex-col lg:items-start lg:justify-start lg:p-0"
-    >
+    <header className="flex h-fit w-full items-center justify-between p-4 lg:h-full lg:max-w-[300px] lg:flex-col lg:items-start lg:justify-start lg:p-0">
       <Link href="/home">
         <CldImage
           src="https://res.cloudinary.com/duixszfkd/image/upload/v1725431523/logo.png"

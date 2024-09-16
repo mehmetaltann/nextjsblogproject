@@ -1,4 +1,3 @@
-"use client";
 import ManagePost from "@/Components/Admin/Posts/ManagePost";
 
 const manage = () => {

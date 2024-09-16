@@ -43,7 +43,9 @@ const CommentItem = ({
       {isEditing && (
         <CommentForm
           btnLabel="Güncelle"
-          formSubmitHandler={(value) => updateCommentHandler(value, _id)}
+          formSubmitHandler={(value) => {
+            updateCommentHandler(value, _id);
+          }}
           formCancelHandler={() => setAffectedComment(null)}
           initialText={content}
         />

@@ -1,4 +1,3 @@
-"use client";
 import SocialMediaShareSet from "./SocialMediaShareSet";
 import { CldImage } from "next-cloudinary";
 

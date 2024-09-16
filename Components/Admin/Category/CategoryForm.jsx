@@ -1,7 +1,7 @@
-"use client";
-import { addCategory } from "@/app/actions/postActions";
+import { useCategory } from "@/app/hooks/useCategory";
 
 const CategoryForm = () => {
+  const { addCategory } = useCategory();
   return (
     <form action={addCategory}>
       <div className="flex gap-2 rounded-lg shadow-sm">

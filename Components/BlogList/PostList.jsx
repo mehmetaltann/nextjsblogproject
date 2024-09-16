@@ -1,4 +1,3 @@
-"use client";
 import PostCard from "./PostCard";
 
 const PostList = ({ posts }) => {
