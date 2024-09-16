@@ -1,19 +1,27 @@
 "use client";
 import Pagination from "@/Components/Layouts/Pagination";
+import DeleteButton from "@/Components/ui/deleteButton";
+import { TiTick } from "react-icons/ti";
+import { IoMdClose } from "react-icons/io";
 import { usePagination } from "@/app/hooks/usePagination";
 import { usePosts } from "@/app/hooks/usePosts";
 import { Loader } from "@/Components/Layouts/Loader";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CldImage } from "next-cloudinary";
+import EditButton from "@/Components/ui/EditButton";
+import Link from "next/link";
 
 const tableHeads = ["Başlık", "Kategoriler", "Tarih", "Ana Sayfa", "İşlemler"];
 
 const ManagePost = () => {
-  const { blogs: allPosts, isLoading, error } = usePosts();
+  const { blogs: allPosts, isLoading, error, deletePost } = usePosts();
 
   //Pagination
-  const { totalPages, displayPosts, onPageChange, currentPage, deletePost } =
-    usePagination(allPosts, 5, isLoading);
+  const { totalPages, displayPosts, onPageChange, currentPage } = usePagination(
+    allPosts,
+    5,
+    isLoading
+  );
 
   return (
     <>
@@ -23,7 +31,7 @@ const ManagePost = () => {
       {!isLoading && !error && (
         <div className="w-full px-4 mx-auto">
           <div className="py-8">
-            <div className="flex flex-row justify-between w-full mb-1 sm:mb-0">
+            <div className="flex flex-col gap-y-2 md:gap-y-0 md:flex-row justify-between w-full mb-1 sm:mb-0">
               <h2 className="text-2xl leading-tight">Yazılar</h2>
               <div className="text-end">
                 <form className="flex flex-col justify-center w-3/4 max-w-sm space-y-3 md:flex-row md:w-full md:space-x-3 md:space-y-0">
@@ -32,14 +40,14 @@ const ManagePost = () => {
                       type="text"
                       id='"form-subscribe-Filter'
                       className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                      placeholder="name"
+                      placeholder="Arama..."
                     />
                   </div>
                   <button
                     className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
                     type="submit"
                   >
-                    Filter
+                    Ara
                   </button>
                 </form>
               </div>
@@ -48,7 +56,7 @@ const ManagePost = () => {
               <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
                 <table className="min-w-full leading-normal">
                   <thead>
-                    <tr>
+                    <tr className="max-[768px]:hidden">
                       {tableHeads.map((item) => (
                         <th
                           key={item}
@@ -62,7 +70,10 @@ const ManagePost = () => {
                   </thead>
                   <tbody>
                     {displayPosts?.map((post) => (
-                      <tr key={post._id}>
+                      <tr
+                        key={post._id}
+                        className="max-[768px]:flex max-[768px]:flex-col "
+                      >
                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                           <div className="flex items-center">
                             <div className="flex-shrink-0">
@@ -85,7 +96,7 @@ const ManagePost = () => {
                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                           <div className="flex flex-wrap gap-2 text-gray-900 whitespace-no-wrap">
                             {post.category.map((cat) => (
-                              <span>#{cat.name}</span>
+                              <span key={cat.name}>#{cat.name}</span>
                             ))}
                           </div>
                         </td>
@@ -95,18 +106,22 @@ const ManagePost = () => {
                           </p>
                         </td>
                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                          <span className="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                            <span
-                              aria-hidden="true"
-                              className="absolute inset-0 bg-green-200 rounded-full opacity-50"
-                            ></span>
-                            <span className="relative"> {post.isHome}</span>
-                          </span>
+                          {post.isHome ? (
+                            <TiTick className="text-green-600" size={35} />
+                          ) : (
+                            <IoMdClose className="text-red-600" size={30} />
+                          )}
                         </td>
                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                          <button className="text-indigo-600 hover:text-indigo-900">
-                            Edit
-                          </button>
+                          <div className="flex gap-x-2 ">
+                            <DeleteButton
+                              deleteHandler={deletePost}
+                              postId={post._id}
+                            />
+                            <Link href={"/admin/posts/write"}>
+                              <EditButton post={post} />
+                            </Link>
+                          </div>
                         </td>
                       </tr>
                     ))}

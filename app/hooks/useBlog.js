@@ -11,19 +11,9 @@ const fetcher = async () => {
 export const useBlog = () => {
   const { data, error, isLoading } = useSWR("/api/blog", fetcher);
 
-  const deleteBlog = async (mongoId) => {
-    await axios.delete(`/api/blog`, {
-      params: {
-        id: mongoId,
-      },
-    }),
-      mutate("/api/blog");
-  };
-
   return {
     data,
     isLoading,
     error,
-    deleteBlog,
   };
 };

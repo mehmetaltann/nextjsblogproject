@@ -17,6 +17,7 @@ const SingleBlog = () => {
     const response = await axios.get("/api/blog", {
       params: { id: params.id },
     });
+    console.log(response.data);
     return response.data;
   });
 

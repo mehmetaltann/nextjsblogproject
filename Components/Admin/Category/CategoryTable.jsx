@@ -2,8 +2,7 @@ import CategoryTableItem from "./CategoryTableItem";
 import { useCategory } from "@/app/hooks/useCategory";
 import { Loader } from "@/Components/Layouts/Loader";
 const CategoryTable = () => {
-  const { categories, isLoading, isLoadingMore, setSize, size, isReachingEnd } =
-    useCategory();
+  const { categories, isLoading } = useCategory();
 
   if (isLoading) return <Loader />;
 

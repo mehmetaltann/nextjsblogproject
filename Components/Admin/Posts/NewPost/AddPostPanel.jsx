@@ -2,11 +2,9 @@
 import CategorySelect from "./CategorySelect";
 import TextEditor from "./TextEditor";
 import PhotoSection from "./PhotoSection";
-import axios from "axios";
 import { useContext } from "react";
 import { AdminContext } from "@/store/AdminContext";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { usePosts } from "@/app/hooks/usePosts";
 
 const AddPostPanel = () => {
   const {
@@ -23,6 +21,8 @@ const AddPostPanel = () => {
     postId,
   } = useContext(AdminContext);
 
+  const { addPost, updatePost } = usePosts();
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const postData = {
@@ -36,25 +36,17 @@ const AddPostPanel = () => {
     };
 
     if (isNewPost) {
-      const response = await axios.post("/api/blog", postData);
-      if (response.data.success) {
-        toast.success(response.data.msg);
+      const { isSuccess } = await addPost(postData);
+      if (isSuccess) {
         setTitle("");
         setDescription("");
         setCategory([]);
         setCloudinaryImageId("");
         setIsHome(false);
         document.getElementById("blog-submit").reset();
-      } else {
-        toast.error("Bir Sıkıntı Var");
       }
     } else {
-      const response = await axios.put("/api/blog", postData);
-      if (response.data.success) {
-        toast.success(response.data.msg);
-      } else {
-        toast.error("Güncellenemedi Bir Sıkıntı Var");
-      }
+      await updatePost(postData);
     }
   };
 
@@ -66,7 +58,7 @@ const AddPostPanel = () => {
     >
       <PhotoSection isNewPost={isNewPost} />
       <input
-        className="bg-gray-50 border text-xl border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 "
+        className="border text-xl border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 "
         type="text"
         id="title"
         placeholder="Başlık"
@@ -99,12 +91,6 @@ const AddPostPanel = () => {
       >
         {isNewPost ? "Ekle" : "Güncelle"}
       </button>
-      <ToastContainer
-        theme="dark"
-        closeOnClick
-        autoClose={2000}
-        position="bottom-left"
-      />
     </form>
   );
 };

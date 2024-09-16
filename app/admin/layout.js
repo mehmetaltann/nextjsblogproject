@@ -10,7 +10,7 @@ export default function Layout({ children }) {
     <AdminContextProvider>
       <div className="flex flex-col h-screen lg:flex-row">
         <AdminHeader />
-        <main className="bg-[#f9f9f9] flex-1 p-4 lg-p-6">{children}</main>
+        <main className="bg-[#f9f9f9] flex-1 p-4 lg-p-6 h-fit">{children}</main>
       </div>
     </AdminContextProvider>
   );

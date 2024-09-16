@@ -9,6 +9,8 @@ import {
   tinos,
   fontVariablesString,
 } from "@/lib/utils/fonts";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
 export const metadata = {
@@ -22,7 +24,15 @@ export default function RootLayout({ children }) {
     <html lang="en" className={fontVariablesString}>
       <body className="font-notosans">
         <AuthProvider>
-          <ClientContextProvider>{children}</ClientContextProvider>
+          <ClientContextProvider>
+            {children}
+            <ToastContainer
+              theme="dark"
+              closeOnClick
+              autoClose={2000}
+              position="bottom-left"
+            />
+          </ClientContextProvider>
         </AuthProvider>
       </body>
     </html>

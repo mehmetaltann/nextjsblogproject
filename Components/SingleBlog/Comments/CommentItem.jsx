@@ -3,6 +3,7 @@ import { CgProfile } from "react-icons/cg";
 import { getFormatLeftTime, getFormatLongDate } from "@/lib/utils/helpers";
 import { useSession } from "next-auth/react";
 import { FiMessageSquare, FiTrash, FiEdit2 } from "react-icons/fi";
+import { useComment } from "@/app/hooks/useComment";
 
 const CommentItem = ({
   comment,
@@ -10,9 +11,8 @@ const CommentItem = ({
   setAffectedComment,
   addCommentHandler,
   parentId = null,
-  updateCommentHandler,
-  deleteCommentHandler,
   replies,
+  paramId,
 }) => {
   const { authorName, content, date, _id } = comment;
   const isReplying =
@@ -25,6 +25,7 @@ const CommentItem = ({
     affectedComment.type === "editing";
   const parentCommentId = parentId ? parentId : _id;
 
+  const { deleteComment, updateComment } = useComment(paramId);
   const { data: session } = useSession();
   return (
     <div className="mb-2 flex flex-col rounded-xl border border-color7 p-4 pb-6 ">
@@ -43,8 +44,12 @@ const CommentItem = ({
       {isEditing && (
         <CommentForm
           btnLabel="Güncelle"
-          formSubmitHandler={(value) => {
-            updateCommentHandler(value, _id);
+          formSubmitHandler={async (value) => {
+            await updateComment({
+              content: value.content,
+              _id,
+            });
+            setAffectedComment(null);
           }}
           formCancelHandler={() => setAffectedComment(null)}
           initialText={content}
@@ -77,7 +82,10 @@ const CommentItem = ({
             </button>
             <button
               className="flex items-center space-x-2"
-              onClick={() => deleteCommentHandler(_id)}
+              onClick={async () => {
+                await deleteComment(_id);
+                setAffectedComment(null);
+              }}
             >
               <FiTrash className="w-4 h-auto" />
               <span>Sil</span>
@@ -103,8 +111,6 @@ const CommentItem = ({
               affectedComment={affectedComment}
               setAffectedComment={setAffectedComment}
               addCommentHandler={addCommentHandler}
-              updateCommentHandler={updateCommentHandler}
-              deleteCommentHandler={deleteCommentHandler}
               replies={[]}
               parentId={comment._id}
             />

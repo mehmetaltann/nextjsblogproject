@@ -23,7 +23,7 @@ export default function Pagination({ totalPages, currentPage, onPageChange }) {
   };
 
   return (
-    <div className="space-y-2 pb-8 pt-6 md:space-y-5">
+    <div className="space-y-2 pb-3 pt-6 md:space-y-5">
       <nav className="flex justify-between">
         {!prevPage && (
           <button className={disableButtonClassName} disabled={!prevPage}>

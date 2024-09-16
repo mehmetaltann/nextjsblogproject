@@ -1,3 +1,4 @@
+"use client";
 import SingleBlog from "@/Components/SingleBlog/SingleBlog";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 

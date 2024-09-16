@@ -1,5 +1,6 @@
 import useSWR, { mutate } from "swr";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const useComment = (blogId) => {
   const { data, error, isLoading } = useSWR("/api/comment", async () => {
@@ -11,11 +12,8 @@ export const useComment = (blogId) => {
 
   const addComment = async (postData) => {
     const response = await axios.post("/api/comment", postData);
+    toastHandler(response);
     mutate("/api/comment");
-    return {
-      isSuccess: response.data.success,
-      resMessage: response.data.msg,
-    };
   };
 
   const deleteComment = async (commentId) => {
@@ -24,20 +22,22 @@ export const useComment = (blogId) => {
         id: commentId,
       },
     });
+    toastHandler(response);
     mutate("/api/comment");
-    return {
-      isSuccess: response.data.success,
-      resMessage: response.data.msg,
-    };
   };
 
   const updateComment = async (updateData) => {
     const response = await axios.put("/api/comment", updateData);
+    toastHandler(response);
     mutate("/api/comment");
-    return {
-      isSuccess: response.data.success,
-      resMessage: response.data.msg,
-    };
+  };
+
+  const toastHandler = (response) => {
+    if (response.data.success) {
+      toast.success(response.data.msg);
+    } else {
+      toast.error(response.data.msg);
+    }
   };
 
   return {

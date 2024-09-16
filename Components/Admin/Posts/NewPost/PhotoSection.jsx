@@ -27,7 +27,7 @@ const PhotoSection = ({ isNewPost }) => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col border border-grey-200 rounded-lg">
       {isUploading && (
         <p className="text-xl text-gray-600 font-semibold pb-4">
           Resim Yükleniyor

@@ -9,24 +9,9 @@ export async function GET(request) {
     return NextResponse.json(comments);
   } catch (error) {
     return NextResponse.json({
-      msg: "Bir Sorun var, Yorumunuz Kaydedildi",
+      msg: error,
       success: false,
     });
-  }
-}
-
-export async function PUT(request) {
-  try {
-    const { _id, content } = await request.json();
-    await CommentModel.findByIdAndUpdate(
-      { _id },
-      {
-        content,
-      }
-    );
-    return NextResponse.json({ success: true, msg: "Yorum Güncellendi" });
-  } catch (error) {
-    return NextResponse.json({ success: false, msg: error });
   }
 }
 
@@ -61,8 +46,26 @@ export async function POST(request) {
     return NextResponse.json({ msg: "Yorumunuz Kaydedildi", success: true });
   } catch (error) {
     return NextResponse.json({
-      msg: "Bir Sorun var, Yorumunuz Kaydedilemedi",
+      msg: "Bir Sorun var, Yorumunuz Kaydedilemedi" + error,
       success: false,
+    });
+  }
+}
+
+export async function PUT(request) {
+  try {
+    const { _id, content } = await request.json();
+    await CommentModel.findByIdAndUpdate(
+      { _id },
+      {
+        content,
+      }
+    );
+    return NextResponse.json({ msg: "Yorumunuz Güncellendi", success: true });
+  } catch (error) {
+    return NextResponse.json({
+      success: false,
+      msg: "Bir Sorun var, Yorumunuz Silinemedi" + error,
     });
   }
 }
@@ -73,6 +76,9 @@ export async function DELETE(request) {
     await CommentModel.findByIdAndDelete(id);
     return NextResponse.json({ success: true, msg: "Yorum Silindi" });
   } catch (error) {
-    return NextResponse.json({ success: false, msg: error });
+    return NextResponse.json({
+      success: false,
+      msg: "Bir Sorun var, Yorumunuz Silinemedi" + error,
+    });
   }
 }

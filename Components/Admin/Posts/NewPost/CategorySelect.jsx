@@ -1,24 +1,26 @@
-"use client"
+"use client";
 import Select from "react-select";
+import { useCategory } from "@/app/hooks/useCategory";
 import axios from "axios";
 import { AdminContext } from "@/store/AdminContext";
 import { useContext, useEffect } from "react";
 
 const CategorySelect = () => {
-  const { categories, setCategories, options, setOptions, selectDefaultValue } =
+  const { setCategories, options, setOptions, selectDefaultValue } =
     useContext(AdminContext);
 
+  const { categories, isLoading } = useCategory();
+
   const fetchCategories = async () => {
-    const response = await axios.get("/api/category");
-    const data = response.data.categories.map((o) => {
+    const data = categories.map((o) => {
       return { label: o.name, value: o.name };
     });
     setOptions(data);
   };
 
   useEffect(() => {
-    fetchCategories();
-  }, []);
+    if (!isLoading) fetchCategories();
+  }, [isLoading]);
 
   return (
     <>
@@ -30,7 +32,7 @@ const CategorySelect = () => {
           instanceId="categoryType"
           placeholder="Kategori ..."
           options={options}
-          className="basic-multi-select bg-gray-50 border text-xl border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5"
+          className="z-40 basic-multi-select border text-lg text-opacity-60 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5"
           classNamePrefix="select"
           onChange={(value) =>
             setCategories(

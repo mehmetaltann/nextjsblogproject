@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import Navbar from "@/Components/Layouts/Navbar";
 import Footer from "@/Components/Layouts/Footer";
 

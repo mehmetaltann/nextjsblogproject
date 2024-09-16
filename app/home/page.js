@@ -1,3 +1,4 @@
+"use client"
 import BlogPosts from "@/Components/Home/BlogPosts";
 
 export default function Home() {

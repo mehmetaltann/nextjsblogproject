@@ -30,7 +30,7 @@ const MENU_ITEMS = [
   {
     id: 3,
     content: [
-      { title: "Post Editör", link: "/admin/posts/write" },
+      { title: "Yeni Post", link: "/admin/posts/write" },
       { title: "Post Yönetimi", link: "/admin/posts/manage" },
     ],
     title: "Yazılar",
