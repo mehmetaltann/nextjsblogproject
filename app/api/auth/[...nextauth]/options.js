@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import brcrypt from "bcryptjs";
 import UserModel from "@/lib/models/UserModel";
+import { signIn, signOut } from "next-auth/react";
 
 export const options = {
   providers: [
@@ -13,7 +14,6 @@ export const options = {
       async authorize(credentials) {
         const { email, password } = credentials;
         try {
-   
           const user = await UserModel.findOne({ email });
 
           if (!user) {
@@ -37,4 +37,8 @@ export const options = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/auth",
+    signOut: "/home",
+  },
 };

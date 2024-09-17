@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { RiMenuLine, RiCloseLine } from "react-icons/ri";
 import { CldImage } from "next-cloudinary";
+import ExpandableSearch from "./ExpandableSearch";
 
 const Navbar = ({ menus, way }) => {
   const [openProfile, setOpenProfile] = useState(false);
@@ -64,7 +65,8 @@ const Navbar = ({ menus, way }) => {
             ))}
           </section>
         </div>
-        <section className="flex flex-col items-center gap-4">
+        <section className="flex items-center gap-4">
+          <ExpandableSearch />
           <button
             type="button"
             className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 "
@@ -82,6 +84,7 @@ const Navbar = ({ menus, way }) => {
               className="cursor-pointer rounded-full"
             />
           </button>
+
           {openProfile && (
             <div
               ref={ref}
@@ -95,86 +98,20 @@ const Navbar = ({ menus, way }) => {
                   mehmetaltann@gmail.com
                 </span>
               </div>
-
-              {way === "home" ? (
-                session ? (
-                  <ul className="py-2" aria-labelledby="user-menu-button">
-                    <li>
-                      <Link
-                        href="/admin"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                      >
-                        Yönetici Paneli
-                      </Link>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => signOut()}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                      >
-                        Çıkış Yap
-                      </button>
-                    </li>
-                  </ul>
-                ) : (
-                  <ul className="py-2" aria-labelledby="user-menu-button">
-                    <li>
-                      <button
-                        onClick={() => signIn()}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                      >
-                        Giriş Yap
-                      </button>
-                    </li>
-                  </ul>
-                )
+              {session ? (
+                <button
+                  onClick={() => signOut({ callbackUrl: "/", redirect: true })}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                >
+                  Çıkış Yap
+                </button>
               ) : (
-                <ul className="py-2" aria-labelledby="user-menu-button">
-                  <li>
-                    <Link
-                      href="/admin"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                    >
-                      Yönetici Ana Sayfa
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/admin/register"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                    >
-                      Kullanıcı Kayıt
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/admin/category"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 e"
-                    >
-                      Kategoriler
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/admin/subscribers"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 e"
-                    >
-                      Takipçiler
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      onClick={() =>
-                        signOut({ callbackUrl: "http://localhost:3000" })
-                      }
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                    >
-                      Çıkış Yap
-                    </Link>
-                  </li>
-                </ul>
+                <button
+                  onClick={() => signIn()}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                >
+                  Giriş Yap
+                </button>
               )}
             </div>
           )}

@@ -1,6 +1,6 @@
 "use client";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
-import AddPostPanel from "@/Components/Admin/Posts/NewPost/AddPostPanel";
+import AddPostPanel from "@/Components/Admin/Write/AddPostPanel";
 
 const page = ({ type }) => {
   return (

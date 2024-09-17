@@ -6,6 +6,7 @@ export const ClientContext = createContext("");
 export const ClientContextProvider = (props) => {
   const [allPosts, setAllPosts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Tümü");
+  const [searchItem, setSearchItem] = useState("");
 
   const value = useMemo(
     () => ({
@@ -13,8 +14,17 @@ export const ClientContextProvider = (props) => {
       setAllPosts,
       selectedCategory,
       setSelectedCategory,
+      searchItem,
+      setSearchItem,
     }),
-    [allPosts, setAllPosts, selectedCategory, setSelectedCategory]
+    [
+      allPosts,
+      setAllPosts,
+      selectedCategory,
+      setSelectedCategory,
+      searchItem,
+      setSearchItem,
+    ]
   );
 
   return (

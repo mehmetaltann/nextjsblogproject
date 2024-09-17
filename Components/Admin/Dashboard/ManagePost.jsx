@@ -1,27 +1,44 @@
 "use client";
 import Pagination from "@/Components/Layouts/Pagination";
 import DeleteButton from "@/Components/ui/deleteButton";
+import EditButton from "@/Components/ui/EditButton";
+import Link from "next/link";
+
+import { useState } from "react";
 import { TiTick } from "react-icons/ti";
 import { IoMdClose } from "react-icons/io";
 import { usePagination } from "@/app/hooks/usePagination";
 import { usePosts } from "@/app/hooks/usePosts";
+import { useBlog } from "@/app/hooks/useBlog";
 import { Loader } from "@/Components/Layouts/Loader";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CldImage } from "next-cloudinary";
-import EditButton from "@/Components/ui/EditButton";
-import Link from "next/link";
 
 const tableHeads = ["Başlık", "Kategoriler", "Tarih", "Ana Sayfa", "İşlemler"];
 
 const ManagePost = () => {
-  const { blogs: allPosts, isLoading, error, deletePost } = usePosts();
+  const { allPosts, isLoading, error } = usePosts();
+  const { deletePost } = useBlog();
+  const [filteredData, setFilteredData] = useState(allPosts);
+  const [searchItem, setSearchItem] = useState("");
 
   //Pagination
   const { totalPages, displayPosts, onPageChange, currentPage } = usePagination(
-    allPosts,
+    filteredData ? filteredData : allPosts,
     5,
     isLoading
   );
+
+  function handleInputChange(e) {
+    const searchTerm = e.target.value;
+    setSearchItem(searchTerm);
+
+    const filteredItems = allPosts.filter((post) =>
+      post.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    setFilteredData(filteredItems);
+  }
 
   return (
     <>
@@ -34,22 +51,21 @@ const ManagePost = () => {
             <div className="flex flex-col gap-y-2 md:gap-y-0 md:flex-row justify-between w-full mb-1 sm:mb-0">
               <h2 className="text-2xl leading-tight">Yazılar</h2>
               <div className="text-end">
-                <form className="flex flex-col justify-center w-3/4 max-w-sm space-y-3 md:flex-row md:w-full md:space-x-3 md:space-y-0">
+                <div className="flex flex-col justify-center w-3/4 max-w-sm space-y-3 md:flex-row md:w-full md:space-x-3 md:space-y-0">
                   <div className=" relative ">
                     <input
                       type="text"
                       id='"form-subscribe-Filter'
                       className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                       placeholder="Arama..."
+                      value={searchItem}
+                      onChange={handleInputChange}
                     />
                   </div>
-                  <button
-                    className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
-                    type="submit"
-                  >
+                  <div className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200">
                     Ara
-                  </button>
-                </form>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
@@ -116,7 +132,7 @@ const ManagePost = () => {
                           <div className="flex gap-x-2 ">
                             <DeleteButton
                               deleteHandler={deletePost}
-                              postId={post._id}
+                              id={post._id}
                             />
                             <Link href={"/admin/posts/write"}>
                               <EditButton post={post} />

@@ -13,7 +13,7 @@ import { usePosts } from "@/app/hooks/usePosts";
 const page = ({ type }) => {
   const { selectedCategory, setSelectedCategory } = useContext(ClientContext);
 
-  const { blogs: allPosts, isLoading, error } = usePosts();
+  const { allPosts, isLoading, error } = usePosts();
 
   //Category List
   const categoryCountObj = !isLoading && getAttCount(allPosts);

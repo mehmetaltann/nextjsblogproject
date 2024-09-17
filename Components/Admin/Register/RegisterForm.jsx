@@ -45,12 +45,12 @@ const RegisterForm = () => {
 
   return (
     <>
-      <h1 className="text-xl text-[teal] mb-2 border border-white px-4 py-6 rounded-lg">
+      <h1 className="text-xl text-[teal] mb-2 px-4 py-6 rounded-lg">
         Kayıt Formu
       </h1>
       <form
         onSubmit={submitHandler}
-        className="flex flex-col w-full gap-3 bg-[white]"
+        className="flex flex-col w-full gap-3 bg-[#f9f9f9]"
       >
         <input
           required

@@ -1,42 +1,55 @@
 "use client";
 import Link from "next/link";
 import NavItem from "./NavItem";
-import NavItemCollapse from "./NavItemCollapse";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { CldImage } from "next-cloudinary";
 import { useEffect, useState } from "react";
 import { RiMenuLine, RiCloseLine } from "react-icons/ri";
-import { FaComments } from "react-icons/fa";
-import { MdDashboard } from "react-icons/md";
 import { AiFillDashboard } from "react-icons/ai";
+import { BiCategoryAlt } from "react-icons/bi";
+import { FaUserAlt, FaSignOutAlt } from "react-icons/fa";
+import { BsFillPencilFill } from "react-icons/bs";
 
 const MENU_ITEMS = [
   {
     id: 1,
     link: "/admin",
-    title: "Dashboard",
+    title: "Yazı Yönetimi",
     name: "dashboard",
     icon: <AiFillDashboard className="text-xl" />,
     type: "link",
   },
   {
     id: 2,
-    link: "/admin/comments",
-    title: "Yorumlar",
-    name: "comments",
-    icon: <FaComments className="text-xl" />,
+    link: "/admin/write",
+    title: "Yeni Yazı",
+    name: "newPost",
+    icon: <BsFillPencilFill className="text-xl" />,
     type: "link",
   },
   {
     id: 3,
-    content: [
-      { title: "Yeni Post", link: "/admin/posts/write" },
-      { title: "Post Yönetimi", link: "/admin/posts/manage" },
-    ],
-    title: "Yazılar",
-    name: "posts",
-    icon: <MdDashboard className="text-xl" />,
-    type: "collapse",
+    link: "/admin/categories",
+    title: "Kategoriler",
+    name: "categories",
+    icon: <BiCategoryAlt className="text-xl" />,
+    type: "link",
+  },
+  {
+    id: 4,
+    link: "/admin/register",
+    title: "Kullanıcı Kayıt",
+    name: "user",
+    icon: <FaUserAlt className="text-xl" />,
+    type: "link",
+  },
+  {
+    id: 5,
+    link: "/home",
+    title: "Çıkış Yap",
+    name: "signOut",
+    icon: <FaSignOutAlt className="text-xl" />,
+    type: "link",
   },
 ];
 
@@ -99,29 +112,17 @@ const AdminHeader = () => {
             <h4 className="mt-10 font-bold text-color1">ANA MENÜ</h4>
             {/* menu icons */}
             <div className="mt-6 flex flex-col gap-y-[0.563rem]">
-              {MENU_ITEMS.map((item) =>
-                item.type === "link" ? (
-                  <NavItem
-                    key={item.id}
-                    link={item.link}
-                    title={item.title}
-                    icon={item.icon}
-                    name={item.name}
-                    activeNavName={activeNavName}
-                    setActiveNavName={setActiveNavName}
-                  />
-                ) : (
-                  <NavItemCollapse
-                    key={item.id}
-                    content={item.content}
-                    title={item.title}
-                    icon={item.icon}
-                    name={item.name}
-                    activeNavName={activeNavName}
-                    setActiveNavName={setActiveNavName}
-                  />
-                )
-              )}
+              {MENU_ITEMS.map((item) => (
+                <NavItem
+                  key={item.id}
+                  link={item.link}
+                  title={item.title}
+                  icon={item.icon}
+                  name={item.name}
+                  activeNavName={activeNavName}
+                  setActiveNavName={setActiveNavName}
+                />
+              ))}
             </div>
           </div>
         </div>

@@ -2,24 +2,16 @@
 import Comments from "./Comments/Comments";
 import SocialMediaShareSet from "../Layouts/SocialMediaShareSet";
 import parse from "html-react-parser";
-import axios from "axios";
 import SimilarPosts from "./SimilarPosts";
-import useSWR from "swr";
 import { CldImage } from "next-cloudinary";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { useParams } from "next/navigation";
 import { Loader } from "../Layouts/Loader";
+import { useBlog } from "@/app/hooks/useBlog";
 
 const SingleBlog = () => {
   const params = useParams();
-
-  const { data, error, isLoading } = useSWR("/api/blog", async () => {
-    const response = await axios.get("/api/blog", {
-      params: { id: params.id },
-    });
-    console.log(response.data);
-    return response.data;
-  });
+  const { data, error, isLoading } = useBlog(params.id);
 
   if (isLoading) return <Loader />;
   if (error) return <div>failed to load</div>;

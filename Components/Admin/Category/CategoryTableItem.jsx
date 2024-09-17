@@ -1,4 +1,5 @@
 import { useCategory } from "@/app/hooks/useCategory";
+import DeleteButton from "@/Components/ui/DeleteButton";
 
 const CategoryTableItem = ({ name, mongoId, color }) => {
   const divStyle = {
@@ -11,7 +12,7 @@ const CategoryTableItem = ({ name, mongoId, color }) => {
     <tr className="bg-white border-b">
       <th
         scope="row"
-        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-left"
+        className="px-6 py-4 text-gray-900 whitespace-nowrap text-left font-semibold"
       >
         {name}
       </th>
@@ -21,12 +22,13 @@ const CategoryTableItem = ({ name, mongoId, color }) => {
       >
         <div style={divStyle} className={`py-2 px-0.2 rounded-full`}></div>
       </th>
-      <td
-        onClick={() => deleteCategory(mongoId)}
-        className="px-6 py-4 cursor-pointer text-center"
+      <th
+        scope="row"
+        className="px-6 py-4 cursor-pointer text-center w-2"
+        style={{ "text-align": "center" }}
       >
-        X
-      </td>
+        <DeleteButton deleteHandler={deleteCategory} id={mongoId} />
+      </th>
     </tr>
   );
 };

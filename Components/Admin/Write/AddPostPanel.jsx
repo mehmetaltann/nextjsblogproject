@@ -4,7 +4,7 @@ import TextEditor from "./TextEditor";
 import PhotoSection from "./PhotoSection";
 import { useContext } from "react";
 import { AdminContext } from "@/store/AdminContext";
-import { usePosts } from "@/app/hooks/usePosts";
+import { useBlog } from "@/app/hooks/useBlog";
 
 const AddPostPanel = () => {
   const {
@@ -21,7 +21,7 @@ const AddPostPanel = () => {
     postId,
   } = useContext(AdminContext);
 
-  const { addPost, updatePost } = usePosts();
+  const { addPost, updatePost } = useBlog();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();

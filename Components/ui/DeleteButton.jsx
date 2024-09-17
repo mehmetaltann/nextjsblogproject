@@ -5,7 +5,7 @@ import ConfirmationModal from "./confirmationModal";
 const buttonClassName =
   "flex gap-2 items-center justify-center py-2 px-4 font-semibold shadow-md rounded-lg text-white bg-red-600 shadow-red-400/40";
 
-const DeleteButton = ({ deleteHandler, postId }) => {
+const DeleteButton = ({ deleteHandler, id }) => {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -26,7 +26,7 @@ const DeleteButton = ({ deleteHandler, postId }) => {
             <button
               className={`${buttonClassName} w-full`}
               onClick={() => {
-                deleteHandler(postId);
+                deleteHandler(id);
                 setOpen(false);
               }}
             >

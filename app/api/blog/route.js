@@ -3,7 +3,7 @@ const { NextResponse } = require("next/server");
 
 export async function GET(request) {
   const blogId = request.nextUrl.searchParams.get("id");
-  if (blogId) {
+  try {
     const blog = await BlogModel.findById(blogId);
     const categoryArray = blog.category.map(function (obj) {
       return obj.name;
@@ -17,10 +17,11 @@ export async function GET(request) {
       return item.title !== blog.title;
     });
     return NextResponse.json({ blog, sameCategoryFilteredData });
-  } else {
-    const blogs = await BlogModel.find({}).sort({ date: -1 });
-    return NextResponse.json({ blogs });
+  } catch (error) {
+    return NextResponse.json({ success: false, msg: error });
   }
+
+
 }
 
 export async function POST(request) {

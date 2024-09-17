@@ -5,16 +5,29 @@ import Pagination from "@/Components/Layouts/Pagination";
 import { usePagination } from "@/app/hooks/usePagination";
 import { Loader } from "../Layouts/Loader";
 import { usePosts } from "@/app/hooks/usePosts";
+import { useContext, useEffect, useState } from "react";
+import { ClientContext } from "@/store/ClientContext";
 
 const BlogPosts = ({ type }) => {
-  const { blogs, isLoading, error } = usePosts();
+  const { allPosts, isLoading, error } = usePosts();
+  const { searchItem } = useContext(ClientContext);
+  const [filteredData, setFilteredData] = useState(allPosts);
 
   const filteredPosts =
-    !isLoading && blogs.filter((item) => item.isHome && item);
+    !isLoading && allPosts.filter((item) => item.isHome && item);
+
+  useEffect(() => {
+    if (!isLoading) {
+      const filteredItems = filteredPosts?.filter((post) =>
+        post.title.toLowerCase().includes(searchItem.toLowerCase())
+      );
+      setFilteredData(filteredItems);
+    }
+  }, [searchItem]);
 
   //Pagination
   const { totalPages, displayPosts, onPageChange, currentPage } = usePagination(
-    filteredPosts,
+    filteredData ? filteredData : filteredPosts,
     4,
     isLoading
   );

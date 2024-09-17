@@ -6,7 +6,7 @@ const page = ({ type }) => {
   return (
     <AnimationWrapper
       keyValue={type}
-      className="flex flex-col mt-40 mb-20 min-w-[350px]"
+      className="flex flex-col m-16 md:mt-10 max-w-[410px] items-center justify-center bg-[#f9f9f9]"
     >
       <RegisterForm />
     </AnimationWrapper>
