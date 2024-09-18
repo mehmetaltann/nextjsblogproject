@@ -2,25 +2,38 @@
 import Link from "next/link";
 import clsx from "clsx";
 import useOnclickOutside from "react-cool-onclickoutside";
+import SearchInput from "../ui/SearchInput";
 import { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { RiMenuLine, RiCloseLine } from "react-icons/ri";
 import { CldImage } from "next-cloudinary";
-import ExpandableSearch from "./ExpandableSearch";
+import { usePathname } from "next/navigation";
 
-const Navbar = ({ menus, way }) => {
+const menus = [
+  { id: 1, linkpage: "/home/about", title: "Hakkımızda" },
+  { id: 2, linkpage: "/home/bloglist", title: "Blog Listesi" },
+  { id: 3, linkpage: "/home/contact", title: "İletişim" },
+];
+
+const Navbar = () => {
   const [openProfile, setOpenProfile] = useState(false);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const { data: session } = useSession();
+  const pathname = usePathname();
 
   const ref = useOnclickOutside(() => {
     setOpenProfile(false);
   });
 
   return (
-    <main className="space-x-4 sticky top-0 bg-white/20 backdrop-blur-lg w-full md:w-3/4 z-[9999]">
-      <nav className="flex justify-between px-12 items-center pt-4 gap-4">
-        <div className="flex items-center gap-8 ">
+    <main className="space-x-4 sticky top-0 bg-white/20 backdrop-blur-lg w-full xl:w-3/4 z-[9999]">
+      <nav
+        className={clsx(
+          "flex justify-between md:px-12 items-center pt-4 gap-4",
+          pathname === "/home" && "flex-col md:flex-row px-4"
+        )}
+      >
+        <div className="flex items-center gap-8">
           <section className="flex items-center gap-4">
             <RiMenuLine
               className="text-3xl cursor-pointer md:hidden "
@@ -33,7 +46,6 @@ const Navbar = ({ menus, way }) => {
                 priority={true}
                 height={250}
                 width={250}
-                style={{ width: "100%", height: "auto" }}
               />
             </Link>
           </section>
@@ -41,7 +53,7 @@ const Navbar = ({ menus, way }) => {
             <Link
               key={id}
               href={linkpage}
-              className="hidden md:block text-color1 hover:text-color5 text-lg font-semibold opacity-55 hover:opacity-100"
+              className="hidden md:block text-color1 hover:text-color5 lg:text-lg font-semibold opacity-75 min-w-[90px] lg:min-w-[100px] first-letter:hover:opacity-100"
             >
               <p>{title}</p>
             </Link>
@@ -66,10 +78,10 @@ const Navbar = ({ menus, way }) => {
           </section>
         </div>
         <section className="flex items-center gap-4">
-          <ExpandableSearch />
+          {pathname === "/home" && <SearchInput />}
           <button
             type="button"
-            className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 "
+            className="flex text-sm bg-gray-800 rounded-full me-5 md:me-0 focus:ring-4 focus:ring-gray-300 "
             id="user-menu-button"
             onClick={() => {
               setOpenProfile((prev) => !prev);
@@ -88,7 +100,7 @@ const Navbar = ({ menus, way }) => {
           {openProfile && (
             <div
               ref={ref}
-              className="absolute mt-16 right-4 text-base list-none text-color1 bg-white divide-y divide-gray-100 rounded-lg shadow"
+              className="absolute mt-48 right-4 text-base list-none text-color1 bg-white divide-y divide-gray-100 rounded-lg shadow"
             >
               <div className="px-4 py-3">
                 <span className="block text-sm font-semibold text-gray-900 ">
@@ -99,12 +111,22 @@ const Navbar = ({ menus, way }) => {
                 </span>
               </div>
               {session ? (
-                <button
-                  onClick={() => signOut({ callbackUrl: "/", redirect: true })}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                >
-                  Çıkış Yap
-                </button>
+                <div className="flex flex-col justify-center items-start">
+                  <Link
+                    href={"/admin"}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                  >
+                    Yönetici Paneli
+                  </Link>
+                  <button
+                    onClick={() =>
+                      signOut({ callbackUrl: "/", redirect: true })
+                    }
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                  >
+                    Çıkış Yap
+                  </button>{" "}
+                </div>
               ) : (
                 <button
                   onClick={() => signIn()}

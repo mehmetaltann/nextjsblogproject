@@ -38,7 +38,7 @@ const page = ({ type }) => {
   return (
     <AnimationWrapper
       keyValue={type}
-      className="flex flex-col justify-center px-3 md:px-0 md:w-2/4 lg:min-w-[820px] w-full sm:flex-row mt-4 gap-4 md:gap-8"
+      className="flex flex-col md:flex-row gap-4 justify-center px-5 lg:w-4/6 xl:w-3/6 mt-4"
     >
       {isLoading && <Loader />}
       {error && <div>failed to load</div>}
@@ -50,7 +50,7 @@ const page = ({ type }) => {
             setSelectedCategory={setSelectedCategory}
             setCurrentPage={setCurrentPage}
           />
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-8">
             <PostList posts={displayPosts} />
             {totalPages > 1 && (
               <Pagination

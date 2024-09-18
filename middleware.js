@@ -5,8 +5,7 @@ export const config = {
     "/admin",
     "/admin/comments",
     "/admin/register",
-    "/admin/posts",
-    "/admin/posts/write",
-    "/admin/posts/manage",
+    "/admin/categories",
+    "/admin/write",
   ],
 };

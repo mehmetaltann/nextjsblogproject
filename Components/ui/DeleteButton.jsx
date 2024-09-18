@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
-import ConfirmationModal from "./confirmationModal";
+import ConfirmationModal from "./ConfirmationModal";
 
 const buttonClassName =
   "flex gap-2 items-center justify-center py-2 px-4 font-semibold shadow-md rounded-lg text-white bg-red-600 shadow-red-400/40";

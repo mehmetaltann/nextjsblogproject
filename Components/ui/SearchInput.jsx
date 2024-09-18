@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ClientContext } from "@/store/ClientContext";
 
-const ExpandableSearch = () => {
+const SearchInput = () => {
   const { searchItem, setSearchItem } = useContext(ClientContext);
 
   return (
@@ -25,4 +25,4 @@ const ExpandableSearch = () => {
   );
 };
 
-export default ExpandableSearch;
+export default SearchInput;

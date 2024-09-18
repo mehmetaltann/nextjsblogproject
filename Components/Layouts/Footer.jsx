@@ -12,7 +12,7 @@ const Footer = () => {
         width={150}
         sizes="150vw"
       />
-      <div className="flex flex-col items-center text-sm text-white">
+      <div className="flex flex-col items-center text-sm text-white opacity-80">
         <p>Bütün Hakları Saklıdır @2024</p>
         <span>mehmetaltann@gmail.com</span>
       </div>

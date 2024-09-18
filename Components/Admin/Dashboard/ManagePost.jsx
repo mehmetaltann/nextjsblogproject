@@ -1,9 +1,8 @@
 "use client";
 import Pagination from "@/Components/Layouts/Pagination";
-import DeleteButton from "@/Components/ui/deleteButton";
+import DeleteButton from "@/Components/ui/DeleteButton";
 import EditButton from "@/Components/ui/EditButton";
 import Link from "next/link";
-
 import { useState } from "react";
 import { TiTick } from "react-icons/ti";
 import { IoMdClose } from "react-icons/io";
@@ -51,7 +50,7 @@ const ManagePost = () => {
             <div className="flex flex-col gap-y-2 md:gap-y-0 md:flex-row justify-between w-full mb-1 sm:mb-0">
               <h2 className="text-2xl leading-tight">Yazılar</h2>
               <div className="text-end">
-                <div className="flex flex-col justify-center w-3/4 max-w-sm space-y-3 md:flex-row md:w-full md:space-x-3 md:space-y-0">
+                <div className="flex flex-row justify-center items-center w-3/4 max-w-sm md:w-full space-x-3 space-y-0">
                   <div className=" relative ">
                     <input
                       type="text"

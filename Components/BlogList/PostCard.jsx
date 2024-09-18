@@ -4,7 +4,7 @@ import { FaArrowRight } from "react-icons/fa6";
 
 export default function PostCard({ data }) {
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       {data.cloudinaryImageId && (
         <Link href={`/home/blogs/${data._id}`}>
           <CldImage
@@ -12,7 +12,7 @@ export default function PostCard({ data }) {
             alt={data.title}
             width={400}
             height={300}
-            className="mb-5 h-[400px] w-full rounded-xl bg-no-repeat object-cover object-center transition-transform duration-200 ease-out hover:scale-[1.02]"
+            className="mb-3 h-[400px] w-full rounded-xl bg-no-repeat object-cover object-center transition-transform duration-200 ease-out hover:scale-[1.02]"
             priority={true}
           />
         </Link>
@@ -33,7 +33,7 @@ export default function PostCard({ data }) {
         </div>
       </div>
       <div
-        className="py-6 text-zinc-500 "
+        className="py-2 text-zinc-500 "
         dangerouslySetInnerHTML={{
           __html: data.description?.slice(0, 200),
         }}

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import ContactForm from "@/Components/Contact/ContactForm";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 
