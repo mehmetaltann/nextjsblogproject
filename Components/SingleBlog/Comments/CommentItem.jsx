@@ -3,7 +3,8 @@ import { CgProfile } from "react-icons/cg";
 import { getFormatLeftTime, getFormatLongDate } from "@/lib/utils/helpers";
 import { useSession } from "next-auth/react";
 import { FiMessageSquare, FiTrash, FiEdit2 } from "react-icons/fi";
-import { useComment } from "@/app/hooks/useComment";
+import { updateComment, deleteComment } from "@/app/actions/actions";
+import { toast } from "react-toastify";
 
 const CommentItem = ({
   comment,
@@ -12,9 +13,8 @@ const CommentItem = ({
   addCommentHandler,
   parentId = null,
   replies,
-  paramId,
 }) => {
-  const { authorName, content, date, _id } = comment;
+  const { authorName, content, date, _id, postId } = comment;
   const isReplying =
     affectedComment &&
     affectedComment._id === _id &&
@@ -24,9 +24,8 @@ const CommentItem = ({
     affectedComment._id === _id &&
     affectedComment.type === "editing";
   const parentCommentId = parentId ? parentId : _id;
-
-  const { deleteComment, updateComment } = useComment(paramId);
   const { data: session } = useSession();
+
   return (
     <div className="mb-2 flex flex-col rounded-xl border border-color7 p-4 pb-6 ">
       <div className="mb-4 flex w-full flex-col md:items-center justify-between gap-2 text-gray-500  sm:flex-row">
@@ -45,11 +44,13 @@ const CommentItem = ({
         <CommentForm
           btnLabel="Güncelle"
           formSubmitHandler={async (value) => {
-            await updateComment({
+            const { msg } = await updateComment({
               content: value.content,
               _id,
+              postId,
             });
             setAffectedComment(null);
+            toast.success(msg);
           }}
           formCancelHandler={() => setAffectedComment(null)}
           initialText={content}
@@ -83,7 +84,8 @@ const CommentItem = ({
             <button
               className="flex items-center space-x-2"
               onClick={async () => {
-                await deleteComment(_id);
+                const { msg } = await deleteComment(_id, postId);
+                toast.success(msg);
                 setAffectedComment(null);
               }}
             >

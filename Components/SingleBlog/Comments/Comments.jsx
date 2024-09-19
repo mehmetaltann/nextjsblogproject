@@ -2,15 +2,13 @@
 import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
 import Pagination from "../../Layouts/Pagination";
-import { useParams } from "next/navigation";
 import { usePagination } from "@/app/hooks/usePagination";
 import { useState } from "react";
-import { useComment } from "@/app/hooks/useComment";
+import { addComment } from "@/app/actions/actions";
+import { toast } from "react-toastify";
 
-const Comments = ({ postId, postTitle }) => {
-  const params = useParams();
+const Comments = ({ postId, postTitle, comments }) => {
   const [affectedComment, setAffectedComment] = useState(null);
-  const { data: comments, addComment } = useComment(params.id);
 
   const mainComments = comments?.filter(
     (item) => item.parentCommentId === null
@@ -58,7 +56,6 @@ const Comments = ({ postId, postTitle }) => {
                     setAffectedComment={setAffectedComment}
                     addCommentHandler={addCommentHandler}
                     replies={getRepliesHandler(comment._id)}
-                    paramId={params.id}
                   />
                 );
               })}

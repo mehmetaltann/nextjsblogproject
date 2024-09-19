@@ -1,8 +1,10 @@
 "use server";
 import CategoryModel from "@/lib/models/CategoryModel";
+import CommentModel from "@/lib/models/CommentsModel";
 import BlogModel from "@/lib/models/BlogModel";
 import UserModel from "@/lib/models/UserModel";
 import bcrypt from "bcryptjs";
+import { mailOptions, transporter } from "@/lib/config/nodemailer";
 const { revalidatePath } = require("next/cache");
 
 export const addCategory = async (prevState, formData) => {
@@ -53,29 +55,89 @@ export const updatePost = async (formData) => {
   }
 };
 
-export const userCheck = async (email) => {
+export const userRegister = async (prevState, formData) => {
   try {
-    let isToBe = false;
+    const isim = formData.get("isim");
+    const email = formData.get("email");
+    const password = formData.get("password");
     const user = await UserModel.findOne({ email }).select("_id");
-    if (user) isToBe = true;
-    return { isToBe };
+    if (user) {
+      return { msg: "Bu kullanıcı kayıtlıdır", isSuccess: false };
+    } else {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const userData = {
+        isim,
+        email,
+        password: hashedPassword,
+      };
+      await UserModel.create(userData);
+      return { msg: "Kullanıcı Kaydedildi", isSuccess: true };
+    }
   } catch (error) {
-    return { msg: error };
+    return { msg: "Bu kullanıcı kayıtlıdır: " + error, isSuccess: false };
   }
 };
 
-export const userRegister = async (formData) => {
+export const sendMessage = async (prevState, formData) => {
   try {
-    const { isim, email, password } = formData;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const userData = {
-      isim,
-      email,
-      password: hashedPassword,
+    const newData = {
+      email: formData.get("email"),
+      title: formData.get("title"),
+      message: formData.get("message"),
     };
-    await UserModel.create(userData);
-    return { msg: "Kullanıcı Kaydedildi", isSuccess: true };
+    await transporter.sendMail({
+      ...mailOptions,
+      from: newData.email,
+      subject: newData.title,
+      text: `Gönderen: ${newData.email}\n\n${newData.message}`,
+    });
+    return { msg: "Mesajınız Gönderildi", success: true };
   } catch (error) {
-    return { msg: "Bu kullanıcı kayıtlıdır: " + error };
+    return { msg: "Mesajınız Gönderildi: " + error, success: false };
+  }
+};
+
+export const addComment = async (formData) => {
+  try {
+    const { postTitle, postId } = formData;
+    await transporter.sendMail({
+      ...mailOptions,
+      from: authorEmail,
+      subject: "Blog Post Yorumu",
+      text: `Gönderen: ${authorEmail}\nPost Konusu: ${postTitle}\n\nYorumu: ${content}`,
+    });
+    delete formData.postTitle;
+    console.log(formData);
+    await CommentModel.create(formData);
+    revalidatePath(`/home/blog/${postId}`);
+    return { msg: "Yorum Eklendi", isSuccess: true };
+  } catch (error) {
+    return { msg: "Yorum Eklenemedi: " + error, isSuccess: false };
+  }
+};
+
+export const updateComment = async (formData) => {
+  try {
+    const { content, _id, postId } = formData;
+    await CommentModel.findByIdAndUpdate(
+      { _id },
+      {
+        content,
+      }
+    );
+    revalidatePath(`/home/blog/${postId}`);
+    return { msg: "Yorum Güncellendi", isSuccess: true };
+  } catch (error) {
+    return { msg: "Yorum Güncellenemedi: " + error, isSuccess: false };
+  }
+};
+
+export const deleteComment = async (_id, postId) => {
+  try {
+    await CommentModel.findByIdAndDelete(_id);
+    revalidatePath(`/home/blog/${postId}`);
+    return { msg: "Yorum Silindi" };
+  } catch (error) {
+    return { msg: "Yorum Silinemedi: " + error };
   }
 };

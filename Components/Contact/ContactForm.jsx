@@ -1,43 +1,20 @@
 "use client";
-import axios from "axios";
-import { useState } from "react";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
 import { FaMailBulk } from "react-icons/fa";
-import "react-toastify/dist/ReactToastify.css";
+import { useFormState } from "react-dom";
+import { sendMessage } from "@/app/actions/actions";
 
 const ContactForm = () => {
-  const [email, setEmail] = useState("");
-  const [title, setTitle] = useState("");
-  const [message, setMessage] = useState("");
+  const [formState, formAction] = useFormState(sendMessage, null);
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-
-    if (!email || !title || !message) {
-      toast.error("Tüm Alanları Doldurunuz");
-      return;
-    }
-
-    const response = await axios.post("/api/contact", {
-      email,
-      title,
-      message,
-    });
-
-    if (response.data.success) {
-      toast.success(response.data.msg);
-      setEmail("");
-      setTitle("");
-      setMessage("");
-    } else {
-      toast.error("Bir Sıkıntı Var, Mesajınız Gönderilemedi");
-    }
-  };
+  useEffect(() => {
+    toast.success(formState?.msg);
+    document.getElementById("myform").reset();
+  }, [formState]);
 
   return (
     <section className="bg-white">
-      <ToastContainer theme="dark" closeOnClick autoClose={2000} />
       <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
         <div className="mb-4 flex items-center justify-center gap-2 text-color1">
           <FaMailBulk size={50} />
@@ -51,7 +28,8 @@ const ContactForm = () => {
           da yardımcı olmamızı isterseniz yazabilirsiniz.
         </p>
         <form
-          onSubmit={submitHandler}
+          id="myform"
+          action={formAction}
           className="flex flex-col gap-3 mb-8 lg:mb-10"
         >
           <div>
@@ -64,11 +42,10 @@ const ContactForm = () => {
             <input
               type="email"
               id="email"
+              name="email"
               className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
               placeholder="Email ..."
               required
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
             />
           </div>
           <div>
@@ -81,11 +58,10 @@ const ContactForm = () => {
             <input
               type="text"
               id="title"
+              name="title"
               className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500"
               placeholder="Başlık ..."
               required
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
             />
           </div>
           <div className="sm:col-span-2">
@@ -98,10 +74,10 @@ const ContactForm = () => {
             <textarea
               id="message"
               rows="6"
+              name="message"
+              required
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
               placeholder="Nasıl Yardımcı Olabiliriz..."
-              onChange={(e) => setMessage(e.target.value)}
-              value={message}
             ></textarea>
           </div>
           <button
