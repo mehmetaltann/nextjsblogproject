@@ -1,9 +1,18 @@
-import { useCategory } from "@/app/hooks/useCategory";
+"use client";
+import { addCategory } from "@/app/actions/actions";
+import { useEffect } from "react";
+import { useFormState } from "react-dom";
+import { toast } from "react-toastify";
 
 const CategoryForm = () => {
-  const { addCategory } = useCategory();
+  const [formState, formAction] = useFormState(addCategory, null);
+
+  useEffect(() => {
+    toast.success(formState?.msg);
+  }, [formState]);
+
   return (
-    <form action={addCategory}>
+    <form action={formAction}>
       <div className="flex gap-2 rounded-lg shadow-sm">
         <input
           type="text"

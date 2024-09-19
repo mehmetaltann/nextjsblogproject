@@ -1,26 +1,15 @@
 "use client";
 import Select from "react-select";
-import { useCategory } from "@/app/hooks/useCategory";
-import axios from "axios";
 import { AdminContext } from "@/store/AdminContext";
 import { useContext, useEffect } from "react";
 
-const CategorySelect = () => {
+const CategorySelect = ({ optionsData }) => {
   const { setCategories, options, setOptions, selectDefaultValue } =
     useContext(AdminContext);
 
-  const { categories, isLoading } = useCategory();
-
-  const fetchCategories = async () => {
-    const data = categories.map((o) => {
-      return { label: o.name, value: o.name };
-    });
-    setOptions(data);
-  };
-
   useEffect(() => {
-    if (!isLoading) fetchCategories();
-  }, [isLoading]);
+    setOptions(optionsData);
+  }, []);
 
   return (
     <>

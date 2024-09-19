@@ -1,7 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import brcrypt from "bcryptjs";
 import UserModel from "@/lib/models/UserModel";
-import { signIn, signOut } from "next-auth/react";
 
 export const options = {
   providers: [

@@ -1,16 +1,15 @@
-"use client";
-import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import AddPostPanel from "@/Components/Admin/Write/AddPostPanel";
+import CategoryModel from "@/lib/models/CategoryModel";
+import { Loader } from "@/Components/Layouts/Loader";
+import { Suspense } from "react";
 
-const page = ({ type }) => {
+export default async function Write() {
+  const categories = await CategoryModel.find({});
+  const allCategories = JSON.parse(JSON.stringify(categories));
+
   return (
-    <AnimationWrapper
-      keyValue={type}
-      className="flex w-full p-6 md:w-3/4 mb-6 pb-6 md:p-0"
-    >
-      <AddPostPanel />
-    </AnimationWrapper>
+    <Suspense fallback={<Loader />}>
+      <AddPostPanel allCategories={allCategories} />
+    </Suspense>
   );
-};
-
-export default page;
+}

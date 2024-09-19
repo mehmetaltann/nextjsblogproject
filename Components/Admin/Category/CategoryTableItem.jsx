@@ -1,12 +1,41 @@
-import { useCategory } from "@/app/hooks/useCategory";
-import DeleteButton from "@/Components/ui/DeleteButton";
+"use client";
+import { deleteCategory } from "@/app/actions/actions";
+import { useFormState, useFormStatus } from "react-dom";
+import { toast } from "react-toastify";
+import { memo, useEffect } from "react";
+
+const DeleteButton = () => {
+  const pending = useFormStatus();
+  return (
+    <button
+      type="submit"
+      aria-disabled={pending}
+      className="py-1 px-4 rounded-3xl bg-color8 text-white text-sm"
+    >
+      Sil
+    </button>
+  );
+};
+
+const DeleteForm = ({ id, formAction }) => {
+  return (
+    <form action={formAction}>
+      <input type="hidden" name="id" value={id} />
+      <DeleteButton />
+    </form>
+  );
+};
 
 const CategoryTableItem = ({ name, mongoId, color }) => {
+  const [formState, formAction] = useFormState(deleteCategory, null);
   const divStyle = {
     backgroundColor: "#" + color,
   };
+  console.log(formState?.msg);
 
-  const { deleteCategory } = useCategory();
+  useEffect(() => {
+    toast.success(formState?.msg);
+  }, [formState]);
 
   return (
     <tr className="bg-white border-b">
@@ -25,12 +54,12 @@ const CategoryTableItem = ({ name, mongoId, color }) => {
       <th
         scope="row"
         className="px-6 py-4 cursor-pointer text-center w-2"
-        style={{ "text-align": "center" }}
+        style={{ textAlign: "center" }}
       >
-        <DeleteButton deleteHandler={deleteCategory} id={mongoId} />
+        <DeleteForm id={mongoId} formAction={formAction} />
       </th>
     </tr>
   );
 };
 
-export default CategoryTableItem;
+export default memo(CategoryTableItem);

@@ -1,4 +1,3 @@
-import clsx from "clsx";
 
 const TagsTable = ({
   categoryCountObj,

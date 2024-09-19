@@ -3,6 +3,7 @@ import Comments from "./Comments/Comments";
 import SocialMediaShareSet from "../Layouts/SocialMediaShareSet";
 import parse from "html-react-parser";
 import SimilarPosts from "./SimilarPosts";
+import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import { CldImage } from "next-cloudinary";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { useParams } from "next/navigation";
@@ -14,7 +15,7 @@ const SingleBlog = () => {
   const { data, error, isLoading } = useBlog(params.id);
 
   return (
-    <>
+    <AnimationWrapper>
       {isLoading && <Loader />}
       {error && <div>failed to load</div>}
       {!isLoading && !error && (
@@ -83,7 +84,7 @@ const SingleBlog = () => {
           <SimilarPosts similarposts={data.sameCategoryFilteredData} />
         </div>
       )}
-    </>
+    </AnimationWrapper>
   );
 };
 

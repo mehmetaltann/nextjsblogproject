@@ -20,8 +20,6 @@ export async function GET(request) {
   } catch (error) {
     return NextResponse.json({ success: false, msg: error });
   }
-
-
 }
 
 export async function POST(request) {

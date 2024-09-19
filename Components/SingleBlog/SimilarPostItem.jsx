@@ -8,7 +8,7 @@ const SimilarPostItem = ({ post }) => {
   return (
     <div>
       <div className="mb-4 w-full overflow-hidden rounded-xl">
-        <Link href={`/home/blogs/${_id}`}>
+        <Link href={`/home/blog/${_id}`}>
           <CldImage
             src={cloudinaryImageId}
             alt={title}
@@ -20,7 +20,7 @@ const SimilarPostItem = ({ post }) => {
           />
         </Link>
       </div>
-      <Link href={`/home/blogs/${_id}`}>
+      <Link href={`/home/blog/${_id}`}>
         <p className="text-zinc-500 font-semibold ms-1">{title}</p>
         <p className="text-zinc-500 ms-1">{getFormatDate(date)}</p>
       </Link>

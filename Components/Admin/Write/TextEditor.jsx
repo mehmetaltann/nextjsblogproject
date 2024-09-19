@@ -10,7 +10,7 @@ const TextEditor = () => {
   const editor = useRef(null);
   const config = useMemo(
     () => ({
-      readonly: false, // all options from https://xdsoft.net/jodit/docs/,
+      readonly: false,
       placeholder: "Yazınız ...",
       height: 600,
     }),

@@ -17,7 +17,7 @@ const BlogPostPreview = ({
 
   return (
     <div className="break-words">
-      <Link href={"/home/blogs/" + id}>
+      <Link href={"/home/blog/" + id}>
         <div className="aspect-[16/9] relative">
           <CldImage
             src={cloudinaryImageId}
@@ -31,7 +31,7 @@ const BlogPostPreview = ({
       </Link>
       <div className="grid grid-cols-1 gap-3 md:col-span-2 mt-4">
         <h2 className="font-semibold tracking-tighter text-primary-txt text-2xl md:text-3xl">
-          <Link href={"/home/blogs/" + id}>{title}</Link>
+          <Link href={"/home/blog/" + id}>{title}</Link>
         </h2>
         <div className="prose lg:prose-lg italic tracking-tighter text-muted-foreground">
           {getFormatDate(date, "dd MMMM yyyy")}
