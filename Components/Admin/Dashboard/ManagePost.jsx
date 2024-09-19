@@ -7,7 +7,7 @@ import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import { useState } from "react";
 import { TiTick } from "react-icons/ti";
 import { IoMdClose } from "react-icons/io";
-import { usePagination } from "@/app/hooks/usePagination";
+import { usePagination } from "@/lib/hooks/usePagination";
 import { useBlog } from "@/app/hooks/useBlog";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CldImage } from "next-cloudinary";

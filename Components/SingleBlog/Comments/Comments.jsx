@@ -2,7 +2,7 @@
 import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
 import Pagination from "../../Layouts/Pagination";
-import { usePagination } from "@/app/hooks/usePagination";
+import { usePagination } from "@/lib/hooks/usePagination";
 import { useState } from "react";
 import { addComment } from "@/app/actions/actions";
 import { toast } from "react-toastify";

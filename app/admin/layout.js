@@ -1,4 +1,3 @@
-"use client";
 import AdminHeader from "@/Components/Admin/Header/AdminHeader";
 import { AdminContextProvider } from "@/store/AdminContext";
 

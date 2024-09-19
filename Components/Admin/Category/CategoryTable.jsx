@@ -1,6 +1,6 @@
 import CategoryTableItem from "./CategoryTableItem";
 import Pagination from "@/Components/Layouts/Pagination";
-import { usePagination } from "@/app/hooks/usePagination";
+import { usePagination } from "@/lib/hooks/usePagination";
 
 const CategoryTable = ({ allCategories }) => {
   //Pagination

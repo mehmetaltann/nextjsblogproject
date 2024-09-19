@@ -1,9 +1,7 @@
-import React from 'react'
+import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 
-const AboutPage = () => {
-  return (
-    <div>AboutPage</div>
-  )
-}
+const AboutPage = ({ type }) => {
+  return <AnimationWrapper keyValue={type}>AboutPage</AnimationWrapper>;
+};
 
-export default AboutPage
+export default AboutPage;

@@ -1,8 +1,7 @@
-"use client";
-import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
+import AboutPage from "@/Components/About/AboutPage";
 
-const page = ({ type }) => {
-  return <AnimationWrapper keyValue={type}>Hakkımızda</AnimationWrapper>;
+const page = () => {
+  return <AboutPage />;
 };
 
 export default page;

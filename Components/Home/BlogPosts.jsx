@@ -2,7 +2,7 @@
 import BlogPostPreview from "./BlogPostPreview";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import Pagination from "@/Components/Layouts/Pagination";
-import { usePagination } from "@/app/hooks/usePagination";
+import { usePagination } from "@/lib/hooks/usePagination";
 import { useContext, useEffect, useState } from "react";
 import { ClientContext } from "@/store/ClientContext";
 

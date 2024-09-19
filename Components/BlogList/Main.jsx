@@ -6,7 +6,7 @@ import Pagination from "../Layouts/Pagination";
 import { getAttCount } from "@/lib/utils/helpers";
 import { useContext } from "react";
 import { ClientContext } from "@/store/ClientContext";
-import { usePagination } from "@/app/hooks/usePagination";
+import { usePagination } from "@/lib/hooks/usePagination";
 
 const Main = ({ allPosts, type }) => {
   const { selectedCategory, setSelectedCategory } = useContext(ClientContext);
