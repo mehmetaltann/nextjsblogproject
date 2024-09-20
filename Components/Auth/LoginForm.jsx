@@ -1,6 +1,7 @@
 "use client";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -14,13 +15,13 @@ const LoginForm = () => {
       });
 
       if (response.error) {
-        setError("Hatalı Giriş");
+        toast.error("Böyle bir kullanıcı bulunmamaktadır");
         return;
       }
 
       router.replace("admin");
     } catch (error) {
-      console.log(error);
+      toast.error("Böyle bir kullanıcı bulunmamaktadır" + error);
     }
   };
 

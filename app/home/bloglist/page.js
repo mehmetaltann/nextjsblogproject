@@ -1,11 +1,10 @@
-import BlogModel from "@/lib/models/BlogModel";
 import Main from "@/Components/BlogList/Main";
 import { Loader } from "@/Components/Layouts/Loader";
 import { Suspense } from "react";
+import { fetchPosts } from "@/app/actions/fetchDatas";
 
 export default async function BlogList() {
-  const posts = await BlogModel.find({}).sort({ date: -1 });
-  const allPosts = JSON.parse(JSON.stringify(posts));
+  const { allPosts } = await fetchPosts();
 
   return (
     <Suspense fallback={<Loader />}>

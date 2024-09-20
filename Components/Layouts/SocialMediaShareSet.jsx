@@ -13,6 +13,7 @@ import {
   FaTelegram,
 } from "react-icons/fa6";
 import IconButton from "./IconButton";
+import { memo } from "react";
 
 const SocialMediaShareSet = ({ shareURL, title, size = 20 }) => {
   return (
@@ -61,4 +62,4 @@ const SocialMediaShareSet = ({ shareURL, title, size = 20 }) => {
   );
 };
 
-export default SocialMediaShareSet;
+export default memo(SocialMediaShareSet);

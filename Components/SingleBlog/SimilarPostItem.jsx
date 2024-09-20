@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CldImage } from "next-cloudinary";
-import Link from "next/link";
 
 const SimilarPostItem = ({ post }) => {
   const { _id, title, date, cloudinaryImageId } = post;

@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        background-color: #ffffff;
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 600px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333333;
+        font-size: 24px;
+        text-align: center;
+      }
+      .message-header {
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #dddddd;
+      }
+      .message-header h2 {
+        font-size: 20px;
+        color: #555555;
+      }
+      .message-header p {
+        font-size: 14px;
+        color: #777777;
+        margin: 5px 0;
+      }
+      .message-body {
+        font-size: 16px;
+        color: #333333;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+      .footer {
+        text-align: center;
+        font-size: 12px;
+        color: #aaaaaa;
+        margin-top: 20px;
+        border-top: 1px solid #dddddd;
+        padding-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Altan's Blog Yeni Mesaj</h1>
+
+      <div class="message-header">
+        <h2>Mesaj Detayı</h2>
+        <p><strong>Yorum Yapan Kişi Email:</strong> ({{authorEmail}})</p>
+        <p><strong>Yorum Yapılan Post Başlığı:</strong> {{postTitle}}</p>
+      </div>
+
+      <div class="message-body">
+        <span>Yorum İçeriği</span>
+        <p>{{content}}</p>
+      </div>
+      <div class="footer">
+        <p>Bu mail Altan's websitesinden gelmiştir</p>
+      </div>
+      <p class="footer2">
+        Web sitemizi ziyaret ederek detalı bilgi alabilirsiniz
+      </p>
+      <a href="http://localhost:3000/home"><strong>Altan's Blog</strong></a>
+    </div>
+  </body>
+</html>

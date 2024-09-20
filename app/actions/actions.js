@@ -4,33 +4,40 @@ import CommentModel from "@/lib/models/CommentsModel";
 import BlogModel from "@/lib/models/BlogModel";
 import UserModel from "@/lib/models/UserModel";
 import bcrypt from "bcryptjs";
-import { mailOptions, transporter } from "@/lib/config/nodemailer";
-const { revalidatePath } = require("next/cache");
+import fs from "fs";
+import path from "path";
+import { envEmail, transporter } from "@/lib/config/nodemailer";
+import { connectToMongoDB } from "@/lib/config/db";
+const { revalidatePath, revalidateTag } = require("next/cache");
+
+///////////////////////// CATEGORY ACTIONS ///////////////////////
 
 export const addCategory = async (prevState, formData) => {
   try {
+    connectToMongoDB();
     const newData = {
       name: formData.get("catName"),
       color: formData.get("catColor"),
     };
     await CategoryModel.create(newData);
-    revalidatePath("/admin/categories");
+    revalidateTag("categories");
     return { msg: "Kategori Eklendi" };
   } catch (error) {
     return { msg: "Kategori Eklenemedi: " + error };
   }
 };
 
-export const deleteCategory = async (prevState, formData) => {
+export const deleteCategory = async (_id) => {
   try {
-    const id = formData.get("id");
-    await CategoryModel.findByIdAndDelete(id);
-    revalidatePath("/admin/categories");
+    await CategoryModel.findByIdAndDelete(_id);
+    revalidateTag("categories");
     return { msg: "Kategori Silindi" };
   } catch (error) {
     return { msg: "Kategori Silinemedi: " + error };
   }
 };
+
+///////////////////////// POST ACTIONS ///////////////////////
 
 export const addPost = async (formData) => {
   try {
@@ -55,6 +62,18 @@ export const updatePost = async (formData) => {
   }
 };
 
+export const deletePost = async (_id) => {
+  try {
+    await BlogModel.findByIdAndDelete(_id);
+    revalidatePath(`/admin/posts`);
+    return { msg: "Blog Silindi" };
+  } catch (error) {
+    return { msg: "Blog Silinemedi: " + error };
+  }
+};
+
+///////////////////////// USER ACTIONS ///////////////////////
+
 export const userRegister = async (prevState, formData) => {
   try {
     const isim = formData.get("isim");
@@ -78,18 +97,30 @@ export const userRegister = async (prevState, formData) => {
   }
 };
 
+///////////////////////// OTHER ACTIONS ///////////////////////
+
 export const sendMessage = async (prevState, formData) => {
+  const templatePath = path.join(
+    process.cwd(),
+    "templates",
+    "contactEmailTemp.html"
+  );
+  let htmlTemplate = fs.readFileSync(templatePath, "utf8");
   try {
-    const newData = {
-      email: formData.get("email"),
-      title: formData.get("title"),
-      message: formData.get("message"),
-    };
+    const email = formData.get("email");
+    const title = formData.get("title");
+    const message = formData.get("message");
+
+    htmlTemplate = htmlTemplate
+      .replace("{{senderEmail}}", email)
+      .replace("{{subject}}", title)
+      .replace("{{message}}", message);
+
     await transporter.sendMail({
-      ...mailOptions,
-      from: newData.email,
-      subject: newData.title,
-      text: `Gönderen: ${newData.email}\n\n${newData.message}`,
+      to: envEmail,
+      from: authorEmail,
+      subject: postTitle,
+      html: htmlTemplate,
     });
     return { msg: "Mesajınız Gönderildi", success: true };
   } catch (error) {
@@ -97,19 +128,64 @@ export const sendMessage = async (prevState, formData) => {
   }
 };
 
+/* text: `Gönderen: ${newData.email}\n\n${newData.message}`*/
+
+///////////////////////// COMMENT ACTIONS ///////////////////////
+
 export const addComment = async (formData) => {
   try {
-    const { postTitle, postId } = formData;
-    await transporter.sendMail({
-      ...mailOptions,
-      from: authorEmail,
-      subject: "Blog Post Yorumu",
-      text: `Gönderen: ${authorEmail}\nPost Konusu: ${postTitle}\n\nYorumu: ${content}`,
-    });
+    const { postTitle, postId, authorEmail, content, parentCommentId } =
+      formData;
+    if (!parentCommentId) {
+      const templatePathNewComment = path.join(
+        process.cwd(),
+        "lib/templates",
+        "newCommentEmailTemp.html"
+      );
+      let htmlTemplateNewComment = fs.readFileSync(
+        templatePathNewComment,
+        "utf8"
+      );
+      htmlTemplateNewComment = htmlTemplateNewComment
+        .replace("{{postTitle}}", postTitle)
+        .replace("{{authorEmail}}", authorEmail)
+        .replace("{{content}}", content);
+
+      await transporter.sendMail({
+        to: envEmail,
+        from: authorEmail,
+        subject: postTitle,
+        html: htmlTemplateNewComment,
+      });
+    } else {
+      const commentReplyEmailTemp = path.join(
+        process.cwd(),
+        "lib/templates",
+        "commentReplyEmailTemp.html"
+      );
+      let htmlTemplateReplyComment = fs.readFileSync(
+        commentReplyEmailTemp,
+        "utf8"
+      );
+      const { authorEmail: parentAuthor } =
+        await CommentModel.findById(parentCommentId);
+
+      htmlTemplateReplyComment = htmlTemplateReplyComment
+        .replace("{{postTitle}}", postTitle)
+        .replace("{{authorEmail}}", authorEmail)
+        .replace("{{content}}", content)
+        .replace("{{parentAuthor}}", parentAuthor);
+
+      await transporter.sendMail({
+        to: [parentAuthor, envEmail],
+        from: authorEmail,
+        subject: postTitle,
+        html: htmlTemplateReplyComment,
+      });
+    }
     delete formData.postTitle;
-    console.log(formData);
     await CommentModel.create(formData);
-    revalidatePath(`/home/blog/${postId}`);
+    revalidateTag("comments");
     return { msg: "Yorum Eklendi", isSuccess: true };
   } catch (error) {
     return { msg: "Yorum Eklenemedi: " + error, isSuccess: false };
@@ -125,7 +201,7 @@ export const updateComment = async (formData) => {
         content,
       }
     );
-    revalidatePath(`/home/blog/${postId}`);
+    revalidateTag("comments");
     return { msg: "Yorum Güncellendi", isSuccess: true };
   } catch (error) {
     return { msg: "Yorum Güncellenemedi: " + error, isSuccess: false };
@@ -135,7 +211,7 @@ export const updateComment = async (formData) => {
 export const deleteComment = async (_id, postId) => {
   try {
     await CommentModel.findByIdAndDelete(_id);
-    revalidatePath(`/home/blog/${postId}`);
+    revalidateTag("comments");
     return { msg: "Yorum Silindi" };
   } catch (error) {
     return { msg: "Yorum Silinemedi: " + error };

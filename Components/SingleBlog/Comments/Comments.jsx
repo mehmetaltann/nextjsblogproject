@@ -1,4 +1,5 @@
 "use client";
+import dynamic from "next/dynamic";
 import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
 import Pagination from "../../Layouts/Pagination";

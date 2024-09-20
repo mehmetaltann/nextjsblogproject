@@ -8,14 +8,13 @@ import { useState } from "react";
 import { TiTick } from "react-icons/ti";
 import { IoMdClose } from "react-icons/io";
 import { usePagination } from "@/lib/hooks/usePagination";
-import { useBlog } from "@/app/hooks/useBlog";
+import { deletePost } from "@/app/actions/actions";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CldImage } from "next-cloudinary";
 
 const tableHeads = ["Başlık", "Kategoriler", "Tarih", "Ana Sayfa", "İşlemler"];
 
 const ManagePost = ({ type, allPosts }) => {
-  const { deletePost } = useBlog();
   const [filteredData, setFilteredData] = useState(allPosts);
   const [searchItem, setSearchItem] = useState("");
 

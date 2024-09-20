@@ -18,6 +18,7 @@ const Main = ({ allPosts, type }) => {
       ? true
       : item.category.some((insItem) => insItem.name === selectedCategory)
   );
+
   const {
     totalPages,
     displayPosts,
@@ -37,7 +38,7 @@ const Main = ({ allPosts, type }) => {
         setSelectedCategory={setSelectedCategory}
         setCurrentPage={setCurrentPage}
       />
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col">
         <PostList posts={displayPosts} />
         {totalPages > 1 && (
           <Pagination

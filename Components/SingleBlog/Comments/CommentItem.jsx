@@ -14,7 +14,14 @@ const CommentItem = ({
   parentId = null,
   replies,
 }) => {
-  const { authorName, content, date, _id, postId } = comment;
+  const {
+    authorName,
+    content,
+    date,
+    _id,
+    postId,
+    parentCommentId: parent,
+  } = comment;
   const isReplying =
     affectedComment &&
     affectedComment._id === _id &&
@@ -57,17 +64,19 @@ const CommentItem = ({
         />
       )}
       <div className="flex items-center gap-x-4 font-roboto text-color9 text-sm mt-3 opacity-80">
-        <button
-          className="flex items-center space-x-2"
-          onClick={
-            affectedComment === null
-              ? () => setAffectedComment({ type: "replying", _id })
-              : () => setAffectedComment(null)
-          }
-        >
-          <FiMessageSquare className="w-4 h-auto" />
-          <span>Yanıtla</span>
-        </button>
+        {!parent && (
+          <button
+            className="flex items-center space-x-2"
+            onClick={
+              affectedComment === null
+                ? () => setAffectedComment({ type: "replying", _id })
+                : () => setAffectedComment(null)
+            }
+          >
+            <FiMessageSquare className="w-4 h-auto" />
+            <span>Yanıtla</span>
+          </button>
+        )}
         {session && (
           <>
             <button
@@ -84,8 +93,7 @@ const CommentItem = ({
             <button
               className="flex items-center space-x-2"
               onClick={async () => {
-                const { msg } = await deleteComment(_id, postId);
-                toast.success(msg);
+                await deleteComment(_id, postId);
                 setAffectedComment(null);
               }}
             >

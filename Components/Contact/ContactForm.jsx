@@ -24,7 +24,7 @@ const ContactForm = ({ type }) => {
               İletişim
             </h2>
           </div>
-          <p className="font-tinos mb-8 lg:mb-12 font-light text-center text-gray-500 sm:text-xl">
+          <p className="mb-8 lg:mb-12 font-light text-center text-gray-500 sm:text-xl">
             Blogumuzda gördüğünüz, aklınıza takılan, sormak istediğiniz, merak
             ettiğiniz bir konu varsa yazmaktan lütfen çekinmeyin. Farklı
             konularda da yardımcı olmamızı isterseniz yazabilirsiniz.
@@ -37,7 +37,7 @@ const ContactForm = ({ type }) => {
             <div>
               <label
                 htmlFor="email"
-                className="font-roboto block text-sm font-medium text-color1"
+                className="block text-sm font-medium text-color1"
               >
                 Mail Adresiniz
               </label>
@@ -53,7 +53,7 @@ const ContactForm = ({ type }) => {
             <div>
               <label
                 htmlFor="title"
-                className="block  text-sm font-medium text-color1"
+                className="block text-sm font-medium text-color1"
               >
                 Konu
               </label>

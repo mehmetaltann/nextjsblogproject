@@ -1,6 +1,11 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { CldImage } from "next-cloudinary";
 import { FaArrowRight } from "react-icons/fa6";
+
+const RenderHTML = dynamic(() => import("../../Components/ui/RenderHTML"), {
+  ssr: false,
+});
 
 export default function PostCard({ data }) {
   return (
@@ -32,12 +37,7 @@ export default function PostCard({ data }) {
             ))}
         </div>
       </div>
-      <div
-        className="py-2 text-zinc-500 "
-        dangerouslySetInnerHTML={{
-          __html: data.description?.slice(0, 200),
-        }}
-      />
+      <RenderHTML HTML={data.description} />
       <div className="flex items-center justify-between font-medium text-color9">
         <Link href={`/home/blog/${data._id}`}>
           <div className="flex items-center space-x-2">

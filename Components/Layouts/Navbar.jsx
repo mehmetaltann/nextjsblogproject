@@ -1,4 +1,3 @@
-"use client";
 import Link from "next/link";
 import clsx from "clsx";
 import useOnclickOutside from "react-cool-onclickoutside";
@@ -130,7 +129,7 @@ const Navbar = () => {
               ) : (
                 <button
                   onClick={() => signIn()}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full "
                 >
                   Giriş Yap
                 </button>

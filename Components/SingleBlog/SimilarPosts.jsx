@@ -1,8 +1,12 @@
-import SimilarPostItem from "./SimilarPostItem";
+import dynamic from "next/dynamic";
+
+const SimilarPostItem = dynamic(() => import("./SimilarPostItem"), {
+  ssr: false,
+});
 
 const SimilarPosts = ({ similarposts }) => {
   if (!similarposts || similarposts.length === 0) return <div></div>;
-  
+
   const shuffled = similarposts.sort(() => 0.5 - Math.random());
 
   return (
