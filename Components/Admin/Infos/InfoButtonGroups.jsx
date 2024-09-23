@@ -7,7 +7,7 @@ const InfoButtonGroups = ({ setSelectedInfo, selectedInfo, infos }) => {
     "font-semibold text-gray-900 bg-white text-[#A5A5A5] hover:bg-gray-100";
 
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap mb-3">
       <button
         onClick={() => setSelectedInfo("new")}
         type="button"

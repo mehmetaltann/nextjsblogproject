@@ -90,8 +90,10 @@ const PhotoSection = ({ isNewPost }) => {
             name="image"
             hidden
           />
+          
         </>
       )}
+
     </div>
   );
 };

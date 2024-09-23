@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import InfoForm from "./InfoForm";
 import InfoTable from "./InfoTable";
+import InfoProfilPic from "./InfoProfilPic";
 
 const InfoButtonGroups = dynamic(() => import("./InfoButtonGroups"), {
   ssr: false,
@@ -11,6 +12,8 @@ const InfoButtonGroups = dynamic(() => import("./InfoButtonGroups"), {
 
 const Infos = ({ type, allInfos }) => {
   const [selectedInfo, setSelectedInfo] = useState("new");
+
+  console.log(allInfos);
 
   let filteredData;
 
@@ -28,16 +31,17 @@ const Infos = ({ type, allInfos }) => {
           infos={allInfos}
           selectedInfo={selectedInfo}
         />
-
-        {filteredData ? (
-          <InfoTable
-            selectedInfo={selectedInfo}
-            infoData={filteredData}
-            setSelectedInfo={setSelectedInfo}
-          />
-        ) : (
-          <InfoForm />
-        )}
+        {!filteredData && <InfoForm />}
+        {filteredData &&
+          (filteredData.isPic ? (
+            <InfoProfilPic infoData={filteredData} />
+          ) : (
+            <InfoTable
+              selectedInfo={selectedInfo}
+              infoData={filteredData}
+              setSelectedInfo={setSelectedInfo}
+            />
+          ))}
       </div>
     </AnimationWrapper>
   );

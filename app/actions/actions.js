@@ -224,6 +224,7 @@ export const addInfo = async (prevState, formData) => {
     const newData = {
       name: formData.get("isim"),
       content: formData.get("content"),
+      isPic: formData.get("isPic") ? true : false,
     };
     await InfoModel.create(newData);
     revalidateTag("infos");
