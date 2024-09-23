@@ -6,7 +6,7 @@ const SimilarPostItem = ({ post }) => {
   const { _id, title, date, cloudinaryImageId } = post;
 
   return (
-    <div>
+    <div className="flex-grow">
       <div className="mb-4 w-full overflow-hidden rounded-xl">
         <Link href={`/home/blog/${_id}`}>
           <CldImage
@@ -14,14 +14,15 @@ const SimilarPostItem = ({ post }) => {
             alt={title}
             width={420}
             height={280}
-            sizes="60vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="aspect-video w-full object-cover"
-            priority={true}
+            quality="auto"
+            format="auto"
           />
         </Link>
       </div>
       <Link href={`/home/blog/${_id}`}>
-        <p className="text-zinc-500 font-semibold ms-1">{title}</p>
+        <h3 className="text-zinc-500 font-semibold ms-1">{title}</h3>
         <p className="text-zinc-500 ms-1">{getFormatDate(date)}</p>
       </Link>
     </div>

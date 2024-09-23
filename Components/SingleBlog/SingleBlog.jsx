@@ -8,7 +8,7 @@ import { CldImage } from "next-cloudinary";
 import { getFormatDate } from "@/lib/utils/helpers";
 
 const SingleBlog = ({ type, blog, sameCategoryBlogs, comments }) => {
-  const filteredSameCategoryBlogs = sameCategoryBlogs.filter((item) => {
+  const filteredBlogsByCategory = sameCategoryBlogs.filter((item) => {
     return item.title !== blog.title;
   });
 
@@ -77,7 +77,7 @@ const SingleBlog = ({ type, blog, sameCategoryBlogs, comments }) => {
       <div className="font-semibold text-xl py-4 opacity-80 text-color1">
         Benzer Yazılar
       </div>
-      <SimilarPosts similarposts={filteredSameCategoryBlogs} />
+      <SimilarPosts similarposts={filteredBlogsByCategory} />
     </AnimationWrapper>
   );
 };

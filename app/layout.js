@@ -1,20 +1,11 @@
 import siteConfig from "@/lib/config/seo.config";
+import localFont from "next/font/local";
 import { AuthProvider } from "./provider";
 import { ClientContextProvider } from "@/store/ClientContext";
 import { connectToMongoDB } from "@/lib/config/db";
 import { ToastContainer } from "react-toastify";
-import { Noto_Sans } from "next/font/google";
-import localFont from "next/font/local";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-
-/*
-export const notosans = Noto_Sans({
-  subsets: ["latin"],
-  variable: "--font-notosans",
-});
-
-*/
 
 const myFont = localFont({
   src: "../lib/fonts/NotoSans-VariableFont.ttf",

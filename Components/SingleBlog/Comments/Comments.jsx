@@ -1,10 +1,9 @@
 "use client";
-import dynamic from "next/dynamic";
 import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
 import Pagination from "../../Layouts/Pagination";
 import { usePagination } from "@/lib/hooks/usePagination";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { addComment } from "@/app/actions/actions";
 import { toast } from "react-toastify";
 
@@ -24,11 +23,17 @@ const Comments = ({ postId, postTitle, comments }) => {
   } = usePagination(mainComments, 5);
 
   const addCommentHandler = async (postData, parentCommentId = null) => {
-    postData.postId = postId;
-    postData.postTitle = postTitle;
-    postData.parentCommentId = parentCommentId;
-    await addComment(postData);
-    setAffectedComment(null);
+    try {
+      postData.postId = postId;
+      postData.postTitle = postTitle;
+      postData.parentCommentId = parentCommentId;
+      await addComment(postData);
+      setAffectedComment(null);
+      toast.success("Yorum başarıyla eklendi!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Yorum eklenirken bir hata oluştu.");
+    }
   };
 
   const getRepliesHandler = (commentId) => {
@@ -46,7 +51,7 @@ const Comments = ({ postId, postTitle, comments }) => {
           {mainComments.length > 0 && (
             <>
               <p className="font-semibold text-xl py-2 opacity-80 text-color1">
-                Tüm Yorumlar ({mainComments.length})
+                Tüm Yorumlar ({mainComments?.length || 0})
               </p>
               {displayComments.map((comment) => {
                 return (

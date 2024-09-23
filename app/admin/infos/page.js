@@ -1,19 +1,14 @@
-import ContactForm from "@/Components/Contact/ContactForm";
+import Infos from "@/Components/Admin/Infos/Infos";
 import { fetchInfos } from "@/app/actions/fetchDatas";
 import { Loader } from "@/Components/Layouts/Loader";
 import { Suspense } from "react";
 
-export const metadata = {
-  title: "İletişim",
-};
-
-export default async function Contact() {
+export default async function Info() {
   const { allInfos } = await fetchInfos();
-  const data = allInfos?.find((info) => info.name === "İletişim");
 
   return (
     <Suspense fallback={<Loader />}>
-      <ContactForm data={data} />
+      <Infos allInfos={allInfos} />
     </Suspense>
   );
 }

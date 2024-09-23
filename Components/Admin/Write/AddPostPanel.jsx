@@ -38,22 +38,28 @@ const AddPostPanel = ({ type, allCategories }) => {
       category: categories,
     };
     if (isNewPost) {
-      const { isSuccess, msg } = await addPost(postData);
-      if (isSuccess) {
-        setTitle("");
-        setDescription("");
-        setCategory([]);
-        setCloudinaryImageId("");
-        setIsHome(false);
-        document.getElementById("blog-submit").reset();
-        toast.success(msg);
+      try {
+        const { isSuccess, msg } = await addPost(postData);
+        if (isSuccess) {
+          setTitle("");
+          setDescription("");
+          setCategory([]);
+          setCloudinaryImageId("");
+          setIsHome(false);
+          document.getElementById("blog-submit").reset();
+          toast.success(msg);
+        }
+      } catch (error) {
+        toast.error(error);
       }
     } else {
-      postData["_id"] = postId;
-      console.log(postData);
-      const { msg } = await updatePost(postData);
-      console.log(msg);
-      toast.success(msg);
+      try {
+        postData["_id"] = postId;
+        const { msg } = await updatePost(postData);
+        toast.success(msg);
+      } catch (error) {
+        toast.error(error);
+      }
     }
   };
 

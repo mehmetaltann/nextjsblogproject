@@ -4,6 +4,7 @@ import { CldImage } from "next-cloudinary";
 import { AdminContext } from "@/store/AdminContext";
 import { useContext, useState } from "react";
 import { IoIosCloudUpload } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const PhotoSection = ({ isNewPost }) => {
   const [isUploading, setIsUploading] = useState(false);
@@ -12,6 +13,13 @@ const PhotoSection = ({ isNewPost }) => {
   const handleFileUpload = async (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
+
+    const validImageTypes = ["image/jpeg", "image/png", "image/gif"];
+    if (!validImageTypes.includes(file.type)) {
+      toast.error("Sadece JPG, PNG veya GIF dosyaları yükleyebilirsiniz.");
+      return;
+    }
+
     setIsUploading(true);
     const formData = new FormData();
     formData.append("file", file);
@@ -20,7 +28,7 @@ const PhotoSection = ({ isNewPost }) => {
       const response = await axios.post("/api/image-upload", formData);
       setCloudinaryImageId(response.data.publicId);
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     } finally {
       setIsUploading(false);
     }
@@ -54,6 +62,7 @@ const PhotoSection = ({ isNewPost }) => {
         <CldImage
           src={cloudinaryImageId}
           description="image upload"
+          sizes="(max-width: 600px) 100vw, 600px"
           height={600}
           width={600}
           alt="down-pic"
@@ -67,6 +76,7 @@ const PhotoSection = ({ isNewPost }) => {
             <CldImage
               src={cloudinaryImageId}
               description="image upload"
+              sizes="(max-width: 600px) 100vw, 600px"
               height={600}
               width={600}
               alt="down-pic"

@@ -20,7 +20,7 @@ const ManagePost = ({ type, allPosts }) => {
 
   //Pagination
   const { totalPages, displayPosts, onPageChange, currentPage } = usePagination(
-    filteredData ? filteredData : allPosts,
+    filteredData || allPosts,
     5
   );
 
@@ -44,16 +44,16 @@ const ManagePost = ({ type, allPosts }) => {
             <h2 className="text-2xl leading-tight">Yazılar</h2>
             <div className="text-end">
               <div className="flex flex-row justify-center items-center w-3/4 max-w-sm md:w-full space-x-3 space-y-0">
-                <div className=" relative ">
-                  <input
-                    type="text"
-                    id='"form-subscribe-Filter'
-                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                    placeholder="Arama..."
-                    value={searchItem}
-                    onChange={handleInputChange}
-                  />
-                </div>
+                <input
+                  type="text"
+                  id='"form-subscribe-Filter'
+                  className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                  placeholder="Arama..."
+                  value={searchItem}
+                  onChange={handleInputChange}
+                  aria-label="Yazı Ara"
+                />
+
                 <div className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200">
                   Ara
                 </div>
@@ -103,7 +103,7 @@ const ManagePost = ({ type, allPosts }) => {
                       </td>
                       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                         <div className="flex flex-wrap gap-2 text-gray-900 whitespace-no-wrap">
-                          {post.category.map((cat) => (
+                          {post.category?.map((cat) => (
                             <span key={cat.name}>#{cat.name}</span>
                           ))}
                         </div>

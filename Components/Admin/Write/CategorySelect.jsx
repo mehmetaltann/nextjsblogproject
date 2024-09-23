@@ -9,14 +9,14 @@ const CategorySelect = ({ optionsData }) => {
 
   useEffect(() => {
     setOptions(optionsData);
-  }, []);
+  }, [optionsData]);
 
   return (
     <>
       {options && (
         <Select
           isMulti
-          defaultValue={selectDefaultValue}
+          defaultValue={selectDefaultValue || []}
           valueField="value"
           instanceId="categoryType"
           placeholder="Kategori ..."

@@ -8,7 +8,7 @@ cloudinary.config({
 });
 
 export async function POST(request) {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   try {
     const formData = await request.formData();
     const file = formData.get("file");
@@ -33,7 +33,7 @@ export async function POST(request) {
 
     return NextResponse.json({ publicId: result.public_id });
   } catch (error) {
-    console.log("Upload Image Failed", error);
-    return NextResponse.json({ msg: "Resim Yüklenemedi" });
+    console.log(error);
+    return NextResponse.json({ msg: "Resim Yüklenemedi" + error });
   }
 }

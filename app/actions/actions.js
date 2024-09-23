@@ -6,15 +6,14 @@ import UserModel from "@/lib/models/UserModel";
 import bcrypt from "bcryptjs";
 import fs from "fs";
 import path from "path";
+import InfoModel from "@/lib/models/InfoModel";
 import { envEmail, transporter } from "@/lib/config/nodemailer";
-import { connectToMongoDB } from "@/lib/config/db";
 const { revalidatePath, revalidateTag } = require("next/cache");
 
 ///////////////////////// CATEGORY ACTIONS ///////////////////////
 
 export const addCategory = async (prevState, formData) => {
   try {
-    connectToMongoDB();
     const newData = {
       name: formData.get("catName"),
       color: formData.get("catColor"),
@@ -194,7 +193,7 @@ export const addComment = async (formData) => {
 
 export const updateComment = async (formData) => {
   try {
-    const { content, _id, postId } = formData;
+    const { content, _id } = formData;
     await CommentModel.findByIdAndUpdate(
       { _id },
       {
@@ -208,12 +207,55 @@ export const updateComment = async (formData) => {
   }
 };
 
-export const deleteComment = async (_id, postId) => {
+export const deleteComment = async (_id) => {
   try {
     await CommentModel.findByIdAndDelete(_id);
     revalidateTag("comments");
     return { msg: "Yorum Silindi" };
   } catch (error) {
     return { msg: "Yorum Silinemedi: " + error };
+  }
+};
+
+///////////////////////// INFO ACTIONS ///////////////////////
+
+export const addInfo = async (prevState, formData) => {
+  try {
+    const newData = {
+      name: formData.get("isim"),
+      content: formData.get("content"),
+    };
+    await InfoModel.create(newData);
+    revalidateTag("infos");
+    return { msg: "Bilgi Eklendi" };
+  } catch (error) {
+    return { msg: "Bilgi Eklenemedi: " + error };
+  }
+};
+
+export const deleteInfo = async (_id) => {
+  try {
+    await InfoModel.findByIdAndDelete(_id);
+    revalidatePath("/admin/infos");
+    return { msg: "Bilgi Silindi" };
+  } catch (error) {
+    return { msg: "Bilgi Silinemedi: " + error };
+  }
+};
+
+export const updateInfo = async (formData) => {
+  try {
+    const { _id, content, name } = formData;
+    await InfoModel.findByIdAndUpdate(
+      { _id },
+      {
+        content,
+        name,
+      }
+    );
+    revalidatePath("/admin/infos");
+    return { msg: "Bilgi Güncellendi", isSuccess: true };
+  } catch (error) {
+    return { msg: "Bilgi Güncellenemedi: " + error, isSuccess: false };
   }
 };

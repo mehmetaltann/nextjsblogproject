@@ -33,6 +33,23 @@ const CommentItem = ({
   const parentCommentId = parentId ? parentId : _id;
   const { data: session } = useSession();
 
+  const handleAffectedComment = (type) => {
+    if (affectedComment === null) {
+      setAffectedComment({ type, _id });
+    } else {
+      setAffectedComment(null);
+    }
+  };
+
+  const handleDeleteClick = async () => {
+    try {
+      await deleteComment(_id, postId);
+      setAffectedComment(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="mb-2 flex flex-col rounded-xl border border-color7 p-4 pb-6 ">
       <div className="mb-4 flex w-full flex-col md:items-center justify-between gap-2 text-gray-500  sm:flex-row">
@@ -67,11 +84,7 @@ const CommentItem = ({
         {!parent && (
           <button
             className="flex items-center space-x-2"
-            onClick={
-              affectedComment === null
-                ? () => setAffectedComment({ type: "replying", _id })
-                : () => setAffectedComment(null)
-            }
+            onClick={() => handleAffectedComment("replying")}
           >
             <FiMessageSquare className="w-4 h-auto" />
             <span>Yanıtla</span>
@@ -81,21 +94,14 @@ const CommentItem = ({
           <>
             <button
               className="flex items-center space-x-2"
-              onClick={
-                affectedComment === null
-                  ? () => setAffectedComment({ type: "editing", _id })
-                  : () => setAffectedComment(null)
-              }
+              onClick={() => handleAffectedComment("editing")}
             >
               <FiEdit2 className="w-4 h-auto" />
               <span>Güncelle</span>
             </button>
             <button
               className="flex items-center space-x-2"
-              onClick={async () => {
-                await deleteComment(_id, postId);
-                setAffectedComment(null);
-              }}
+              onClick={handleDeleteClick}
             >
               <FiTrash className="w-4 h-auto" />
               <span>Sil</span>
@@ -112,7 +118,7 @@ const CommentItem = ({
           formCancelHandler={() => setAffectedComment(null)}
         />
       )}
-      {replies.length > 0 && (
+      {replies?.length > 0 && (
         <div className="mt-6 ms-6 md:ms-24">
           {replies.map((reply) => (
             <CommentItem

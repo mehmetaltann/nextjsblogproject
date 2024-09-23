@@ -6,13 +6,15 @@ import { FaMailBulk } from "react-icons/fa";
 import { useFormState } from "react-dom";
 import { sendMessage } from "@/app/actions/actions";
 
-const ContactForm = ({ type }) => {
+const ContactForm = ({ type, data }) => {
   const [formState, formAction] = useFormState(sendMessage, null);
 
   useEffect(() => {
-    toast.success(formState?.msg);
-    document.getElementById("myform").reset();
-  }, [formState]);
+    if (formState?.msg) {
+      toast.success(formState.msg);
+      document.getElementById("myform").reset();
+    }
+  }, [formState?.msg]);
 
   return (
     <AnimationWrapper keyValue={type} className="flex flex-col justify-between">
@@ -25,9 +27,7 @@ const ContactForm = ({ type }) => {
             </h2>
           </div>
           <p className="mb-8 lg:mb-12 font-light text-center text-gray-500 sm:text-xl">
-            Blogumuzda gördüğünüz, aklınıza takılan, sormak istediğiniz, merak
-            ettiğiniz bir konu varsa yazmaktan lütfen çekinmeyin. Farklı
-            konularda da yardımcı olmamızı isterseniz yazabilirsiniz.
+            {data.content}
           </p>
           <form
             id="myform"

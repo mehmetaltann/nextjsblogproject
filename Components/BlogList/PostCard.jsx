@@ -39,11 +39,12 @@ export default function PostCard({ data }) {
       </div>
       <RenderHTML HTML={data.description} />
       <div className="flex items-center justify-between font-medium text-color9">
-        <Link href={`/home/blog/${data._id}`}>
-          <div className="flex items-center space-x-2">
-            <span>Devamı</span>
-            <FaArrowRight className="h-4 w-4 text-inherit" />
-          </div>
+        <Link
+          href={`/home/blog/${data._id}`}
+          className="flex items-center space-x-2"
+        >
+          <span>Devamı</span>
+          <FaArrowRight className="h-4 w-4 text-inherit" />
         </Link>
         <div className="hidden select-none justify-end space-x-2 md:flex ">
           {data.category &&

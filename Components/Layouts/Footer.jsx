@@ -1,7 +1,9 @@
 import SocialMediaShareSet from "./SocialMediaShareSet";
-import { CldImage } from "next-cloudinary";
 import Link from "next/link";
+import { CldImage } from "next-cloudinary";
 import { memo } from "react";
+
+const BASE_URL = process.env.BASE_URL;
 
 const Footer = () => {
   return (
@@ -21,10 +23,7 @@ const Footer = () => {
         <span>mehmetaltann@gmail.com</span>
       </div>
       <div className="flex">
-        <SocialMediaShareSet
-          shareURL="http://localhost:3000/"
-          title="Altans Blog"
-        />
+        <SocialMediaShareSet shareURL={BASE_URL} title="Altans Blog" />
       </div>
     </div>
   );

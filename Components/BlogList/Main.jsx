@@ -4,20 +4,22 @@ import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import PostList from "./PostList";
 import Pagination from "../Layouts/Pagination";
 import { getAttCount } from "@/lib/utils/helpers";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { ClientContext } from "@/store/ClientContext";
 import { usePagination } from "@/lib/hooks/usePagination";
 
 const Main = ({ allPosts, type }) => {
   const { selectedCategory, setSelectedCategory } = useContext(ClientContext);
 
-  const categoryCountObj = getAttCount(allPosts);
+  const categoryCountObj = useMemo(() => getAttCount(allPosts), [allPosts]);
 
-  const filteredPosts = allPosts.filter((item) =>
-    selectedCategory === "Tümü"
-      ? true
-      : item.category.some((insItem) => insItem.name === selectedCategory)
-  );
+  const filteredPosts = useMemo(() => {
+    return selectedCategory === "Tümü"
+      ? allPosts
+      : allPosts.filter((item) =>
+          item.category.some((insItem) => insItem.name === selectedCategory)
+        );
+  }, [selectedCategory, allPosts]);
 
   const {
     totalPages,
@@ -26,6 +28,11 @@ const Main = ({ allPosts, type }) => {
     setCurrentPage,
     currentPage,
   } = usePagination(filteredPosts, 3);
+
+  const handlePageChange = (page) => {
+    onPageChange(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <AnimationWrapper
@@ -44,7 +51,7 @@ const Main = ({ allPosts, type }) => {
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
-            onPageChange={onPageChange}
+            onPageChange={handlePageChange}
           />
         )}
       </div>

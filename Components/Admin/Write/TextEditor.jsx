@@ -3,6 +3,7 @@ import { AdminContext } from "@/store/AdminContext";
 import dynamic from "next/dynamic";
 const JoditEditor = dynamic(() => import("./WrappedTextEditor"), {
   ssr: false,
+  loading: () => <p>Yükleniyor...</p>,
 });
 
 const TextEditor = () => {
@@ -24,7 +25,6 @@ const TextEditor = () => {
       config={config}
       tabIndex={1} // tabIndex of textarea
       onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
-      onChange={(newContent) => {}}
     />
   );
 };

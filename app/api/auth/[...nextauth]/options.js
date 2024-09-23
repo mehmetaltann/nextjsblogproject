@@ -40,4 +40,21 @@ export const options = {
     signIn: "/auth",
     signOut: "/home",
   },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user._id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.id = token.id;
+      }
+      return session;
+    },
+  },
+  jwt: {
+    maxAge: 60 * 60 * 24 * 30, // 30 gün
+  },
 };

@@ -5,58 +5,14 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { CldImage } from "next-cloudinary";
 import { useEffect, useState } from "react";
 import { RiMenuLine, RiCloseLine } from "react-icons/ri";
-import { AiFillDashboard } from "react-icons/ai";
-import { BiCategoryAlt } from "react-icons/bi";
-import { FaUserAlt, FaSignOutAlt } from "react-icons/fa";
-import { BsFillPencilFill } from "react-icons/bs";
 
-const MENU_ITEMS = [
-  {
-    id: 1,
-    link: "/admin",
-    title: "Yazı Yönetimi",
-    name: "dashboard",
-    icon: <AiFillDashboard className="text-xl" />,
-    type: "link",
-  },
-  {
-    id: 2,
-    link: "/admin/write",
-    title: "Yeni Yazı",
-    name: "newPost",
-    icon: <BsFillPencilFill className="text-xl" />,
-    type: "link",
-  },
-  {
-    id: 3,
-    link: "/admin/categories",
-    title: "Kategoriler",
-    name: "categories",
-    icon: <BiCategoryAlt className="text-xl" />,
-    type: "link",
-  },
-  {
-    id: 4,
-    link: "/admin/register",
-    title: "Kullanıcı Kayıt",
-    name: "user",
-    icon: <FaUserAlt className="text-xl" />,
-    type: "link",
-  },
-  {
-    id: 5,
-    link: "/home",
-    title: "Çıkış Yap",
-    name: "signOut",
-    icon: <FaSignOutAlt className="text-xl" />,
-    type: "link",
-  },
-];
+import { MENU_ITEMS } from "@/lib/static/adminHedarData";
 
 const AdminHeader = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
   const [activeNavName, setActiveNavName] = useState("dashboard");
   const windowSize = useWindowSize();
+
   const toggleMenuHandler = () => {
     setIsMenuActive((prevState) => !prevState);
   };
@@ -86,11 +42,13 @@ const AdminHeader = () => {
           <RiCloseLine
             className="w-6 h-6 cursor-pointer"
             onClick={toggleMenuHandler}
+            aria-label="Close Menu"
           />
         ) : (
           <RiMenuLine
             className="w-6 h-6 cursor-pointer"
             onClick={toggleMenuHandler}
+            aria-label="Open Menu"
           />
         )}
       </div>
@@ -98,7 +56,7 @@ const AdminHeader = () => {
       {isMenuActive && (
         <div className="fixed inset-0 lg:static lg:h-full lg:w-full">
           {/* sidebar */}
-          <div className="opacity-80 fixed top-0 bottom-0 left-0 z-10 w-3/4 overflow-y-auto bg-white p-4 lg:static lg:h-full lg:max-w-[300px] lg:p-6">
+          <div className="fixed top-0 bottom-0 left-0 z-50 w-3/4 overflow-y-auto bg-white p-4 lg:static lg:h-full lg:max-w-[300px] lg:p-6">
             <Link href="/home">
               <CldImage
                 src="https://res.cloudinary.com/duixszfkd/image/upload/v1725431523/logo.png"
