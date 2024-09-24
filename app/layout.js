@@ -18,6 +18,7 @@ export const metadata = {
   title: { default: siteConfig.title, template: "%s - Altan's Blog" },
   description: siteConfig.description,
   publisher: siteConfig.publisher,
+  creator: siteConfig.author,
   author: siteConfig.author,
   robots: siteConfig.robots,
   keywords: siteConfig.keywords,

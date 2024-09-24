@@ -1,10 +1,9 @@
 "use client";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import dynamic from "next/dynamic";
-import { useState } from "react";
 import InfoForm from "./InfoForm";
 import InfoTable from "./InfoTable";
-import InfoProfilPic from "./InfoProfilPic";
+import { useState } from "react";
 
 const InfoButtonGroups = dynamic(() => import("./InfoButtonGroups"), {
   ssr: false,
@@ -13,11 +12,7 @@ const InfoButtonGroups = dynamic(() => import("./InfoButtonGroups"), {
 const Infos = ({ type, allInfos }) => {
   const [selectedInfo, setSelectedInfo] = useState("new");
 
-  console.log(allInfos);
-
-  let filteredData;
-
-  filteredData = allInfos?.find((info) => info.name === selectedInfo);
+  const filteredData = allInfos?.find((info) => info.name === selectedInfo);
 
   return (
     <AnimationWrapper
@@ -31,17 +26,15 @@ const Infos = ({ type, allInfos }) => {
           infos={allInfos}
           selectedInfo={selectedInfo}
         />
-        {!filteredData && <InfoForm />}
-        {filteredData &&
-          (filteredData.isPic ? (
-            <InfoProfilPic infoData={filteredData} />
-          ) : (
-            <InfoTable
-              selectedInfo={selectedInfo}
-              infoData={filteredData}
-              setSelectedInfo={setSelectedInfo}
-            />
-          ))}
+        {!filteredData ? (
+          <InfoForm />
+        ) : (
+          <InfoTable
+            selectedInfo={selectedInfo}
+            infoData={filteredData}
+            setSelectedInfo={setSelectedInfo}
+          />
+        )}
       </div>
     </AnimationWrapper>
   );
