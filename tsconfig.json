@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "typeRoots": ["./node_modules/@types", "./@types"],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "app/home/page.js",
+    "Components/Home/BlogPosts.jsx",
+    "Components/Home/BlogPostPreview.tsx",
+    "app/sitemap.ts",
+    "lib/models/UserModel.js",
+    "lib/config/db.ts",
+    "lib/config/nodemailer.ts",
+    "lib/hooks/usePagination.ts",
+    "app/actions/fetchDatas.ts",
+    "app/home/blog/[id]/page.tsx",
+    "app/api/auth/[...nextauth]/options.ts",
+    "Components/Admin/Infos/InfoProfilPic.jsx",
+    "app/admin/write/page.tsx"
+  ],
+  "exclude": ["node_modules"]
+}
