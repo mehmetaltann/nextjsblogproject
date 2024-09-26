@@ -39,7 +39,7 @@
     "app/home/blog/[id]/page.tsx",
     "app/api/auth/[...nextauth]/options.ts",
     "Components/Admin/Infos/InfoProfilPic.jsx",
-    "app/admin/write/page.js"
+    "app/admin/write/page.tsx"
   ],
   "exclude": ["node_modules"]
 }
