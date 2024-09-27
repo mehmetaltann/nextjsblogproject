@@ -9,6 +9,16 @@ const CategoryTableItem = ({ category }: { category: CategoryType }) => {
     backgroundColor: "#" + category.color,
   };
 
+  const deleteHandler = async () => {
+    try {
+      const response = await deleteCategory(category._id);
+      const { msg } = response as { msg: string };
+      toast.success(msg);
+    } catch (error) {
+      toast.error("Kategori Silinemedi: " + error);
+    }
+  };
+
   return (
     <tr className="bg-white border-b">
       <th
@@ -30,10 +40,7 @@ const CategoryTableItem = ({ category }: { category: CategoryType }) => {
       >
         <button
           className="py-1 px-4 rounded-3xl bg-color8 text-white text-sm"
-          onClick={async () => {
-            const { msg } = await deleteCategory(category._id);
-            toast.success(msg);
-          }}
+          onClick={deleteHandler}
         >
           Sil
         </button>

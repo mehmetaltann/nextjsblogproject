@@ -1,18 +1,7 @@
 import { RiEdit2Line } from "react-icons/ri";
 import { useContext } from "react";
 import { AdminContext } from "@/store/AdminContext";
-import { PostCategoryType } from "@/lib/types/types";
-
-// Define the post type
-type PostType = {
-  _id: string;
-  title: string;
-  isHome: boolean;
-  description: string;
-  category: PostCategoryType[];
-  cloudinaryImageId: string | null;
-  date: string;
-};
+import { PostType } from "@/lib/types/types";
 
 interface EditButtonProps {
   post: PostType;

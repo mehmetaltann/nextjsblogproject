@@ -18,15 +18,3 @@ export async function connectToMongoDB(): Promise<Connection> {
   }
 }
 
-
-/*
-
-
-    const cnx = await mongoose.connect(process.env.MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    });
-
-
-    */

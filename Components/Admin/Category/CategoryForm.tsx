@@ -8,7 +8,11 @@ const CategoryForm = () => {
   const [formState, formAction] = useFormState(addCategory, null);
 
   useEffect(() => {
-    toast.success(formState?.msg);
+    if (Array.isArray(formState)) return;
+
+    if (formState?.msg) {
+      toast.success(formState.msg);
+    }
   }, [formState]);
 
   return (

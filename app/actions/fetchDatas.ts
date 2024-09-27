@@ -2,6 +2,7 @@ import CommentModel from "@/lib/models/CommentsModel";
 import BlogModel from "@/lib/models/BlogModel";
 import CategoryModel from "@/lib/models/CategoryModel";
 import InfoModel from "@/lib/models/InfoModel";
+import dbConnect from "@/lib/config/dbConnect";
 import {
   CategoryType,
   CommentType,
@@ -19,6 +20,12 @@ interface Blog {
 
 export const fetchPosts = async () => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     const posts = await BlogModel.find({}).sort({ date: -1 }).lean();
     const allPosts: PostType[] = JSON.parse(JSON.stringify(posts));
     return allPosts;
@@ -29,6 +36,12 @@ export const fetchPosts = async () => {
 
 export const fetchCategories = async () => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     const categories = await CategoryModel.find({}).lean();
     const allCategories: CategoryType[] = JSON.parse(
       JSON.stringify(categories)
@@ -41,6 +54,12 @@ export const fetchCategories = async () => {
 
 export const fetchComment = async (id: string) => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     const commentsData = await CommentModel.find({ postId: id }).lean();
     const comments: CommentType[] = JSON.parse(JSON.stringify(commentsData));
     return comments;
@@ -51,6 +70,12 @@ export const fetchComment = async (id: string) => {
 
 export const fetchBlog = async (id: string) => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     const data = await BlogModel.findById(id).lean();
     const blog: PostType = JSON.parse(JSON.stringify(data));
     return blog;
@@ -61,6 +86,12 @@ export const fetchBlog = async (id: string) => {
 
 export const fetchSimilarPosts = async (categoryArray: string[]) => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     const sameCategoryBlogsData = await BlogModel.find({
       "category.name": {
         $in: categoryArray,
@@ -77,6 +108,12 @@ export const fetchSimilarPosts = async (categoryArray: string[]) => {
 
 export const fetchInfos = async () => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     const infos = await InfoModel.find({}).lean();
     const allInfos: InfoType[] = JSON.parse(JSON.stringify(infos));
     return allInfos;

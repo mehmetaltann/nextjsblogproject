@@ -25,11 +25,12 @@ const InfoTable = ({
 
   const handleInfoUpdate = async () => {
     try {
-      const { msg } = await updateInfo({
+      const response = await updateInfo({
         _id,
         content: newContent,
         name: newName,
       });
+      const { msg } = response as { msg: string };
       toast.success(msg);
     } catch (error) {
       if (error instanceof Error) {
@@ -42,7 +43,8 @@ const InfoTable = ({
 
   const handleInfoDelete = async () => {
     try {
-      const { msg } = await deleteInfo(_id);
+      const response = await deleteInfo(_id);
+      const { msg } = response as { msg: string };
       toast.success(msg);
       setSelectedInfo("new");
     } catch (error) {

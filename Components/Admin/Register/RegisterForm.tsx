@@ -10,6 +10,7 @@ const RegisterForm: React.FC = () => {
   const [formState, formAction] = useFormState(userRegister, null);
 
   useEffect(() => {
+    if (Array.isArray(formState)) return;
     if (formState?.isSuccess) {
       toast.success(formState?.msg);
       (document.getElementById("registerForm") as HTMLFormElement).reset();

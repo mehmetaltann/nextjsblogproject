@@ -8,6 +8,7 @@ export type PostType = {
   isHome: boolean;
   updated_at: string;
   created_at: string;
+  author: string;
 };
 
 export type CommentType = {

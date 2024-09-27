@@ -1,9 +1,9 @@
 import { useRef, useMemo, useContext, SetStateAction } from "react";
 import { AdminContext } from "@/store/AdminContext";
 import dynamic from "next/dynamic";
-const JoditEditor = dynamic(() => import("./WrappedTextEditor"), {
+
+const JoditEditor = dynamic(() => import("jodit-react"), {
   ssr: false,
-  loading: () => <p>Yükleniyor...</p>,
 });
 
 const TextEditor = () => {
@@ -15,25 +15,32 @@ const TextEditor = () => {
   }
   const { setDescription, description } = context;
   const editor = useRef(null);
+
   const config = useMemo(
     () => ({
       readonly: false,
-      placeholder: "Yazınız ...",
+      placeholder: "Yazınız...",
       height: 600,
+      uploader: {
+        insertImageAsBase64URI: true,
+        imagesExtensions: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
+      },
     }),
     []
   );
 
   return (
-    <JoditEditor
-      editorRef={editor}
-      value={description}
-      config={config}
-      tabIndex={1}
-      onBlur={(newContent: SetStateAction<string>) =>
-        setDescription(newContent)
-      }
-    />
+    <div tabIndex={1}>
+      <JoditEditor
+        ref={editor}
+        value={description}
+        config={config}
+        onBlur={(newContent: SetStateAction<string>) =>
+          setDescription(newContent)
+        }
+        onChange={(newContent) => {}}
+      />
+    </div>
   );
 };
 

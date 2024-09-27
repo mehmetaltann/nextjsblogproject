@@ -1,5 +1,4 @@
 import SingleBlog from "@/Components/SingleBlog/SingleBlog";
-import BlogModel from "@/lib/models/BlogModel";
 import { Loader } from "@/Components/Layouts/Loader";
 import { Suspense } from "react";
 import {
@@ -21,7 +20,7 @@ export async function generateMetadata({ params }: Params) {
   const id = params.id;
 
   try {
-    const blog = await fetchBlog(id);
+    const blog = (await fetchBlog(id)) as PostType;
 
     if (!blog) {
       return {

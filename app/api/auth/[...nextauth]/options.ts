@@ -1,7 +1,9 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs"; 
+import bcrypt from "bcryptjs";
 import UserModel from "@/lib/models/UserModel";
+import dbConnect from "@/lib/config/dbConnect";
 import { NextAuthOptions } from "next-auth";
+
 
 export const options: NextAuthOptions = {
   providers: [
@@ -15,26 +17,32 @@ export const options: NextAuthOptions = {
         const { email, password } = credentials || {};
 
         if (!email || !password) {
-          return null; 
+          return null;
         }
 
         try {
+          try {
+            await dbConnect();
+          } catch (error) {
+            console.error(error);
+            return [];
+          }
           const user = await UserModel.findOne({ email });
 
           if (!user) {
-            return null; 
+            return null;
           }
 
           const passwordsMatch = await bcrypt.compare(password, user.password);
 
           if (!passwordsMatch) {
-            return null; 
+            return null;
           }
 
-          return user; 
+          return user;
         } catch (error) {
           console.error("Error during authorization:", error);
-          return null; 
+          return null;
         }
       },
     }),
@@ -50,18 +58,18 @@ export const options: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id; 
+        token.id = user.id;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.id; 
+        session.user.id = token.id;
       }
       return session;
     },
   },
   jwt: {
-    maxAge: 60 * 60 * 24 * 30, 
+    maxAge: 60 * 60 * 24 * 30,
   },
 };

@@ -17,11 +17,13 @@ interface AddPostPanelProps {
   allCategories: Category[];
 }
 
+type filteredPostType = Omit<PostType, "date" | "updated_at" | "created_at">;
+
 const AddPostPanel: React.FC<AddPostPanelProps> = ({ allCategories }) => {
   const context = useContext(AdminContext);
   if (!context) {
     throw new Error(
-      "useClientContext must be used within a ClientContextProvider"
+      "useClientContext must be used within a AdminContextProvider"
     );
   }
   const {
@@ -38,7 +40,6 @@ const AddPostPanel: React.FC<AddPostPanelProps> = ({ allCategories }) => {
     postId,
   } = context;
 
-  // Map allCategories to the format expected by CategorySelect
   const optionsData = allCategories.map((o) => ({
     label: o.name,
     value: o.name,
@@ -46,18 +47,23 @@ const AddPostPanel: React.FC<AddPostPanelProps> = ({ allCategories }) => {
 
   const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const postData: PostType = {
+    const postData: filteredPostType = {
       title,
       description,
       isHome,
       author: "Mehmet Altan",
       cloudinaryImageId,
       category: categories,
+      _id: "",
     };
 
     if (isNewPost) {
       try {
-        const { isSuccess, msg } = await addPost(postData);
+        const response = await addPost(postData);
+        const { isSuccess, msg } = response as {
+          isSuccess: boolean;
+          msg: string;
+        };
         if (isSuccess) {
           setTitle("");
           setDescription("");
@@ -71,9 +77,11 @@ const AddPostPanel: React.FC<AddPostPanelProps> = ({ allCategories }) => {
       }
     } else {
       postData._id = postId;
-      console.log(postData);
       try {
-        const { msg } = await updatePost(postData);
+        const response = await updatePost(postData);
+        const { msg } = response as {
+          msg: string;
+        };
         toast.success(msg);
       } catch (error) {
         toast.error((error as Error).message);

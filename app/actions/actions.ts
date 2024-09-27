@@ -7,15 +7,12 @@ import InfoModel from "@/lib/models/InfoModel";
 import bcrypt from "bcryptjs";
 import fs from "fs";
 import path from "path";
+import dbConnect from "@/lib/config/dbConnect";
 import { envEmail, transporter } from "@/lib/config/nodemailer";
 import { revalidatePath } from "next/cache";
 import { PostType } from "@/lib/types/types";
 
 // Type Definitions
-interface FormData {
-  get(key: string): string | null;
-}
-
 interface CommentData {
   postTitle: string;
   postId: string;
@@ -30,6 +27,8 @@ interface InfoData {
   name: string;
 }
 
+type filteredPostType = Omit<PostType, "date" | "updated_at" | "created_at">;
+
 ///////////////////////// CATEGORY ACTIONS ///////////////////////
 
 export const addCategory = async (prevState: any, formData: any) => {
@@ -38,6 +37,12 @@ export const addCategory = async (prevState: any, formData: any) => {
       name: formData.get("catName"),
       color: formData.get("catColor"),
     };
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     await CategoryModel.create(newData);
     revalidatePath("/admin/categories");
     return { msg: "Kategori Eklendi" };
@@ -48,6 +53,12 @@ export const addCategory = async (prevState: any, formData: any) => {
 
 export const deleteCategory = async (_id: string) => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     await CategoryModel.findByIdAndDelete(_id);
     revalidatePath("/admin/categories");
     return { msg: "Kategori Silindi" };
@@ -60,6 +71,12 @@ export const deleteCategory = async (_id: string) => {
 
 export const addPost = async (formData: any) => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     await BlogModel.create(formData);
     revalidatePath("/admin/posts");
     return { msg: "Yazı Eklendi", isSuccess: true };
@@ -68,10 +85,15 @@ export const addPost = async (formData: any) => {
   }
 };
 
-export const updatePost = async (formData: PostType) => {
+export const updatePost = async (formData: filteredPostType) => {
   try {
     const { _id } = formData;
-    console.log(formData)
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     await BlogModel.findByIdAndUpdate({ _id }, formData, { new: true });
     revalidatePath("/admin/posts");
     return { msg: "Yazı Güncellendi" };
@@ -82,6 +104,12 @@ export const updatePost = async (formData: PostType) => {
 
 export const deletePost = async (_id: string) => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     await BlogModel.findByIdAndDelete(_id);
     revalidatePath(`/admin/posts`);
     return { msg: "Blog Silindi" };
@@ -97,7 +125,12 @@ export const userRegister = async (prevState: any, formData: any) => {
     const isim = formData.get("isim");
     const email = formData.get("email");
     const password = formData.get("password");
-
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     const user = await UserModel.findOne({ email }).select("_id");
     if (user) {
       return { msg: "Bu kullanıcı kayıtlıdır", isSuccess: false };
@@ -116,6 +149,12 @@ export const userRegister = async (prevState: any, formData: any) => {
 
 export const addComment = async (formData: CommentData) => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     const { postTitle, postId, authorEmail, content, parentCommentId } =
       formData;
 
@@ -167,7 +206,6 @@ export const addComment = async (formData: CommentData) => {
         html: htmlTemplateReplyComment,
       });
     }
-
     delete (formData as any).postTitle;
     await CommentModel.create(formData);
     revalidatePath(`/home/blog/${postId}`);
@@ -185,6 +223,12 @@ export const updateComment = async (
   postId: string
 ) => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     const { content, _id } = formData;
     await CommentModel.findByIdAndUpdate(_id, { content });
     revalidatePath(`/home/blog/${postId}`);
@@ -196,6 +240,12 @@ export const updateComment = async (
 
 export const deleteComment = async (_id: string, postId: string) => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     await CommentModel.findByIdAndDelete(_id);
     revalidatePath(`/home/blog/${postId}`);
     return { msg: "Yorum Silindi" };
@@ -212,6 +262,12 @@ export const addInfo = async (prevState: any, formData: any) => {
       name: formData.get("isim"),
       content: formData.get("content"),
     };
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     await InfoModel.create(newData);
     revalidatePath("/admin/infos");
     return { msg: "Bilgi Eklendi" };
@@ -222,6 +278,12 @@ export const addInfo = async (prevState: any, formData: any) => {
 
 export const deleteInfo = async (_id: string) => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     await InfoModel.findByIdAndDelete(_id);
     revalidatePath("/admin/infos");
     return { msg: "Bilgi Silindi" };
@@ -232,6 +294,12 @@ export const deleteInfo = async (_id: string) => {
 
 export const updateInfo = async (formData: InfoData) => {
   try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
     const { _id, content, name } = formData;
     await InfoModel.findByIdAndUpdate(_id, { content, name });
     revalidatePath("/admin/infos");
@@ -244,6 +312,12 @@ export const updateInfo = async (formData: InfoData) => {
 ///////////////////////// OTHER ACTIONS ///////////////////////
 
 export const sendMessage = async (prevState: any, formData: any) => {
+  try {
+    await dbConnect();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
   const templatePath = path.join(
     process.cwd(),
     "templates",

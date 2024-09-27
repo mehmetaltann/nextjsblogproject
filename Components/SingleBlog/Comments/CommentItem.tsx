@@ -95,10 +95,14 @@ const CommentItem: React.FC<CommentItemProps> = ({
         <CommentForm
           btnLabel="Güncelle"
           formSubmitHandler={async (value: FormData) => {
-            const { msg } = await updateComment({
-              content: value.content,
-              _id,
-            },postId);
+            const response = await updateComment(
+              {
+                content: value.content,
+                _id,
+              },
+              postId
+            );
+            const { msg } = response as { msg: string };
             setAffectedComment(null);
             toast.success(msg);
           }}

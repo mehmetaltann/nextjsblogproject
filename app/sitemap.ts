@@ -1,18 +1,27 @@
 import { connectToMongoDB } from "@/lib/config/db";
 import { MetadataRoute } from "next";
-import { PostType } from "@/lib/types/types";
 
-type CustomPostType = PostType & {
-  created_at: string;
-  updated_at: string;
+type siteMapType = {
+  url: string;
+  lastModified?: string | Date | undefined;
+  changeFrequency?:
+    | "monthly"
+    | "always"
+    | "hourly"
+    | "daily"
+    | "weekly"
+    | "yearly"
+    | "never"
+    | undefined;
+  priority?: number | undefined;
 };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const client = await connectToMongoDB();
   const data = await client.collection("blogs").find({}).toArray();
-  const siteUrl = process.env.BASE_URL;
+  const siteUrl = process.env.BASE_URL as string;
 
-  const post = data.map((item: CustomPostType) => ({
+  const post: siteMapType[] = data.map((item) => ({
     url: `${siteUrl}/home/blog/${item._id.toString()}`,
     lastModified: item.updated_at || item.created_at || item.date,
     changeFrequency: "monthly",

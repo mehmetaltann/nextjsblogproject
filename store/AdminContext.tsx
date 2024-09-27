@@ -14,8 +14,8 @@ import {
 interface AdminContextProps {
   categories: PostCategoryType[];
   isHome: boolean;
-  cloudinaryImageId: string | null;
-  setCloudinaryImageId: Dispatch<SetStateAction<string | null>>;
+  cloudinaryImageId: string;
+  setCloudinaryImageId: Dispatch<SetStateAction<string>>;
   setIsHome: Dispatch<SetStateAction<boolean>>;
   setCategories: Dispatch<SetStateAction<PostCategoryType[]>>;
   title: string;
@@ -54,9 +54,7 @@ export const AdminContextProvider: FC<AdminContextProviderProps> = ({
   const [description, setDescription] = useState("");
   const [postId, setPostId] = useState("");
   const [isHome, setIsHome] = useState(false);
-  const [cloudinaryImageId, setCloudinaryImageId] = useState<string | null>(
-    null
-  );
+  const [cloudinaryImageId, setCloudinaryImageId] = useState<string>("");
 
   const value = useMemo(
     () => ({

@@ -14,11 +14,12 @@ const ContactForm = ({ content }: ContactFormProps) => {
   const [formState, formAction] = useFormState(sendMessage, null);
 
   useEffect(() => {
+    if (Array.isArray(formState)) return;
     if (formState?.msg) {
       toast.success(formState.msg);
       (document.getElementById("myform") as HTMLFormElement).reset();
     }
-  }, [formState?.msg]);
+  }, [formState]);
 
   return (
     <AnimationWrapper

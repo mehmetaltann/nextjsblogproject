@@ -12,9 +12,13 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export default function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) {
-  const prevPage = currentPage > 1; // Adjusted to allow the first page
-  const nextPage = currentPage < totalPages; // Adjusted to prevent exceeding total pages
+export default function Pagination({
+  totalPages,
+  currentPage,
+  onPageChange,
+}: PaginationProps) {
+  const prevPage = currentPage > 1;
+  const nextPage = currentPage < totalPages;
 
   const handlePrevPage = () => {
     if (prevPage) {
@@ -33,7 +37,9 @@ export default function Pagination({ totalPages, currentPage, onPageChange }: Pa
       <nav className="flex justify-between items-center">
         <div className="flex items-center">
           <button
-            className={prevPage ? activeButtonClassName : disableButtonClassName}
+            className={
+              prevPage ? activeButtonClassName : disableButtonClassName
+            }
             onClick={handlePrevPage}
             disabled={!prevPage}
           >
@@ -41,14 +47,16 @@ export default function Pagination({ totalPages, currentPage, onPageChange }: Pa
             Önceki
           </button>
         </div>
-        
+
         <span className="text-color1">
           {currentPage} of {totalPages}
         </span>
 
         <div className="flex items-center">
           <button
-            className={nextPage ? activeButtonClassName : disableButtonClassName}
+            className={
+              nextPage ? activeButtonClassName : disableButtonClassName
+            }
             onClick={handleNextPage}
             disabled={!nextPage}
           >

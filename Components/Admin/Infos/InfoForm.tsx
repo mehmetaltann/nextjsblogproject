@@ -2,13 +2,16 @@ import { addInfo } from "@/app/actions/actions";
 import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { toast } from "react-toastify";
-import { InfoType } from "@/lib/types/types";
 
 const InfoForm = () => {
   const [formState, formAction] = useFormState(addInfo, null);
 
   useEffect(() => {
-    toast.success(formState?.msg);
+    if (Array.isArray(formState)) return;
+
+    if (formState?.msg) {
+      toast.success(formState.msg);
+    }
   }, [formState]);
 
   return (

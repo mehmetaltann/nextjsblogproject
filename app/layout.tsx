@@ -2,7 +2,6 @@ import siteConfig from "@/lib/config/seo.config";
 import localFont from "next/font/local";
 import { AuthProvider } from "./provider";
 import { ClientContextProvider } from "@/store/ClientContext";
-import { connectToMongoDB } from "@/lib/config/db";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
@@ -31,7 +30,6 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  connectToMongoDB();
   return (
     <html lang="en">
       <body className={myFont.className}>

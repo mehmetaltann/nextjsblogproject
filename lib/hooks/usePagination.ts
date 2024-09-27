@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 
 interface UsePaginationResult<T> {
   totalPages: number;
   displayPosts: T[];
-  setCurrentPage: (page: number) => void;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
   onPageChange: (page: number) => void;
   currentPage: number;
 }
 
-export const usePagination = <T>(data: T[], postsPerPage: number = 3): UsePaginationResult<T> => {
+export const usePagination = <T>(
+  data: T[],
+  postsPerPage: number = 3
+): UsePaginationResult<T> => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const totalPages = Math.ceil(data?.length / postsPerPage);
