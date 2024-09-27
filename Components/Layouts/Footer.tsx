@@ -3,11 +3,8 @@ import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 
 const site_url = process.env.NEXT_PUBLIC_BASE_URL as string;
-console.log(site_url);
 
 const Footer = () => {
-  console.log(site_url);
-
   return (
     <div className="w-full bg-color1 flex flex-col justify-around items-center md:flex-row gap-3 py-3 px-auto ">
       <Link href="/home">

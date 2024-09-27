@@ -25,7 +25,6 @@ const SocialMediaShareSet: React.FC<SocialMediaShareSetProps> = ({
   title,
   size = 20,
 }) => {
-  console.log(shareURL);
   return (
     <div className="flex  gap-2">
       <WhatsappShareButton
