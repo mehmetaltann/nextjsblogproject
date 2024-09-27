@@ -6,9 +6,9 @@ import { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { RiMenuLine, RiCloseLine } from "react-icons/ri";
 import { CldImage } from "next-cloudinary";
+import { FaLinkedin } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 
-// Menü tipleri tanımlandı
 interface MenuItem {
   id: number;
   linkpage: string;
@@ -22,13 +22,11 @@ const menus: MenuItem[] = [
 ];
 
 const Navbar: React.FC = () => {
-  // TypeScript ile useState için varsayılan türler belirtildi
   const [openProfile, setOpenProfile] = useState<boolean>(false);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState<boolean>(false);
   const { data: session } = useSession();
   const pathname = usePathname();
 
-  // useOnclickOutside fonksiyonunun tipi belirlendi
   const ref = useOnclickOutside(() => {
     setOpenProfile(false);
   });
@@ -44,7 +42,7 @@ const Navbar: React.FC = () => {
         <div className="flex items-center gap-8">
           <section className="flex items-center gap-4">
             <RiMenuLine
-              className="text-3xl cursor-pointer md:hidden "
+              className="text-3xl ms-2 cursor-pointer md:hidden "
               onClick={() => setIsSideMenuOpen(true)}
             />
             <Link href="/" className="text-4xl font-mono">
@@ -110,14 +108,23 @@ const Navbar: React.FC = () => {
               ref={ref}
               className="absolute mt-48 right-4 text-base list-none text-color1 bg-white divide-y divide-gray-100 rounded-lg shadow"
             >
-              <div className="px-4 py-3">
-                <span className="block text-sm font-semibold text-gray-900 ">
-                  Mehmet ALTAN
-                </span>
-                <span className="block text-sm  text-gray-500 truncate ">
-                  mehmetaltann@gmail.com
-                </span>
-              </div>
+              <Link
+                href="https://www.linkedin.com/in/mehmetaltann/"
+                className="flex px-4 py-3 justify-center items-center gap-2"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaLinkedin size={30} className="cursor-pointer" />
+                <div>
+                  <span className="block text-sm font-semibold text-gray-900 ">
+                    Mehmet ALTAN
+                  </span>
+                  <span className="block text-sm  text-gray-500 truncate ">
+                    mehmetaltann@gmail.com
+                  </span>
+                </div>
+              </Link>
+
               {session ? (
                 <div className="flex flex-col justify-center items-start">
                   <Link

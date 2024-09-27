@@ -40,7 +40,7 @@ const siteConfig: SiteConfig = {
   publisher: "Mehmet ALTAN",
   robots: "index, follow",
   description: "Tatil, Yazılım ve daha bir çok konuda rehberiniz",
-  siteUrl: process.env.BASE_URL as string,
+  siteUrl: process.env.NEXT_PUBLIC_BASE_URL as string,
   author: "Mehmet ALTAN",
   keywords: [
     "Yazılım",

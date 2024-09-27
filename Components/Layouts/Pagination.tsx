@@ -1,7 +1,7 @@
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 const disableButtonClassName =
-  "cursor-auto disabled:opacity-50 text-color1 hover:text-color2 border px-4 py-2 rounded-2xl";
+  "cursor-auto flex gap-1 justify-center items-center disabled:opacity-50 text-color1 hover:text-color2 border rounded-2xl py-3 px-4";
 
 const activeButtonClassName =
   "flex gap-1 justify-center items-center text-color1";

@@ -9,7 +9,6 @@ interface ConfirmationModalProps {
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ open, onClose, children }) => {
   return (
-    // backdrop
     <div
       onClick={onClose}
       className={`
@@ -17,7 +16,6 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ open, onClose, ch
         ${open ? "visible bg-black/20" : "invisible"}
       `}
     >
-      {/* modal */}
       <div
         onClick={(e) => e.stopPropagation()}
         className={`

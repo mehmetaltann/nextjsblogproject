@@ -51,7 +51,7 @@ const Main = ({ allPosts }: MainProps) => {
 
   return (
     <AnimationWrapper
-      className="flex flex-col md:flex-row gap-4 justify-center px-5 lg:w-4/6 xl:w-3/6 mt-4"
+      className="flex flex-col md:flex-row gap-4 justify-center px-5 py-4 lg:w-4/6 xl:w-3/6 mt-4"
       keyValue="BlogListPage"
     >
       <TagsTable

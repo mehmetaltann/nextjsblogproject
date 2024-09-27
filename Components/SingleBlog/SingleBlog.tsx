@@ -26,7 +26,7 @@ const SingleBlog: React.FC<SingleBlogProps> = ({
   return (
     <AnimationWrapper
       keyValue="singlePostPage"
-      className="relative m-auto flex max-w-[820px] flex-col items-start my-8"
+      className="relative m-auto flex max-w-[820px] px-4 md:px-0 flex-col items-start my-8"
     >
       <h1 className="mb-8 text-3xl font-extrabold leading-tight tracking-tighter text-color1 md:text-4xl">
         {blog.title}

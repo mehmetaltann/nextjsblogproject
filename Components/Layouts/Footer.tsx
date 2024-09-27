@@ -1,11 +1,13 @@
 import SocialMediaShareSet from "./SocialMediaShareSet";
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
-import { FC } from "react";
 
-const BASE_URL = process.env.BASE_URL as string;
+const site_url = process.env.NEXT_PUBLIC_BASE_URL as string;
+console.log(site_url);
 
-const Footer: FC = () => {
+const Footer = () => {
+  console.log(site_url);
+
   return (
     <div className="w-full bg-color1 flex flex-col justify-around items-center md:flex-row gap-3 py-3 px-auto ">
       <Link href="/home">
@@ -18,12 +20,15 @@ const Footer: FC = () => {
           sizes="150vw"
         />
       </Link>
-      <div className="flex flex-col items-center text-sm text-white opacity-80">
+      <Link
+        href="/home/contact"
+        className="flex flex-col items-center text-sm text-white opacity-80 cursor-pointer"
+      >
         <p>Bütün Hakları Saklıdır @2024</p>
         <span>mehmetaltann@gmail.com</span>
-      </div>
+      </Link>
       <div className="flex">
-        <SocialMediaShareSet shareURL={BASE_URL} title="Altans Blog" />
+        <SocialMediaShareSet shareURL={site_url} title="Altans Blog" />
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ async function dbConnect() {
       bufferCommands: false,
     };
     cached.promise = mongoose
-      .connect(process.env.MONGO_URL as string, opts)
+      .connect(process.env.NEXT_PUBLIC_MONGO_URI as string, opts)
       .then((mongoose) => {
         return mongoose;
       });

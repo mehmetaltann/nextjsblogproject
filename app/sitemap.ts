@@ -1,5 +1,6 @@
-import { connectToMongoDB } from "@/lib/config/db";
 import { MetadataRoute } from "next";
+import { fetchPosts } from "./actions/fetchDatas";
+import { PostType } from "@/lib/types/types";
 
 type siteMapType = {
   url: string;
@@ -17,11 +18,10 @@ type siteMapType = {
 };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const client = await connectToMongoDB();
-  const data = await client.collection("blogs").find({}).toArray();
-  const siteUrl = process.env.BASE_URL as string;
+  const data = (await fetchPosts()) as PostType[];
+  const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
 
-  const post: siteMapType[] = data.map((item) => ({
+  const post: siteMapType[] = data.map((item: any) => ({
     url: `${siteUrl}/home/blog/${item._id.toString()}`,
     lastModified: item.updated_at || item.created_at || item.date,
     changeFrequency: "monthly",

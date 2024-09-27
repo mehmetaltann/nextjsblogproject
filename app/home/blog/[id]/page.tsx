@@ -5,18 +5,26 @@ import {
   fetchComment,
   fetchSimilarPosts,
   fetchBlog,
+  fetchPosts,
 } from "@/app/actions/fetchDatas";
 import { CommentType, PostType } from "@/lib/types/types";
 
-// Tip tanımları
 interface Params {
   params: {
     id: string;
   };
 }
 
+export async function generateStaticParams() {
+  const allPosts = (await fetchPosts()) as PostType[];
+
+  return allPosts.map((post) => ({
+    id: post._id,
+  }));
+}
+
 export async function generateMetadata({ params }: Params) {
-  const siteUrl = process.env.BASE_URL as string;
+  const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
   const id = params.id;
 
   try {
@@ -53,14 +61,14 @@ export async function generateMetadata({ params }: Params) {
         title,
         description,
         url: `${siteUrl}/home/blog/${id}`,
-        images: `${process.env.CLOUDINARY_BASE_URL}/${cloudinaryImageId}`,
+        images: `${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}/${cloudinaryImageId}`,
         publishedTime: date,
         type: "article",
       },
       twitter: {
         card: "summary_large_image",
         title,
-        images: `${process.env.CLOUDINARY_BASE_URL}/${cloudinaryImageId}`,
+        images: `${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}/${cloudinaryImageId}`,
       },
     };
   } catch (error) {
@@ -81,7 +89,7 @@ export default async function Blog({ params }: Params) {
       "@context": "https://schema.org",
       "@type": "Product",
       name: blog.title,
-      image: `${process.env.CLOUDINARY_BASE_URL}/${blog.cloudinaryImageId}`,
+      image: `${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}/${blog.cloudinaryImageId}`,
       description: blog.description,
       author: { "@type": "Person", name: "Mehmet ALTAN" },
       datePublished: blog.updated_at || blog.date,

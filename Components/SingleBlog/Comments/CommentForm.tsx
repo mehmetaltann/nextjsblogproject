@@ -2,14 +2,12 @@ import clsx from "clsx";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { toast } from "react-toastify";
 
-// Define types for form data
 interface FormData {
   authorName: string;
   authorEmail: string;
   content: string;
 }
 
-// Define types for component props
 interface CommentFormProps {
   formSubmitHandler: (data: FormData) => void;
   btnLabel: string;
@@ -31,7 +29,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
   const { authorName, authorEmail, content } = formData;
 
-  // Handle input changes
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -42,7 +39,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
     }));
   };
 
-  // Form submission handler
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -57,8 +53,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
     }
 
     formSubmitHandler(formData);
-
-    // Reset the form after submission
     setFormData({
       authorName: "",
       authorEmail: "",
@@ -66,7 +60,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
     });
   };
 
-  // Auto resize textarea based on content
   const autoResize = (e: ChangeEvent<HTMLTextAreaElement>) => {
     e.target.style.height = "auto";
     e.target.style.height = e.target.scrollHeight + "px";

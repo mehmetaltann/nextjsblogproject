@@ -12,8 +12,7 @@ import {
   FaXTwitter,
   FaTelegram,
 } from "react-icons/fa6";
-import IconButton from "./IconButton";
-import { memo } from "react";
+import IconButton from "../ui/IconButton";
 
 interface SocialMediaShareSetProps {
   shareURL: string;
@@ -26,6 +25,7 @@ const SocialMediaShareSet: React.FC<SocialMediaShareSetProps> = ({
   title,
   size = 20,
 }) => {
+  console.log(shareURL);
   return (
     <div className="flex  gap-2">
       <WhatsappShareButton
@@ -41,7 +41,7 @@ const SocialMediaShareSet: React.FC<SocialMediaShareSetProps> = ({
       <TwitterShareButton
         url={shareURL}
         title={title}
-        className="Demo__some-network__share-button"
+        className="cursor-pointer"
       >
         <IconButton text="Twitter" color="bg-black">
           <FaXTwitter size={size} />
@@ -72,4 +72,4 @@ const SocialMediaShareSet: React.FC<SocialMediaShareSetProps> = ({
   );
 };
 
-export default memo(SocialMediaShareSet);
+export default SocialMediaShareSet;
