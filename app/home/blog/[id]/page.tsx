@@ -53,13 +53,17 @@ export async function generateMetadata({ params }: Params) {
 
     const { title, description, cloudinaryImageId, category, date } = blog;
 
+    var designedDesc = description
+      .replace(/(<([^>]+)>)*/g, "")
+      .substring(0, 500);
+
     return {
       title,
-      description,
+      description: designedDesc,
       keywords: category.map((i: { name: string }) => i.name),
       openGraph: {
         title,
-        description,
+        description: designedDesc,
         url: `${siteUrl}/home/blog/${id}`,
         images: `${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}/${cloudinaryImageId}`,
         publishedTime: date,
@@ -87,7 +91,7 @@ export default async function Blog({ params }: Params) {
 
     const jsonLd = {
       "@context": "https://schema.org",
-      "@type": "Product",
+      "@type": "Blog",
       name: blog.title,
       image: `${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}/${blog.cloudinaryImageId}`,
       description: blog.description,

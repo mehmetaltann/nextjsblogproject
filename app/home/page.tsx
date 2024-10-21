@@ -3,6 +3,10 @@ import { Loader } from "@/Components/Layouts/Loader";
 import { Suspense } from "react";
 import { fetchPosts } from "../actions/fetchDatas";
 import { PostType } from "@/lib/types/types";
+import { fetchCategories } from "@/app/actions/fetchDatas";
+import { CategoryType } from "@/lib/types/types";
+
+
 
 const Home = async (): Promise<JSX.Element> => {
   const allPosts = (await fetchPosts()) as PostType[];

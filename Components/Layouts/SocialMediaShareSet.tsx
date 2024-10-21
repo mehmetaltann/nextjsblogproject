@@ -25,12 +25,13 @@ const SocialMediaShareSet: React.FC<SocialMediaShareSetProps> = ({
   title,
   size = 20,
 }) => {
+  console.log(shareURL)
   return (
     <div className="flex  gap-2">
       <WhatsappShareButton
         url={shareURL}
         title={title}
-        separator=":: "
+        separator=": "
         className="cursor-pointer"
       >
         <IconButton text="Whatsapp" color="bg-[#25D366]">

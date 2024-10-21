@@ -60,7 +60,7 @@ const LoginForm: React.FC = () => {
         />
         <button
           type="submit"
-          className="bg-red-700 cursor-pointer text-color8 p-2.5 border-[none] font-semibold"
+          className="bg-red-700 cursor-pointer text-white p-2.5 border-[none] font-semibold"
         >
           Giriş Yap
         </button>

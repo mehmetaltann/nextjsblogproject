@@ -1,5 +1,7 @@
 import siteConfig from "@/lib/config/seo.config";
 import localFont from "next/font/local";
+import { fetchCategories } from "@/app/actions/fetchDatas";
+import { CategoryType } from "@/lib/types/types";
 import { AuthProvider } from "./provider";
 import { ClientContextProvider } from "@/store/ClientContext";
 import { ToastContainer } from "react-toastify";
@@ -11,19 +13,27 @@ const myFont = localFont({
   variable: "--font-notosans",
 });
 
-export const metadata = {
-  metadataBase: siteConfig.siteUrl,
-  site_name: siteConfig.site_name,
-  title: { default: siteConfig.title, template: "%s - Altan's Blog" },
-  description: siteConfig.description,
-  publisher: siteConfig.publisher,
-  creator: siteConfig.author,
-  author: siteConfig.author,
-  robots: siteConfig.robots,
-  keywords: siteConfig.keywords,
-  twitter: siteConfig.twitter,
-  openGraph: siteConfig.openGraph,
-};
+export async function generateMetadata() {
+  const allCategories = (await fetchCategories()) as CategoryType[];
+
+  try {
+    return {
+      keywords: allCategories.map((i: { name: string }) => i.name),
+      metadataBase: siteConfig.siteUrl,
+      site_name: siteConfig.site_name,
+      title: { default: siteConfig.title, template: "%s - Altan's Blog" },
+      description: siteConfig.description,
+      publisher: siteConfig.publisher,
+      creator: siteConfig.author,
+      author: siteConfig.author,
+      robots: siteConfig.robots,
+      twitter: siteConfig.twitter,
+      openGraph: siteConfig.openGraph,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 interface RootLayoutProps {
   children: React.ReactNode;
