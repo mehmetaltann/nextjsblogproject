@@ -96,6 +96,7 @@ export const updatePost = async (formData: filteredPostType) => {
     }
     await BlogModel.findByIdAndUpdate({ _id }, formData, { new: true });
     revalidatePath("/admin");
+    revalidatePath(`/home/blog/${_id}`);
     return { msg: "Yazı Güncellendi" };
   } catch (error) {
     return { msg: `Yazı Güncellenemedi: ${error}` };
@@ -111,7 +112,7 @@ export const deletePost = async (_id: string) => {
       return [];
     }
     await BlogModel.findByIdAndDelete(_id);
-    revalidatePath(`/admin/posts`);
+    revalidatePath(`/admin`);
     return { msg: "Blog Silindi" };
   } catch (error) {
     return { msg: `Blog Silinemedi: ${error}` };
