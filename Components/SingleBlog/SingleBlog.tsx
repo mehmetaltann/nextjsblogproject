@@ -22,6 +22,7 @@ const SingleBlog: React.FC<SingleBlogProps> = ({
   const filteredBlogsByCategory = sameCategoryBlogs.filter((item) => {
     return item.title !== blog.title;
   });
+  const siteUrl = process.env.NEXTAUTH_URL as string;
 
   return (
     <AnimationWrapper
@@ -63,7 +64,7 @@ const SingleBlog: React.FC<SingleBlogProps> = ({
       </div>
       <div className="mt-2 self-end">
         <SocialMediaShareSet
-          shareURL={`http://localhost:3000/blogs/${blog._id}`}
+          shareURL={`${siteUrl}/${blog._id}`}
           title={blog.title}
           size={20}
         />
