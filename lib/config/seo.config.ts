@@ -61,7 +61,7 @@ const siteConfig: SiteConfig = {
     site_name: "Altan's Blog",
     title: "Altan's Blog",
     description: "Tatil, Yazılım ve daha bir çok konuda rehberiniz",
-    url: "http://localhost:3000/",
+    url: process.env.NEXT_PUBLIC_BASE_URL as string,
     type: "website",
     images: [
       {
