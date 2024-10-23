@@ -78,7 +78,7 @@ export const addPost = async (formData: any) => {
       return [];
     }
     await BlogModel.create(formData);
-    revalidatePath("/admin/posts");
+    revalidatePath("/admin");
     return { msg: "Yazı Eklendi", isSuccess: true };
   } catch (error) {
     return { msg: `Yazı Eklenemedi: ${error}`, isSuccess: false };
@@ -95,7 +95,7 @@ export const updatePost = async (formData: filteredPostType) => {
       return [];
     }
     await BlogModel.findByIdAndUpdate({ _id }, formData, { new: true });
-    revalidatePath("/admin/posts");
+    revalidatePath("/admin");
     return { msg: "Yazı Güncellendi" };
   } catch (error) {
     return { msg: `Yazı Güncellenemedi: ${error}` };
