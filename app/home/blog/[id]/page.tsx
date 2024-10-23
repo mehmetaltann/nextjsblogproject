@@ -81,6 +81,7 @@ export async function generateMetadata({ params }: Params) {
 }
 
 export default async function Blog({ params }: Params) {
+  const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
   const { id } = params;
 
   try {
@@ -109,6 +110,7 @@ export default async function Blog({ params }: Params) {
           blog={blog}
           sameCategoryBlogs={similarPosts}
           comments={comments}
+          siteUrl={siteUrl}
         />
       </Suspense>
     );

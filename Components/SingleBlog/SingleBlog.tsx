@@ -11,6 +11,7 @@ import { CommentType, PostType } from "@/lib/types/types";
 interface SingleBlogProps {
   blog: PostType;
   sameCategoryBlogs: PostType[];
+  siteUrl: string;
   comments: CommentType[] | [];
 }
 
@@ -18,11 +19,11 @@ const SingleBlog: React.FC<SingleBlogProps> = ({
   blog,
   sameCategoryBlogs,
   comments,
+  siteUrl,
 }) => {
   const filteredBlogsByCategory = sameCategoryBlogs.filter((item) => {
     return item.title !== blog.title;
   });
-  const siteUrl = process.env.NEXTAUTH_URL as string;
 
   return (
     <AnimationWrapper
