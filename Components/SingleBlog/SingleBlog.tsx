@@ -26,7 +26,7 @@ const SingleBlog: React.FC<SingleBlogProps> = ({
   return (
     <AnimationWrapper
       keyValue="singlePostPage"
-      className="relative m-auto flex max-w-[820px] px-4 md:px-0 flex-col items-start my-8"
+      className="relative m-auto flex max-w-[960px] w-full lg:w-3/4 xl:w-2/4 px-4 lg:px-0 flex-col items-start my-8"
     >
       <h1 className="mb-8 text-3xl font-extrabold leading-tight tracking-tighter text-color1 md:text-4xl">
         {blog.title}
@@ -58,7 +58,7 @@ const SingleBlog: React.FC<SingleBlogProps> = ({
           </div>
         </div>
       </div>
-      <div className="space-y-4 text-zinc-700 mb-4">
+      <div className="space-y-4 text-zinc-700 mb-4 w-full">
         {parse(blog.description)}
       </div>
       <div className="mt-2 self-end">
