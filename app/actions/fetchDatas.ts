@@ -10,14 +10,6 @@ import {
   PostType,
 } from "@/lib/types/types";
 
-interface Blog {
-  _id: string;
-  title: string;
-  content: string;
-  date: Date;
-  category: Array<{ name: string }>;
-}
-
 export const fetchPosts = async () => {
   try {
     try {
@@ -26,6 +18,7 @@ export const fetchPosts = async () => {
       console.error(error);
       return [];
     }
+
     const posts = await BlogModel.find({}).sort({ date: -1 }).lean();
     const allPosts: PostType[] = JSON.parse(JSON.stringify(posts));
     return allPosts;

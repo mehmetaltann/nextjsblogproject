@@ -92,12 +92,12 @@ const AddPostPanel: React.FC<AddPostPanelProps> = ({ allCategories }) => {
   return (
     <AnimationWrapper
       keyValue="writePost"
-      className="flex w-full p-6 md:w-3/4 mb-6 pb-6 md:p-0"
+      className="flex w-full p-6 mb-6 pb-6 md:p-0"
     >
       <form
         onSubmit={onSubmitHandler}
         id="blog-submit"
-        className="flex flex-col w-full md:w-3/4 gap-3 mt-6 mb-16"
+        className="flex flex-col w-full gap-3 mt-6 mb-16"
       >
         <PhotoSection isNewPost={isNewPost} />
         <input

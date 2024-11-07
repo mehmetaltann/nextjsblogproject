@@ -4,7 +4,6 @@ import UserModel from "@/lib/models/UserModel";
 import dbConnect from "@/lib/config/dbConnect";
 import { NextAuthOptions } from "next-auth";
 
-
 export const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -21,12 +20,7 @@ export const options: NextAuthOptions = {
         }
 
         try {
-          try {
-            await dbConnect();
-          } catch (error) {
-            console.error(error);
-            return [];
-          }
+          await dbConnect();
           const user = await UserModel.findOne({ email });
 
           if (!user) {
