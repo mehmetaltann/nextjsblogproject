@@ -45,6 +45,7 @@ export const addCategory = async (prevState: any, formData: any) => {
     }
     await CategoryModel.create(newData);
     revalidatePath("/admin/categories");
+    revalidatePath("/admin/write");
     return { msg: "Kategori Eklendi" };
   } catch (error) {
     return { msg: `Kategori Eklenemedi: ${error}` };
@@ -61,6 +62,7 @@ export const deleteCategory = async (_id: string) => {
     }
     await CategoryModel.findByIdAndDelete(_id);
     revalidatePath("/admin/categories");
+    revalidatePath("/admin/write");
     return { msg: "Kategori Silindi" };
   } catch (error) {
     return { msg: `Kategori Silinemedi: ${error}` };
@@ -77,8 +79,12 @@ export const addPost = async (formData: any) => {
       console.error(error);
       return [];
     }
+    delete formData._id
+    console.log(formData)
     await BlogModel.create(formData);
     revalidatePath("/admin");
+    revalidatePath("/home");
+    revalidatePath("/home/bloglist");
     return { msg: "Yazı Eklendi", isSuccess: true };
   } catch (error) {
     return { msg: `Yazı Eklenemedi: ${error}`, isSuccess: false };
@@ -96,6 +102,8 @@ export const updatePost = async (formData: filteredPostType) => {
     }
     await BlogModel.findByIdAndUpdate({ _id }, formData, { new: true });
     revalidatePath("/admin");
+    revalidatePath("/home");
+    revalidatePath("/home/bloglist");
     revalidatePath(`/home/blog/${_id}`);
     return { msg: "Yazı Güncellendi" };
   } catch (error) {
@@ -113,6 +121,8 @@ export const deletePost = async (_id: string) => {
     }
     await BlogModel.findByIdAndDelete(_id);
     revalidatePath(`/admin`);
+    revalidatePath("/home");
+    revalidatePath("/home/bloglist");
     return { msg: "Blog Silindi" };
   } catch (error) {
     return { msg: `Blog Silinemedi: ${error}` };
