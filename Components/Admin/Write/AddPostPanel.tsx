@@ -3,7 +3,7 @@ import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import CategorySelect from "./CategorySelect";
 import TextEditor from "./TextEditor";
 import PhotoSection from "./PhotoSection";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AdminContext } from "@/store/AdminContext";
 import { addPost, updatePost } from "@/app/actions/actions";
 import { toast } from "react-toastify";
@@ -40,6 +40,8 @@ const AddPostPanel: React.FC<AddPostPanelProps> = ({ allCategories }) => {
     postId,
   } = context;
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const optionsData = allCategories.map((o) => ({
     label: o.name,
     value: o.name,
@@ -47,6 +49,7 @@ const AddPostPanel: React.FC<AddPostPanelProps> = ({ allCategories }) => {
 
   const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     const postData: filteredPostType = {
       title,
       description,
@@ -87,6 +90,7 @@ const AddPostPanel: React.FC<AddPostPanelProps> = ({ allCategories }) => {
         toast.error((error as Error).message);
       }
     }
+    setIsLoading(false);
   };
 
   return (
@@ -131,8 +135,9 @@ const AddPostPanel: React.FC<AddPostPanelProps> = ({ allCategories }) => {
         <button
           type="submit"
           className="w-full opacity-90 h-12 bg-color1 text-white text-base border hover:bg-white hover:text-color1"
+          disabled={isLoading}
         >
-          {isNewPost ? "Ekle" : "Güncelle"}
+          {isLoading ? "Yükleniyor..." : isNewPost ? "Ekle" : "Güncelle"}
         </button>
       </form>
     </AnimationWrapper>

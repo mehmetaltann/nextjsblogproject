@@ -39,10 +39,10 @@ const BlogPostPreview: React.FC<BlogPostPreviewProps> = ({ post }) => {
         <h2 className="font-semibold tracking-tighter text-primary-txt text-2xl md:text-3xl">
           <Link href={`/home/blog/${post._id}`}>{post.title}</Link>
         </h2>
-        <div className="prose lg:prose-lg italic tracking-tighter text-muted-foreground">
+        <div className="prose text-color1 lg:prose-lg tracking-tighter text-muted-foreground">
           {getFormatDate(post.date)}
         </div>
-        <div className="prose lg:prose-lg leading-relaxed md:text-lg line-clamp-4 text-muted-foreground">
+        <div className="prose lg:prose-lg leading-relaxed md:text-lg line-clamp-5 text-muted-foreground">
           {parse(post.description)}
         </div>
         <div className="text-sm text-muted-foreground">

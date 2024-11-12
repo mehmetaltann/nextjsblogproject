@@ -11,13 +11,13 @@ const AboutPage = ({ content }: { content: string }) => {
         <div className="container mx-auto h-full">
           <div className="flex flex-col xl:flex-row items-center mx-auto justify-around xl:pt-8 xl:pb-24">
             <div className="text-center order-2 xl:order-none">
-              <h1 className="h1 mb-6 text-xl">
+              <h1 className="mb-6 text-xl">
                 Merhaba Ben{" "}
                 <span className="text-color1 text-xl">Mehmet ALTAN</span>
                 <br />
               </h1>
 
-              <h6 className="max-w-[1000px] mb-9 text-black/80 text-sm">
+              <h6 className="max-w-[1000px] mb-9 text-black/80">
                 {parse(content)}
               </h6>
 

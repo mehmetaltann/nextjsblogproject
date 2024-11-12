@@ -79,8 +79,8 @@ export const addPost = async (formData: any) => {
       console.error(error);
       return [];
     }
-    delete formData._id
-    console.log(formData)
+    delete formData._id;
+    console.log(formData);
     await BlogModel.create(formData);
     revalidatePath("/admin");
     revalidatePath("/home");
@@ -314,6 +314,8 @@ export const updateInfo = async (formData: InfoData) => {
     const { _id, content, name } = formData;
     await InfoModel.findByIdAndUpdate(_id, { content, name });
     revalidatePath("/admin/infos");
+    revalidatePath("/home/about");
+    revalidatePath("/admin/contact");
     return { msg: "Bilgi Güncellendi", isSuccess: true };
   } catch (error) {
     return { msg: `Bilgi Güncellenemedi: ${error}`, isSuccess: false };
