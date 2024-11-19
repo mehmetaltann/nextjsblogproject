@@ -14,7 +14,7 @@ const SimilarPostItem: FC<SimilarPostItemProps> = ({ post }) => {
   return (
     <div className="flex-grow">
       <div className="mb-4 w-full overflow-hidden rounded-xl">
-        <Link href={`/home/blog/${_id}`}>
+        <Link href={`/home/blog/${title}`}>
           <CldImage
             src={cloudinaryImageId}
             alt={title}
@@ -27,7 +27,7 @@ const SimilarPostItem: FC<SimilarPostItemProps> = ({ post }) => {
           />
         </Link>
       </div>
-      <Link href={`/home/blog/${_id}`}>
+      <Link href={`/home/blog/${title}`}>
         <h3 className="text-zinc-500 font-semibold ms-1">{title}</h3>
         <p className="text-zinc-500 ms-1">{getFormatDate(date)}</p>
       </Link>

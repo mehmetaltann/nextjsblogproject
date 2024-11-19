@@ -61,7 +61,7 @@ export const fetchComment = async (id: string) => {
   }
 };
 
-export const fetchBlog = async (id: string) => {
+export const fetchBlog = async (title: string) => {
   try {
     try {
       await dbConnect();
@@ -69,7 +69,7 @@ export const fetchBlog = async (id: string) => {
       console.error(error);
       return [];
     }
-    const data = await BlogModel.findById(id).lean();
+    const data = await BlogModel.findOne({ title: decodeURI(title) });
     const blog: PostType = JSON.parse(JSON.stringify(data));
     return blog;
   } catch (error) {

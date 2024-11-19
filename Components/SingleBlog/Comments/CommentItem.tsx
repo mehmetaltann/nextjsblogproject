@@ -31,6 +31,7 @@ interface CommentItemProps {
   ) => Promise<void>;
   parentId?: string | null;
   replies: CommentType[];
+  postTitle: string;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
@@ -40,15 +41,9 @@ const CommentItem: React.FC<CommentItemProps> = ({
   addCommentHandler,
   parentId = null,
   replies,
+  postTitle,
 }) => {
-  const {
-    authorName,
-    content,
-    date,
-    _id,
-    parentCommentId: parent,
-    postId,
-  } = comment;
+  const { authorName, content, date, _id, parentCommentId: parent } = comment;
   const isReplying =
     affectedComment &&
     affectedComment._id === _id &&
@@ -70,7 +65,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
 
   const handleDeleteClick = async () => {
     try {
-      await deleteComment(_id, postId);
+      await deleteComment(_id, postTitle);
       setAffectedComment(null);
     } catch (error) {
       console.error(error);
@@ -100,7 +95,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
                 content: value.content,
                 _id,
               },
-              postId
+              postTitle
             );
             const { msg } = response as { msg: string };
             setAffectedComment(null);
@@ -159,6 +154,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
               addCommentHandler={addCommentHandler}
               replies={[]}
               parentId={comment._id}
+              postTitle={postTitle}
             />
           ))}
         </div>

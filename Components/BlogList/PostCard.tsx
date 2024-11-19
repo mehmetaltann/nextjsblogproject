@@ -16,7 +16,7 @@ export default function PostCard({ data }: PostCardProps) {
   return (
     <div className="flex flex-col gap-2">
       {data.cloudinaryImageId && (
-        <Link href={`/home/blog/${data._id}`}>
+        <Link href={`/home/blog/${data.title}`}>
           <CldImage
             src={data.cloudinaryImageId}
             alt={data.title}
@@ -28,7 +28,7 @@ export default function PostCard({ data }: PostCardProps) {
         </Link>
       )}
       <h2 className="text-xl font-semibold tracking-tight text-zinc-800 ">
-        <Link href={`/home/blog/${data._id}`}>{data.title}</Link>
+        <Link href={`/home/blog/${data.title}`}>{data.title}</Link>
       </h2>
       <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
         <div className="flex select-none justify-start space-x-2 md:hidden md:justify-end">
@@ -45,7 +45,7 @@ export default function PostCard({ data }: PostCardProps) {
       <RenderHTML HTML={data.description} />
       <div className="flex items-center justify-between font-medium text-color9">
         <Link
-          href={`/home/blog/${data._id}`}
+          href={`/home/blog/${data.title}`}
           className="flex items-center space-x-2"
         >
           <span>Devamı</span>

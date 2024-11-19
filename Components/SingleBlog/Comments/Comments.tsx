@@ -83,6 +83,7 @@ const Comments: React.FC<CommentsProps> = ({ postId, postTitle, comments }) => {
               setAffectedComment={setAffectedComment}
               addCommentHandler={addCommentHandler}
               replies={getRepliesHandler(comment._id)}
+              postTitle={postTitle}
             />
           ))}
           {totalComments > 1 && (

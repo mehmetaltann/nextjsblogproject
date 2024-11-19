@@ -1,17 +1,17 @@
 import SingleBlog from "@/Components/SingleBlog/SingleBlog";
 import { Loader } from "@/Components/Layouts/Loader";
 import { Suspense } from "react";
+import { CommentType, PostType } from "@/lib/types/types";
 import {
   fetchComment,
   fetchSimilarPosts,
   fetchBlog,
   fetchPosts,
 } from "@/app/actions/fetchDatas";
-import { CommentType, PostType } from "@/lib/types/types";
 
 interface Params {
   params: {
-    id: string;
+    title: string;
   };
 }
 
@@ -25,10 +25,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Params) {
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
-  const id = params.id;
 
   try {
-    const blog = (await fetchBlog(id)) as PostType;
+    const blog = (await fetchBlog(params.title)) as PostType;
 
     if (!blog) {
       return {
@@ -64,7 +63,7 @@ export async function generateMetadata({ params }: Params) {
       openGraph: {
         title,
         description: designedDesc,
-        url: `${siteUrl}/home/blog/${id}`,
+        url: `${siteUrl}/home/blog/${title}`,
         images: `${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}/${cloudinaryImageId}`,
         publishedTime: date,
         type: "article",
@@ -82,13 +81,13 @@ export async function generateMetadata({ params }: Params) {
 
 export default async function Blog({ params }: Params) {
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
-  const { id } = params;
+  const { title } = params;
 
   try {
-    const blog = (await fetchBlog(id)) as PostType;
+    const blog = (await fetchBlog(title)) as PostType;
     const categoryArray = blog.category.map((obj) => obj.name);
     const similarPosts = (await fetchSimilarPosts(categoryArray)) as PostType[];
-    const comments = (await fetchComment(id)) as CommentType[];
+    const comments = (await fetchComment(blog._id)) as CommentType[];
 
     const jsonLd = {
       "@context": "https://schema.org",

@@ -36,7 +36,7 @@
     "lib/config/nodemailer.ts",
     "lib/hooks/usePagination.ts",
     "app/actions/fetchDatas.ts",
-    "app/home/blog/[id]/page.tsx",
+    "app/home/blog/[title]/page.tsx",
     "app/api/auth/[...nextauth]/options.ts",
     "Components/Admin/Infos/InfoProfilPic.jsx",
     "app/admin/write/page.tsx"

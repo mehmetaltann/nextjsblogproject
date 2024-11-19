@@ -65,7 +65,7 @@ const SingleBlog: React.FC<SingleBlogProps> = ({
       </div>
       <div className="mt-2 self-end">
         <SocialMediaShareSet
-          shareURL={`${siteUrl}/home/blog/${blog._id}`}
+          shareURL={`${siteUrl}/home/blog/${blog.title}`}
           title={blog.title}
           size={20}
         />

@@ -23,7 +23,7 @@ const BlogPostPreview: React.FC<BlogPostPreviewProps> = ({ post }) => {
 
   return (
     <div className="break-words">
-      <Link href={`/home/blog/${post._id}`}>
+      <Link href={`/home/blog/${post.title}`}>
         <div className="aspect-[16/9] relative">
           <CldImage
             src={post.cloudinaryImageId}
@@ -37,7 +37,7 @@ const BlogPostPreview: React.FC<BlogPostPreviewProps> = ({ post }) => {
       </Link>
       <div className="grid grid-cols-1 gap-3 md:col-span-2 mt-4">
         <h2 className="font-semibold tracking-tighter text-primary-txt text-2xl md:text-3xl">
-          <Link href={`/home/blog/${post._id}`}>{post.title}</Link>
+          <Link href={`/home/blog/${post.title}`}>{post.title}</Link>
         </h2>
         <div className="prose text-color1 lg:prose-lg tracking-tighter text-muted-foreground">
           {getFormatDate(post.date)}

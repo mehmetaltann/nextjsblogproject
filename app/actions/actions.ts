@@ -12,7 +12,6 @@ import { envEmail, transporter } from "@/lib/config/nodemailer";
 import { revalidatePath } from "next/cache";
 import { PostType } from "@/lib/types/types";
 
-// Type Definitions
 interface CommentData {
   postTitle: string;
   postId: string;
@@ -30,7 +29,6 @@ interface InfoData {
 type filteredPostType = Omit<PostType, "date" | "updated_at" | "created_at">;
 
 ///////////////////////// CATEGORY ACTIONS ///////////////////////
-
 export const addCategory = async (prevState: any, formData: any) => {
   try {
     const newData = {
@@ -82,6 +80,7 @@ export const addPost = async (formData: any) => {
     delete formData._id;
     console.log(formData);
     await BlogModel.create(formData);
+    revalidatePath("/");
     revalidatePath("/admin");
     revalidatePath("/home");
     revalidatePath("/home/bloglist");
@@ -93,7 +92,7 @@ export const addPost = async (formData: any) => {
 
 export const updatePost = async (formData: filteredPostType) => {
   try {
-    const { _id } = formData;
+    const { title, _id } = formData;
     try {
       await dbConnect();
     } catch (error) {
@@ -101,10 +100,11 @@ export const updatePost = async (formData: filteredPostType) => {
       return [];
     }
     await BlogModel.findByIdAndUpdate({ _id }, formData, { new: true });
+    revalidatePath("/");
     revalidatePath("/admin");
     revalidatePath("/home");
     revalidatePath("/home/bloglist");
-    revalidatePath(`/home/blog/${_id}`);
+    revalidatePath(`/home/blog/${title}`);
     return { msg: "Yazı Güncellendi" };
   } catch (error) {
     return { msg: `Yazı Güncellenemedi: ${error}` };
@@ -120,7 +120,8 @@ export const deletePost = async (_id: string) => {
       return [];
     }
     await BlogModel.findByIdAndDelete(_id);
-    revalidatePath(`/admin`);
+    revalidatePath("/");
+    revalidatePath("/admin");
     revalidatePath("/home");
     revalidatePath("/home/bloglist");
     return { msg: "Blog Silindi" };
@@ -130,7 +131,6 @@ export const deletePost = async (_id: string) => {
 };
 
 ///////////////////////// USER ACTIONS ///////////////////////
-
 export const userRegister = async (prevState: any, formData: any) => {
   try {
     const isim = formData.get("isim");
@@ -166,8 +166,7 @@ export const addComment = async (formData: CommentData) => {
       console.error(error);
       return [];
     }
-    const { postTitle, postId, authorEmail, content, parentCommentId } =
-      formData;
+    const { postTitle, authorEmail, content, parentCommentId } = formData;
 
     if (!parentCommentId) {
       const templatePathNewComment = path.join(
@@ -219,7 +218,7 @@ export const addComment = async (formData: CommentData) => {
     }
     delete (formData as any).postTitle;
     await CommentModel.create(formData);
-    revalidatePath(`/home/blog/${postId}`);
+    revalidatePath(`/home/blog/${postTitle}`);
     return { msg: "Yorum Eklendi", isSuccess: true };
   } catch (error) {
     return { msg: `Yorum Eklenemedi: ${error}`, isSuccess: false };
@@ -231,7 +230,7 @@ export const updateComment = async (
     content: string;
     _id: string;
   },
-  postId: string
+  postTitle: string
 ) => {
   try {
     try {
@@ -242,14 +241,14 @@ export const updateComment = async (
     }
     const { content, _id } = formData;
     await CommentModel.findByIdAndUpdate(_id, { content });
-    revalidatePath(`/home/blog/${postId}`);
+    revalidatePath(`/home/blog/${postTitle}`);
     return { msg: "Yorum Güncellendi", isSuccess: true };
   } catch (error) {
     return { msg: `Yorum Güncellenemedi: ${error}`, isSuccess: false };
   }
 };
 
-export const deleteComment = async (_id: string, postId: string) => {
+export const deleteComment = async (_id: string, postTitle: string) => {
   try {
     try {
       await dbConnect();
@@ -258,7 +257,7 @@ export const deleteComment = async (_id: string, postId: string) => {
       return [];
     }
     await CommentModel.findByIdAndDelete(_id);
-    revalidatePath(`/home/blog/${postId}`);
+    revalidatePath(`/home/blog/${postTitle}`);
     return { msg: "Yorum Silindi" };
   } catch (error) {
     return { msg: `Yorum Silinemedi: ${error}` };
