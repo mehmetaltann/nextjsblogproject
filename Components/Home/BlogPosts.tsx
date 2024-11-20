@@ -44,7 +44,7 @@ const BlogPosts: React.FC<BlogPostsProps> = ({ allPosts }) => {
   //Pagination
   const { totalPages, displayPosts, onPageChange, currentPage } = usePagination(
     filteredData || filteredPosts,
-    4
+    6
   );
 
   const handlePageChange = (page: number) => {
