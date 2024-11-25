@@ -3,7 +3,6 @@ import nodemailer from "nodemailer";
 export const envEmail = process.env.NEXT_PUBLIC_EMAIL as string;
 const pass = process.env.NEXT_PUBLIC_EMAIL_PASS as string;
 
-
 if (!envEmail || !pass) {
   throw new Error("Email or password environment variables are not set");
 }

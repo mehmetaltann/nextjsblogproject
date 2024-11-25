@@ -8,10 +8,10 @@ import { ClientContext } from "@/store/ClientContext";
 import { PostType } from "@/lib/types/types";
 
 interface BlogPostsProps {
-  allPosts: PostType[];
+  filteredPosts: PostType[];
 }
 
-const BlogPosts: React.FC<BlogPostsProps> = ({ allPosts }) => {
+const BlogPosts: React.FC<BlogPostsProps> = ({ filteredPosts }) => {
   const context = useContext(ClientContext);
   if (!context)
     throw new Error(
@@ -20,11 +20,7 @@ const BlogPosts: React.FC<BlogPostsProps> = ({ allPosts }) => {
 
   const { searchItem } = context;
 
-  const [filteredData, setFilteredData] = useState<PostType[]>(allPosts);
-
-  const filteredPosts = useMemo(() => {
-    return allPosts.filter((item) => item.isHome);
-  }, [allPosts]);
+  const [filteredData, setFilteredData] = useState<PostType[]>(filteredPosts);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
