@@ -1,6 +1,7 @@
 "use client";
 import Footer from "@/Components/Layouts/Footer";
 import Navbar from "@/Components/Layouts/Navbar";
+
 import { ReactNode, FC } from "react";
 
 interface LayoutProps {

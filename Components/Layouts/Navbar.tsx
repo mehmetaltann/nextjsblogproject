@@ -33,14 +33,13 @@ const Navbar: React.FC = () => {
   });
 
   // Logo boyutları koşullu
-  const LogoSize = pathname === "/home" ? 600 : 400;
+  const LogoSize = pathname === "/home" ? 500 : 450;
 
   // Profile ikon boyutu koşullu
-  const profileIconDesktop = pathname === "/home" ? 60 : 70;
+  const profileIconDesktop = pathname === "/home" ? 100 : 70;
   const profileIconMObile = pathname === "/home" ? 90 : 60;
 
   // RiMenuLine ikon boyutu koşullu
-  const menuIconSize = pathname === "/home" ? "text-4xl" : "text-3xl";
   const mobileMargin = pathname !== "/home" ? "mx-4" : "";
 
   // useEffect ile sayfa yolu değiştiğinde menüyü kapat
@@ -56,14 +55,14 @@ const Navbar: React.FC = () => {
         className={clsx(
           "flex justify-between md:px-12 items-center pt-4 gap-4",
           pathname === "/home" && "flex-col md:flex-row px-4",
-          mobileMargin // mobilde margin eklemek için
+          mobileMargin
         )}
       >
         <div className="flex items-center gap-8 w-full justify-between md:w-auto">
           {/* Logo ve Menü Butonu */}
           <section className="flex items-center gap-2 w-full md:w-auto">
             <RiMenuLine
-              className={`${menuIconSize} ms-2 cursor-pointer md:hidden`}
+              className={`text-4xl ms-2 cursor-pointer md:hidden`}
               onClick={() => setIsSideMenuOpen(true)}
             />
             <Link href="/" className="text-4xl font-mono">
@@ -111,12 +110,12 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Masaüstü Menü (Sol tarafa hizalanmış) */}
-        <div className="hidden md:flex items-center ms-4 gap-8 w-full justify-start">
+        <div className="hidden md:flex items-center ms-4 gap-6 w-full justify-start">
           {menus.map(({ id, linkpage, title }) => (
             <Link
               key={id}
               href={linkpage}
-              className="text-color1 hover:text-color5 lg:text-lg font-semibold opacity-75 min-w-[90px] lg:min-w-[100px] first-letter:hover:opacity-100"
+              className="text-color1 hover:text-color5 lg:text-lg xl:text-xl font-semibold opacity-75 min-w-[90px] lg:min-w-[100px] first-letter:hover:opacity-100"
             >
               <p>{title}</p>
             </Link>
@@ -145,12 +144,7 @@ const Navbar: React.FC = () => {
 
         {/* Profil Butonu ve Arama Butonu - Masaüstü */}
         <section className="hidden md:flex items-center gap-4">
-          {pathname === "/home" && (
-            <div className="hidden md:block w-full md:w-48 lg:w-72">
-              <SearchInput />
-            </div>
-          )}
-
+          {pathname === "/home" && <SearchInput />}
           <button
             type="button"
             className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
