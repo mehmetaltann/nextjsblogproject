@@ -39,12 +39,15 @@ const siteConfig: SiteConfig = {
   title: "Altan's Blog",
   publisher: "Mehmet ALTAN",
   robots: "index, follow",
-  description: "Tatil, Yazılım ve daha bir çok konuda rehberiniz",
+  description: "Gezi, Tatil, Yazılım ve daha bir çok konuda rehberiniz",
   siteUrl: process.env.NEXT_PUBLIC_BASE_URL as string,
   author: "Mehmet ALTAN",
   keywords: [
     "Yazılım",
+    "Yolculuk",
     "Tatil",
+    "Gezi",
+    "Türkiye",
     "Avrupa",
     "Deniz",
     "Yaz",
@@ -54,13 +57,13 @@ const siteConfig: SiteConfig = {
   twitter: {
     card: "summary_large_image",
     title: "Altan's Blog",
-    description: "Tatil, Yazılım ve daha bir çok konuda rehberiniz",
+    description: "Gezi, Tatil, Yazılım ve daha bir çok konuda rehberiniz",
     images: [`${process.env.CLOUDINARY_BASE_URL}/logo.png`],
   },
   openGraph: {
     site_name: "Altan's Blog",
     title: "Altan's Blog",
-    description: "Tatil, Yazılım ve daha bir çok konuda rehberiniz",
+    description: "Gezi, Tatil, Yazılım ve daha bir çok konuda rehberiniz",
     url: process.env.NEXT_PUBLIC_BASE_URL as string,
     type: "website",
     images: [

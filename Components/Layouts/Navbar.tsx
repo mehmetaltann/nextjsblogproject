@@ -16,9 +16,10 @@ interface MenuItem {
 }
 
 const menus: MenuItem[] = [
-  { id: 1, linkpage: "/home/about", title: "Hakkımızda" },
-  { id: 2, linkpage: "/home/bloglist", title: "Blog Listesi" },
-  { id: 3, linkpage: "/home/contact", title: "İletişim" },
+  { id: 1, linkpage: "/home", title: "Anasayfa" },
+  { id: 2, linkpage: "/home/about", title: "Hakkımızda" },
+  { id: 3, linkpage: "/home/bloglist", title: "Blog Listesi" },
+  { id: 4, linkpage: "/home/contact", title: "İletişim" },
 ];
 
 const Navbar: React.FC = () => {

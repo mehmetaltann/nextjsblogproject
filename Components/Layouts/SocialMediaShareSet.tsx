@@ -1,3 +1,4 @@
+import IconButton from "../ui/IconButton";
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -12,7 +13,7 @@ import {
   FaXTwitter,
   FaTelegram,
 } from "react-icons/fa6";
-import IconButton from "../ui/IconButton";
+
 
 interface SocialMediaShareSetProps {
   shareURL: string;
@@ -25,7 +26,6 @@ const SocialMediaShareSet: React.FC<SocialMediaShareSetProps> = ({
   title,
   size = 20,
 }) => {
-  console.log(shareURL)
   return (
     <div className="flex  gap-2">
       <WhatsappShareButton

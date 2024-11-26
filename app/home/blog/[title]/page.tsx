@@ -19,7 +19,7 @@ export async function generateStaticParams() {
   const allPosts = (await fetchPosts()) as PostType[];
 
   return allPosts.map((post) => ({
-    id: post._id,
+    title: post.title,
   }));
 }
 
@@ -28,7 +28,6 @@ export async function generateMetadata({ params }: Params) {
 
   try {
     const blog = (await fetchBlog(params.title)) as PostType;
-
     if (!blog) {
       return {
         title: "Yazı bulunamadı",
