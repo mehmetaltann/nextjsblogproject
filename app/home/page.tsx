@@ -13,7 +13,7 @@ const Home = async (): Promise<JSX.Element> => {
 
   return (
     <Suspense fallback={<Loader />}>
-      <div className="flex flex-col mx-4 md:mx-0 md:w-5/6 lg:w-3/4 xl:w-2/3 mb-10">
+      <div className="flex flex-col mx-4 md:mx-0 md:w-11/12 ld:w-10/11 2xl:w-2/3 mb-10">
         <BlogPosts filteredPosts={filteredPosts} />
       </div>
     </Suspense>

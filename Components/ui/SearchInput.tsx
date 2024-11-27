@@ -1,8 +1,8 @@
-import { useContext, ChangeEvent, useState } from "react";
+import { useContext, ChangeEvent, useState, useEffect, useRef } from "react";
 import { ClientContext } from "@/store/ClientContext";
 import { CiSearch } from "react-icons/ci";
 
-const SearchInput = () => {
+const SearchInput = ({ inputWidth }: { inputWidth: string }) => {
   const context = useContext(ClientContext);
   if (!context) {
     throw new Error(
@@ -11,30 +11,52 @@ const SearchInput = () => {
   }
   const { searchItem, setSearchItem } = context;
 
+  const [isClicked, setIsClicked] = useState(false);
+  const inputRef = useRef<HTMLDivElement>(null);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchItem(e.target.value);
   };
 
-  // State to handle hover effect
-  const [isHovered, setIsHovered] = useState(false);
+  const toggleSearchInput = () => {
+    setIsClicked((prev) => !prev);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+      setIsClicked(false); // Dışarı tıklanınca kapat
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div
-      className="flex items-center px-4 py-2 rounded-full border border-gray-400 overflow-hidden max-w-md mx-auto font-[sans-serif] transition-all duration-300 ease-in-out"
-      onMouseEnter={() => setIsHovered(true)} // Mouse hover
-      onMouseLeave={() => setIsHovered(false)} // Mouse leave
+      className="flex items-center px-4 py-2 md:px-6 md:py-3 lg:px-3 lg:py-2 rounded-full border border-gray-400 overflow-hidden max-w-md mx-auto font-[sans-serif] transition-all duration-300 ease-in-out"
+      ref={inputRef}
+      style={{
+        maxWidth: "300px",
+      }}
     >
-      {/* Search Icon */}
-      <CiSearch style={{ opacity: 2, fontSize: 32, paddingRight: 2 }} />
-
-      {/* Input field, only appears when hovered */}
+      <CiSearch
+        style={{ opacity: 2, fontSize: 32, paddingRight: 2, cursor: "pointer" }}
+        onClick={toggleSearchInput}
+      />
       <input
         type="text"
         placeholder="Ara ..."
         aria-label="Search"
-        className={`w-full outline-none bg-transparent text-gray-600 text-sm transition-all duration-300 ease-in-out ${
-          isHovered ? "opacity-100 w-full" : "opacity-0 w-0"
-        }`}
+        className="outline-none bg-transparent text-gray-600 text-sm transition-all duration-300 ease-in-out"
+        style={{
+          width: isClicked ? inputWidth : "0px",
+          opacity: isClicked ? 1 : 0,
+          paddingLeft: isClicked ? "8px" : "0px",
+        }}
         value={searchItem}
         onChange={handleChange}
       />
