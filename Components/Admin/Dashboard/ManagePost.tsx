@@ -16,14 +16,13 @@ import { PostType } from "@/lib/types/types"; // Ensure you have a type definiti
 const tableHeads = ["Başlık", "Kategoriler", "Tarih", "Ana Sayfa", "İşlemler"];
 
 interface ManagePostProps {
-  allPosts: PostType[]; // Define the type for allPosts
+  allPosts: PostType[];
 }
 
 const ManagePost: React.FC<ManagePostProps> = ({ allPosts }) => {
   const [filteredData, setFilteredData] = useState<PostType[]>(allPosts);
   const [searchItem, setSearchItem] = useState<string>("");
 
-  // Pagination
   const { totalPages, displayPosts, onPageChange, currentPage } = usePagination(
     filteredData || allPosts,
     5
