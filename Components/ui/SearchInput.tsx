@@ -37,7 +37,7 @@ const SearchInput = ({ inputWidth }: { inputWidth: string }) => {
 
   return (
     <div
-      className="flex items-center px-4 py-2 md:px-6 md:py-3 lg:px-3 lg:py-2 rounded-full border border-gray-400 overflow-hidden max-w-md mx-auto font-[sans-serif] transition-all duration-300 ease-in-out"
+      className="flex items-center px-4 py-2 md:px-6 md:py-3 lg:px-4 lg:py-2 rounded-full border border-gray-400 overflow-hidden max-w-md mx-auto font-[sans-serif] transition-all duration-300 ease-in-out"
       ref={inputRef}
       style={{
         maxWidth: "300px",

@@ -13,13 +13,9 @@ export const usePagination = <T>(
   postsPerPage: number = 3
 ): UsePaginationResult<T> => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-
   const totalPages = Math.ceil(data?.length / postsPerPage);
-
   const startIndex = (currentPage - 1) * postsPerPage;
-
   const endIndex = startIndex + postsPerPage;
-
   const displayPosts = data ? data.slice(startIndex, endIndex) : [];
 
   const onPageChange = (page: number) => {
