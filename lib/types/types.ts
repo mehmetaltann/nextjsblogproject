@@ -11,6 +11,18 @@ export type PostType = {
   author: string;
 };
 
+export type HomePost = {
+  title: string;
+  description: string;
+  cloudinaryImageId: string;
+  date: string;
+  category: PostCategoryType[];
+};
+
+export type PostTitle = {
+  title: string;
+};
+
 export type CommentType = {
   _id: string;
   content: string;

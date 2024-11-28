@@ -5,13 +5,13 @@ import Pagination from "@/Components/Layouts/Pagination";
 import { usePagination } from "@/lib/hooks/usePagination";
 import { useContext, useEffect, useState, useMemo } from "react";
 import { ClientContext } from "@/store/ClientContext";
-import { PostType } from "@/lib/types/types";
+import { HomePost } from "@/lib/types/types";
 
 interface BlogPostsProps {
-  filteredPosts: PostType[];
+  allPosts: HomePost[];
 }
 
-const BlogPosts: React.FC<BlogPostsProps> = ({ filteredPosts }) => {
+const BlogPosts = ({ allPosts }: BlogPostsProps) => {
   const context = useContext(ClientContext);
   if (!context)
     throw new Error(
@@ -20,14 +20,14 @@ const BlogPosts: React.FC<BlogPostsProps> = ({ filteredPosts }) => {
 
   const { searchItem } = context;
 
-  const [filteredData, setFilteredData] = useState<PostType[]>(filteredPosts);
+  const [filteredData, setFilteredData] = useState<HomePost[]>(allPosts);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (!searchItem) {
-        setFilteredData(filteredPosts);
+        setFilteredData(allPosts);
       } else {
-        const filteredItems = filteredPosts.filter((post) =>
+        const filteredItems = allPosts.filter((post: { title: string }) =>
           post.title.toLowerCase().includes(searchItem.toLowerCase())
         );
         setFilteredData(filteredItems);
@@ -35,11 +35,10 @@ const BlogPosts: React.FC<BlogPostsProps> = ({ filteredPosts }) => {
     }, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [searchItem, filteredPosts]);
+  }, [searchItem, allPosts]);
 
-  //Pagination
   const { totalPages, displayPosts, onPageChange, currentPage } = usePagination(
-    filteredData || filteredPosts,
+    filteredData || allPosts,
     6
   );
 
@@ -50,17 +49,13 @@ const BlogPosts: React.FC<BlogPostsProps> = ({ filteredPosts }) => {
 
   return (
     <>
-      {displayPosts.length === 0 ? (
-        <p>Sonuç bulunamadı.</p>
-      ) : (
-        <section className="grid grid-cols-1 gap-12 lg:gap-18 md:grid-cols-2 md:my-16 my-8">
-          {displayPosts.map((post: PostType) => (
-            <AnimationWrapper key={post._id} keyValue="Blog Post Preview">
-              <BlogPostPreview post={post} />
-            </AnimationWrapper>
-          ))}
-        </section>
-      )}
+      <section className="grid grid-cols-1 gap-12 lg:gap-18 md:grid-cols-2 md:my-16 my-8">
+        {displayPosts.map((post: HomePost, index) => (
+          <AnimationWrapper key={index} keyValue="Blog Post Preview">
+            <BlogPostPreview post={post} />
+          </AnimationWrapper>
+        ))}
+      </section>
       {totalPages > 1 && (
         <Pagination
           totalPages={totalPages}

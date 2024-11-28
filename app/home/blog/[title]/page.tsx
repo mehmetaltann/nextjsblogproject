@@ -1,12 +1,12 @@
 import SingleBlog from "@/Components/SingleBlog/SingleBlog";
 import { Loader } from "@/Components/Layouts/Loader";
 import { Suspense } from "react";
-import { CommentType, PostType } from "@/lib/types/types";
+import { CommentType, PostTitle, PostType } from "@/lib/types/types";
 import {
   fetchComment,
   fetchSimilarPosts,
   fetchBlog,
-  fetchPosts,
+  fetchPostTitles,
 } from "@/app/actions/fetchDatas";
 
 interface Params {
@@ -16,15 +16,14 @@ interface Params {
 }
 
 export async function generateStaticParams() {
-  const allPosts = (await fetchPosts()) as PostType[];
-
-  return allPosts.map((post) => ({
-    title: post.title,
+  const allPostTitles = (await fetchPostTitles()) as PostTitle[];
+  return allPostTitles.map(({ title }) => ({
+    title,
   }));
 }
 
 export async function generateMetadata({ params }: Params) {
-  const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
+  const siteUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   try {
     const blog = (await fetchBlog(params.title)) as PostType;

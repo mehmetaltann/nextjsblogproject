@@ -4,13 +4,13 @@ import { ClientContext } from "@/store/ClientContext";
 import { CldImage } from "next-cloudinary";
 import { useContext } from "react";
 import { getFormatDate } from "@/lib/utils/helpers";
-import { PostType } from "@/lib/types/types";
+import { HomePost } from "@/lib/types/types";
 
 interface BlogPostPreviewProps {
-  post: PostType;
+  post: HomePost;
 }
 
-const BlogPostPreview: React.FC<BlogPostPreviewProps> = ({ post }) => {
+const BlogPostPreview = ({ post }: BlogPostPreviewProps) => {
   const context = useContext(ClientContext);
 
   if (!context) {

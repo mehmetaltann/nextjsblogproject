@@ -6,7 +6,9 @@ import dbConnect from "@/lib/config/dbConnect";
 import {
   CategoryType,
   CommentType,
+  HomePost,
   InfoType,
+  PostTitle,
   PostType,
 } from "@/lib/types/types";
 
@@ -110,6 +112,60 @@ export const fetchInfos = async () => {
     const infos = await InfoModel.find({}).lean();
     const allInfos: InfoType[] = JSON.parse(JSON.stringify(infos));
     return allInfos;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchHomePosts = async () => {
+  try {
+    try {
+      await dbConnect();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+
+    const posts: HomePost[] = await BlogModel.aggregate([
+      {
+        $match: {
+          isHome: true,
+        },
+      },
+      {
+        $sort: {
+          date: -1,
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          title: 1,
+          category: 1,
+          date: 1,
+          cloudinaryImageId: 1,
+          description: { $substr: ["$description", 0, 600] },
+        },
+      },
+    ]);
+    return posts;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchPostTitles = async () => {
+  try {
+    await dbConnect();
+    const postTitles: PostTitle[] = await BlogModel.aggregate([
+      {
+        $project: {
+          _id: 0,
+          title: 1,
+        },
+      },
+    ]);
+    return postTitles;
   } catch (error) {
     console.log(error);
   }
