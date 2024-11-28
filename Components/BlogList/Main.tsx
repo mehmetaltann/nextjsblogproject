@@ -7,10 +7,10 @@ import { getAttCount } from "@/lib/utils/helpers";
 import { useContext, useMemo } from "react";
 import { ClientContext } from "@/store/ClientContext";
 import { usePagination } from "@/lib/hooks/usePagination";
-import { PostType } from "@/lib/types/types";
+import { HomePost } from "@/lib/types/types";
 
 interface MainProps {
-  allPosts: PostType[];
+  allPosts: HomePost[];
 }
 
 const ALL_CATEGORIES = "Tümü";

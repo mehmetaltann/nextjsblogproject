@@ -2,14 +2,14 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { CldImage } from "next-cloudinary";
 import { FaArrowRight } from "react-icons/fa6";
-import { PostType } from "@/lib/types/types";
+import { HomePost } from "@/lib/types/types";
 
 const RenderHTML = dynamic(() => import("../ui/RenderHTML"), {
   ssr: false,
 });
 
 interface PostCardProps {
-  data: PostType;
+  data: HomePost;
 }
 
 export default function PostCard({ data }: PostCardProps) {
