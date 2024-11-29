@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 
-const LoginForm: React.FC = () => {
+const LoginForm = () => {
   const router = useRouter();
 
   const submitLogin = async (event: React.FormEvent<HTMLFormElement>) => {

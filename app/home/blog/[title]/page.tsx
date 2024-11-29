@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: Params) {
 
     var designedDesc = description
       .replace(/(<([^>]+)>)*/g, "")
-      .substring(0, 500);
+      .substring(0, 600);
 
     return {
       title,

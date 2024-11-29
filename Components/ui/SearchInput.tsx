@@ -2,7 +2,11 @@ import { useContext, ChangeEvent, useState, useEffect, useRef } from "react";
 import { ClientContext } from "@/store/ClientContext";
 import { CiSearch } from "react-icons/ci";
 
-const SearchInput = ({ inputWidth }: { inputWidth: string }) => {
+interface SearchInputProps {
+  inputWidth: string;
+}
+
+const SearchInput = ({ inputWidth }: SearchInputProps) => {
   const context = useContext(ClientContext);
   if (!context) {
     throw new Error(
@@ -10,7 +14,6 @@ const SearchInput = ({ inputWidth }: { inputWidth: string }) => {
     );
   }
   const { searchItem, setSearchItem } = context;
-
   const [isClicked, setIsClicked] = useState(false);
   const inputRef = useRef<HTMLDivElement>(null);
 
@@ -24,7 +27,7 @@ const SearchInput = ({ inputWidth }: { inputWidth: string }) => {
 
   const handleClickOutside = (event: MouseEvent) => {
     if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
-      setIsClicked(false); // Dışarı tıklanınca kapat
+      setIsClicked(false);
     }
   };
 

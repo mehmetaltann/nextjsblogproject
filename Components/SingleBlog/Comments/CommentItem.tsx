@@ -34,7 +34,7 @@ interface CommentItemProps {
   postTitle: string;
 }
 
-const CommentItem: React.FC<CommentItemProps> = ({
+const CommentItem = ({
   comment,
   affectedComment,
   setAffectedComment,
@@ -42,7 +42,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   parentId = null,
   replies,
   postTitle,
-}) => {
+}: CommentItemProps) => {
   const { authorName, content, date, _id, parentCommentId: parent } = comment;
   const isReplying =
     affectedComment &&

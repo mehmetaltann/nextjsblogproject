@@ -7,7 +7,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout: FC<LayoutProps> = ({ children }) => {
+const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="mx-auto flex flex-col items-center justify-between w-full h-screen">
       <Navbar />

@@ -3,15 +3,14 @@ import Pagination from "@/Components/Layouts/Pagination";
 import { usePagination } from "@/lib/hooks/usePagination";
 import { CategoryType } from "@/lib/types/types";
 
-const CategoryTable = ({
-  allCategories,
-}: {
+interface CategoryTableProps {
   allCategories: CategoryType[];
-}) => {
+}
 
+const CategoryTable = ({ allCategories }: CategoryTableProps) => {
   const { totalPages, displayPosts, onPageChange, currentPage } = usePagination(
     allCategories,
-    8
+    15
   );
 
   return (

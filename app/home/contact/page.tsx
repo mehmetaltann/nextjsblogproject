@@ -8,9 +8,7 @@ export const metadata = {
 };
 
 export default async function Contact() {
-  const allInfos = (await fetchInfos()) as InfoType[];
+  const data = (await fetchInfos("İletişim")) as InfoType[];
 
-  const data = allInfos!.find((info) => info.name === "İletişim");
-
-  return <>{data ? <ContactForm content={data.content} /> : <Loader />}</>;
+  return <>{data ? <ContactForm content={data[0].content} /> : <Loader />}</>;
 }

@@ -10,7 +10,11 @@ const InfoButtonGroups = dynamic(() => import("./InfoButtonGroups"), {
   ssr: false,
 });
 
-const Infos = ({ allInfos }: { allInfos: InfoType[] }) => {
+interface InfoProps {
+  allInfos: InfoType[];
+}
+
+const Infos = ({ allInfos }: InfoProps) => {
   const [selectedInfo, setSelectedInfo] = useState<string>("new");
 
   const filteredData = allInfos?.find((info) => info.name === selectedInfo);

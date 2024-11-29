@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CldImage } from "next-cloudinary";
-import { FC } from "react";
 import { PostType } from "@/lib/types/types";
 
 interface SimilarPostItemProps {
   post: PostType;
 }
 
-const SimilarPostItem: FC<SimilarPostItemProps> = ({ post }) => {
+const SimilarPostItem = ({ post }: SimilarPostItemProps) => {
   const { _id, title, date, cloudinaryImageId } = post;
 
   return (

@@ -101,7 +101,8 @@ export const fetchSimilarPosts = async (categoryArray: string[]) => {
   }
 };
 
-export const fetchInfos = async () => {
+export const fetchInfos = async (searchType: string) => {
+  const filteringdata = searchType === "All" ? { $exists: true } : searchType;
   try {
     try {
       await dbConnect();
@@ -109,7 +110,13 @@ export const fetchInfos = async () => {
       console.error(error);
       return [];
     }
-    const infos = await InfoModel.find({}).lean();
+    const infos = await InfoModel.aggregate([
+      {
+        $match: {
+          name: filteringdata,
+        },
+      },
+    ]);
     const allInfos: InfoType[] = JSON.parse(JSON.stringify(infos));
     return allInfos;
   } catch (error) {

@@ -10,7 +10,7 @@ interface PhotoSectionProps {
   isNewPost: boolean;
 }
 
-const PhotoSection: React.FC<PhotoSectionProps> = ({ isNewPost }) => {
+const PhotoSection = ({ isNewPost }: PhotoSectionProps) => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const context = useContext(AdminContext);
   if (!context) {

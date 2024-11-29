@@ -10,7 +10,6 @@ import {
   FC,
 } from "react";
 
-// Define types for the context
 interface AdminContextProps {
   categories: PostCategoryType[];
   isHome: boolean;
@@ -32,7 +31,6 @@ interface AdminContextProps {
   setPostId: Dispatch<SetStateAction<string>>;
 }
 
-// Create context with initial values
 export const AdminContext = createContext<AdminContextProps | undefined>(
   undefined
 );

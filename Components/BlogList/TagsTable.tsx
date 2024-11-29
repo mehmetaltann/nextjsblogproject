@@ -10,12 +10,12 @@ interface TagsTableProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const TagsTable: React.FC<TagsTableProps> = ({
+const TagsTable = ({
   categoryCountObj,
   selectedCategory,
   setSelectedCategory,
   setCurrentPage,
-}) => {
+}: TagsTableProps) => {
   const handleCategoryChange = (category: string) => {
     setCurrentPage(1);
     setSelectedCategory(category === selectedCategory ? "" : category);

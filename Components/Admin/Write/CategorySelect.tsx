@@ -11,7 +11,7 @@ interface CategorySelectProps {
   optionsData: CategoryOption[];
 }
 
-const CategorySelect: React.FC<CategorySelectProps> = ({ optionsData }) => {
+const CategorySelect = ({ optionsData }: CategorySelectProps) => {
   const context = useContext(AdminContext);
   if (!context) {
     throw new Error(

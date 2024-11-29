@@ -6,7 +6,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout = ({ children }: LayoutProps) => {
   return (
     <AdminContextProvider>
       <div className="flex flex-col lg:flex-row">

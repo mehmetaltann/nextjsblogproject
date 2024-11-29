@@ -1,4 +1,5 @@
 "use client";
+import { PostType } from "@/lib/types/types";
 import {
   createContext,
   useMemo,
@@ -8,7 +9,6 @@ import {
   SetStateAction,
   FC,
 } from "react";
-import { PostType } from "@/lib/types/types";
 
 type ClientContextProviderProps = {
   children: ReactNode;

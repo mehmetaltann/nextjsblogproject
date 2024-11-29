@@ -13,9 +13,7 @@ export default async function BlogList() {
   return (
     <>
       {allPosts && allPosts.length > 0 ? (
-        <div className="flex flex-col mx-4 md:mx-0 md:w-11/12 ld:w-10/11 2xl:w-2/3 mb-10">
-          <Main allPosts={allPosts} />
-        </div>
+        <Main allPosts={allPosts} />
       ) : (
         <Loader />
       )}

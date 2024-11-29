@@ -25,7 +25,7 @@ interface AffectedComment {
   _id: string;
 }
 
-const Comments: React.FC<CommentsProps> = ({ postId, postTitle, comments }) => {
+const Comments = ({ postId, postTitle, comments }: CommentsProps) => {
   const [affectedComment, setAffectedComment] =
     useState<AffectedComment | null>(null);
 

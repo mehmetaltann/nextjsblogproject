@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import { FC } from "react";
 import { PostType } from "@/lib/types/types";
 
 const SimilarPostItem = dynamic(() => import("./SimilarPostItem"), {
@@ -12,10 +11,10 @@ interface SimilarPostsProps {
   displayCount?: number;
 }
 
-const SimilarPosts: FC<SimilarPostsProps> = ({
+const SimilarPosts = ({
   similarposts,
   displayCount = 2,
-}) => {
+}: SimilarPostsProps) => {
   if (!similarposts || similarposts.length === 0) return <div></div>;
 
   const shuffled = [...similarposts].sort(() => 0.5 - Math.random());

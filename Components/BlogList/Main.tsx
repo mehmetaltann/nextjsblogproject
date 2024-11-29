@@ -42,7 +42,7 @@ const Main = ({ allPosts }: MainProps) => {
     onPageChange,
     setCurrentPage,
     currentPage,
-  } = usePagination(filteredPosts, 3);
+  } = usePagination(filteredPosts, 4);
 
   const handlePageChange = (page: number) => {
     onPageChange(page);

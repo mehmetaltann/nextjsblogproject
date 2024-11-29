@@ -4,11 +4,11 @@ import { FaLinkedin } from "react-icons/fa";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Dispatch, SetStateAction } from "react";
 
-const ProfileMenu = ({
-  setOpenProfile,
-}: {
+interface ProfileMenuProps {
   setOpenProfile: Dispatch<SetStateAction<boolean>>;
-}) => {
+}
+
+const ProfileMenu = ({ setOpenProfile }: ProfileMenuProps) => {
   const { data: session } = useSession();
 
   const ref = useOnclickOutside(() => {

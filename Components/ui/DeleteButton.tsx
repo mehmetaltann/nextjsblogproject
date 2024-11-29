@@ -10,7 +10,7 @@ interface DeleteButtonProps {
 const buttonClassName =
   "flex gap-2 items-center justify-center py-2 px-4 font-semibold shadow-md rounded-lg text-white bg-red-600 shadow-red-400/40";
 
-const DeleteButton: React.FC<DeleteButtonProps> = ({ deleteHandler, id }) => {
+const DeleteButton = ({ deleteHandler, id }: DeleteButtonProps) => {
   const [open, setOpen] = useState(false);
 
   const deleteHandlerInside = () => {

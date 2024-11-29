@@ -14,18 +14,17 @@ import {
   FaTelegram,
 } from "react-icons/fa6";
 
-
 interface SocialMediaShareSetProps {
   shareURL: string;
   title: string;
   size?: number;
 }
 
-const SocialMediaShareSet: React.FC<SocialMediaShareSetProps> = ({
+const SocialMediaShareSet = ({
   shareURL,
   title,
   size = 20,
-}) => {
+}: SocialMediaShareSetProps) => {
   return (
     <div className="flex  gap-2">
       <WhatsappShareButton

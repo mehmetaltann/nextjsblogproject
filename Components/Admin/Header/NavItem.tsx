@@ -11,14 +11,14 @@ interface NavItemProps {
   setActiveNavName: (name: string) => void;
 }
 
-const NavItem: React.FC<NavItemProps> = ({
+const NavItem = ({
   link,
   title,
   icon,
   name,
   activeNavName,
   setActiveNavName,
-}) => {
+}: NavItemProps) => {
   const handleClick = () => {
     setActiveNavName(name);
     if (name === "signOut") {

@@ -19,13 +19,13 @@ interface ManagePostProps {
   allPosts: PostType[];
 }
 
-const ManagePost: React.FC<ManagePostProps> = ({ allPosts }) => {
+const ManagePost = ({ allPosts }: ManagePostProps) => {
   const [filteredData, setFilteredData] = useState<PostType[]>(allPosts);
   const [searchItem, setSearchItem] = useState<string>("");
 
   const { totalPages, displayPosts, onPageChange, currentPage } = usePagination(
     filteredData || allPosts,
-    5
+    7
   );
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {

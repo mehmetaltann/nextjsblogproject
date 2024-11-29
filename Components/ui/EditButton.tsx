@@ -10,7 +10,7 @@ interface EditButtonProps {
 const buttonClassName =
   "flex gap-2 items-center justify-center py-2 px-4 font-semibold shadow-md rounded-lg text-white bg-blue-600 shadow-blue-400/40";
 
-const EditButton: React.FC<EditButtonProps> = ({ post }) => {
+const EditButton = ({ post }: EditButtonProps) => {
   const { _id, title, isHome, description, category, cloudinaryImageId } = post;
 
   const context = useContext(AdminContext);

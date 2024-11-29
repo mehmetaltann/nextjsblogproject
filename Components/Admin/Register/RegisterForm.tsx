@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useFormState } from "react-dom"; // Bunu kontrol edin, doğru import mu?
 import { userRegister } from "@/app/actions/actions";
 
-const RegisterForm: React.FC = () => {
+const RegisterForm = () => {
   const [formState, formAction] = useFormState(userRegister, null);
 
   useEffect(() => {

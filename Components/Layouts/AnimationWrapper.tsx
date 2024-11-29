@@ -10,14 +10,14 @@ interface AnimationWrapperProps {
   transition?: object;
 }
 
-const AnimationWrapper: React.FC<AnimationWrapperProps> = ({
+const AnimationWrapper = ({
   children,
   keyValue,
   className,
   initial = { y: 20, opacity: 0 },
   animate = { y: 0, opacity: 1 },
   transition = { ease: "easeInOut", duration: 0.75 },
-}) => {
+}: AnimationWrapperProps) => {
   return (
     <AnimatePresence>
       <motion.div

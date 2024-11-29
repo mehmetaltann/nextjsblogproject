@@ -1,10 +1,13 @@
-"use client";
 import { deleteCategory } from "@/app/actions/actions";
 import { toast } from "react-toastify";
 import { memo } from "react";
 import { CategoryType } from "@/lib/types/types";
 
-const CategoryTableItem = ({ category }: { category: CategoryType }) => {
+interface CategoryTableItemProps {
+  category: CategoryType;
+}
+
+const CategoryTableItem = ({ category }: CategoryTableItemProps) => {
   const divStyle = {
     backgroundColor: "#" + category.color,
   };

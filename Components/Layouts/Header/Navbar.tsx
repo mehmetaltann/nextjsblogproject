@@ -20,7 +20,7 @@ const menus: MenuItem[] = [
   { id: 4, linkpage: "/home/contact", title: "İletişim" },
 ];
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const [openProfile, setOpenProfile] = useState<boolean>(false);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();

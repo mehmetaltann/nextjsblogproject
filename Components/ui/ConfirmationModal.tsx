@@ -7,7 +7,11 @@ interface ConfirmationModalProps {
   children: ReactNode;
 }
 
-const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ open, onClose, children }) => {
+const ConfirmationModal = ({
+  open,
+  onClose,
+  children,
+}: ConfirmationModalProps) => {
   return (
     <div
       onClick={onClose}

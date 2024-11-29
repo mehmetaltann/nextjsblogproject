@@ -19,7 +19,7 @@ interface AddPostPanelProps {
 
 type filteredPostType = Omit<PostType, "date" | "updated_at" | "created_at">;
 
-const AddPostPanel: React.FC<AddPostPanelProps> = ({ allCategories }) => {
+const AddPostPanel = ({ allCategories }: AddPostPanelProps) => {
   const context = useContext(AdminContext);
   if (!context) {
     throw new Error(

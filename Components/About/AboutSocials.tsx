@@ -15,13 +15,12 @@ const socials = [
   { icon: <FaYoutube />, path: "https://www.youtube.com/@mehmet_altan" },
 ];
 
-const AboutSocials = ({
-  containerStyles,
-  iconStyles,
-}: {
+interface AboutSocialsProps {
   containerStyles: string;
   iconStyles: string;
-}) => {
+}
+
+const AboutSocials = ({ containerStyles, iconStyles }: AboutSocialsProps) => {
   return (
     <div className={containerStyles}>
       {socials.map((item, index) => {

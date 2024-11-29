@@ -1,4 +1,3 @@
-"use client";
 import { addCategory } from "@/app/actions/actions";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";

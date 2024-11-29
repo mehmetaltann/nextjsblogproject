@@ -8,8 +8,7 @@ export const metadata = {
 };
 
 export default async function About() {
-  const allInfos = (await fetchInfos()) as InfoType[];
-  const data = allInfos!.find((info) => info.name === "Hakkımızda");
+  const data = (await fetchInfos("Hakkımızda")) as InfoType[];
 
-  return <>{data ? <AboutPage content={data.content} /> : <Loader />}</>;
+  return <>{data ? <AboutPage content={data[0].content} /> : <Loader />}</>;
 }

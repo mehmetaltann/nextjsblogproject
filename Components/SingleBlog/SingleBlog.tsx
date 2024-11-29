@@ -15,12 +15,12 @@ interface SingleBlogProps {
   comments: CommentType[] | [];
 }
 
-const SingleBlog: React.FC<SingleBlogProps> = ({
+const SingleBlog = ({
   blog,
   sameCategoryBlogs,
   comments,
   siteUrl,
-}) => {
+}: SingleBlogProps) => {
   const filteredBlogsByCategory = sameCategoryBlogs.filter((item) => {
     return item.title !== blog.title;
   });
