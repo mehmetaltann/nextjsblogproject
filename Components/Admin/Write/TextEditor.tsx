@@ -17,7 +17,9 @@ const TextEditor = () => {
   const editor = useRef(null);
 
   useEffect(() => {
-    registerFlickityPlugin();
+    if (typeof window !== "undefined") {
+      registerFlickityPlugin();
+    }
   }, []);
 
   const config = useMemo(() => ({
@@ -42,13 +44,16 @@ const TextEditor = () => {
 
   return (
     <div tabIndex={1}>
-      <Head>
-        <link
-          rel="stylesheet"
-          href="https://unpkg.com/flickity@2/dist/flickity.min.css"
-        />
-        <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-      </Head>
+      {/* Flickity CSS + JS sadece client-side */}
+      {typeof window !== "undefined" && (
+        <Head>
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/flickity@2/dist/flickity.min.css"
+          />
+          <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+        </Head>
+      )}
 
       <JoditEditor
         ref={editor}
