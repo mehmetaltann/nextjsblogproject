@@ -1,7 +1,7 @@
-import JoditLib from "jodit";
+import * as JoditLib from "jodit";
 
 export function registerFlickityPlugin() {
-  const Jodit: any = JoditLib; 
+  const Jodit: any = JoditLib;
 
   if (!Jodit.plugins?.get("flickitySlider")) {
     Jodit.plugins.add("flickitySlider", function (editor: any) {
@@ -17,14 +17,15 @@ export function registerFlickityPlugin() {
               <img src="https://res.cloudinary.com/altan/image/upload/2.jpg" />
               <img src="https://res.cloudinary.com/altan/image/upload/3.jpg" />
             </div>
-            <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
-            <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-            <script>
-              var elem = document.querySelector('.my-slider');
-              if(elem) new Flickity(elem, { wrapAround: true, autoPlay: 3000 });
-            </script>
           `;
           editor.s.insertHTML(html);
+
+          setTimeout(() => {
+            const elem = editor.editor.querySelector(".my-slider");
+            if (elem && (window as any).Flickity) {
+              new (window as any).Flickity(elem, { wrapAround: true, autoPlay: 3000 });
+            }
+          }, 100); // küçük gecikme ile DOM hazır olmasını sağlıyoruz
         },
       });
     });
