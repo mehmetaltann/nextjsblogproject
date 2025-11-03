@@ -7,6 +7,7 @@ import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import { CldImage } from "next-cloudinary";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CommentType, PostType } from "@/lib/types/types";
+import { useEffect } from "react";
 
 interface SingleBlogProps {
   blog: PostType;
@@ -24,6 +25,61 @@ const SingleBlog = ({
   const filteredBlogsByCategory = sameCategoryBlogs.filter((item) => {
     return item.title !== blog.title;
   });
+
+  // Carousel script – sadece varsa çalışır
+  useEffect(() => {
+    const carousels = document.querySelectorAll(".carousel-container");
+
+    carousels.forEach((carousel) => {
+      const track = carousel.querySelector(".carousel-track") as HTMLElement;
+      const next = carousel.querySelector(".carousel-next");
+      const prev = carousel.querySelector(".carousel-prev");
+
+      if (!track || !next || !prev) return;
+
+      let index = 0;
+      const total = track.children.length;
+      let startX = 0;
+      let currentX = 0;
+      let isDragging = false;
+
+      const updateCarousel = () => {
+        track.style.transform = `translateX(-${index * 100}%)`;
+      };
+
+      next.addEventListener("click", () => {
+        index = (index + 1) % total;
+        updateCarousel();
+      });
+
+      prev.addEventListener("click", () => {
+        index = (index - 1 + total) % total;
+        updateCarousel();
+      });
+
+      // Dokunmatik kaydırma
+      track.addEventListener("touchstart", (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+
+      track.addEventListener("touchmove", (e) => {
+        if (!isDragging) return;
+        currentX = e.touches[0].clientX;
+      });
+
+      track.addEventListener("touchend", () => {
+        if (!isDragging) return;
+        const diff = startX - currentX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) index = (index + 1) % total;
+          else index = (index - 1 + total) % total;
+          updateCarousel();
+        }
+        isDragging = false;
+      });
+    });
+  }, []);
 
   return (
     <AnimationWrapper
