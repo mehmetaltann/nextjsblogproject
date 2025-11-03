@@ -16,24 +16,47 @@ const TextEditor = () => {
   const { setDescription, description } = context;
   const editor = useRef(null);
 
-  const config = useMemo(
-    () => ({
-      readonly: false,
-      placeholder: "Yazınız...",
-      height: 600,
-      uploader: {
-        insertImageAsBase64URI: true,
-        imagesExtensions: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
+  const config = useMemo(() => ({
+  readonly: false,
+  placeholder: "Yazınız...",
+  height: 600,
+  uploader: {
+    insertImageAsBase64URI: true,
+    imagesExtensions: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
+  },
+  cleanHTML: {
+    allowTags: {
+      div: {
+        class: true,
+        style: true,
       },
-      // 👇 Bu kısım eklendi: HTML temizleme ayarları
-      cleanHTML: {
-        removeStyle: false,   // ✅ inline style="" KORUNUR
-        removeScript: false,  // ✅ <script> tag'leri KORUNUR (sadece sen kullanıyorsun)
-        removeTags: [],       // başka tag silinmez
+      img: {
+        src: true,
+        alt: true,
+        style: true,
       },
-    }),
-    []
-  );
+      p: true,
+      h1: true,
+      h2: true,
+      h3: true,
+      a: {
+        href: true,
+        target: true,
+      },
+      ul: true,
+      ol: true,
+      li: true,
+      strong: true,
+      em: true,
+      br: true,
+      script: true,
+    },
+ 
+    replaceOldTags: false, 
+    fillEmptyParagraph: false,
+    removeEmptyElements: false,
+  },
+}), []);
 
   return (
     <div tabIndex={1}>
