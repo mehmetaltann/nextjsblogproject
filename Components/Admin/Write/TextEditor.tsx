@@ -1,4 +1,4 @@
-import { useRef, useMemo, useContext, SetStateAction } from "react";
+import { useRef, useMemo, useContext } from "react";
 import { AdminContext } from "@/store/AdminContext";
 import dynamic from "next/dynamic";
 
@@ -10,7 +10,7 @@ const TextEditor = () => {
   const context = useContext(AdminContext);
   if (!context) {
     throw new Error(
-      "useClientContext must be used within a ClientContextProvider"
+      "AdminContext must be used within an AdminContextProvider"
     );
   }
   const { setDescription, description } = context;
@@ -25,6 +25,12 @@ const TextEditor = () => {
         insertImageAsBase64URI: true,
         imagesExtensions: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
       },
+      // 👇 Bu kısım eklendi: HTML temizleme ayarları
+      cleanHTML: {
+        removeStyle: false,   // ✅ inline style="" KORUNUR
+        removeScript: false,  // ✅ <script> tag'leri KORUNUR (sadece sen kullanıyorsun)
+        removeTags: [],       // başka tag silinmez
+      },
     }),
     []
   );
@@ -35,9 +41,7 @@ const TextEditor = () => {
         ref={editor}
         value={description}
         config={config}
-        onBlur={(newContent: SetStateAction<string>) =>
-          setDescription(newContent)
-        }
+        onBlur={(newContent) => setDescription(newContent)}
         onChange={(newContent) => {}}
       />
     </div>
