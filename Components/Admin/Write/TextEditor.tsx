@@ -24,38 +24,7 @@ const TextEditor = () => {
     insertImageAsBase64URI: true,
     imagesExtensions: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
   },
-  cleanHTML: {
-    allowTags: {
-      div: {
-        class: true,
-        style: true,
-      },
-      img: {
-        src: true,
-        alt: true,
-        style: true,
-      },
-      p: true,
-      h1: true,
-      h2: true,
-      h3: true,
-      a: {
-        href: true,
-        target: true,
-      },
-      ul: true,
-      ol: true,
-      li: true,
-      strong: true,
-      em: true,
-      br: true,
-      script: true,
-    },
- 
-    replaceOldTags: false, 
-    fillEmptyParagraph: false,
-    removeEmptyElements: false,
-  },
+  cleanHTML: false
 }), []);
 
   return (
