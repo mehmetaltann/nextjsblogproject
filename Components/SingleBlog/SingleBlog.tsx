@@ -1,15 +1,32 @@
 "use client";
-import dynamic from "next/dynamic";
+
 import Comments from "./Comments/Comments";
 import SocialMediaShareSet from "../Layouts/SocialMediaShareSet";
-import parse from "html-react-parser";
 import SimilarPosts from "./SimilarPosts";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import { CldImage } from "next-cloudinary";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CommentType, PostType } from "@/lib/types/types";
+import { useEffect, useRef } from 'react';
 
-const Carousel = dynamic(() => import("../ui/Carousel"), { ssr: false });
+const runScripts = (container: HTMLElement | null) => {
+  if (!container) return;
+  const scripts = container.querySelectorAll('script');
+  scripts.forEach(script => {
+    const newScript = document.createElement('script');
+    if (script.src) {
+      newScript.src = script.src;
+    } else {
+      newScript.textContent = script.textContent;
+    }
+    Array.from(script.attributes).forEach(attr => {
+      if (attr.name !== 'src' && attr.name !== 'textContent') {
+        newScript.setAttribute(attr.name, attr.value);
+      }
+    });
+    script.parentNode?.replaceChild(newScript, script);
+  });
+};
 
 interface SingleBlogProps {
   blog: PostType;
@@ -24,9 +41,16 @@ const SingleBlog = ({
   comments,
   siteUrl,
 }: SingleBlogProps) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+
   const filteredBlogsByCategory = sameCategoryBlogs.filter(
     (item) => item.title !== blog.title
   );
+
+  // Script'leri çalıştır
+  useEffect(() => {
+    runScripts(contentRef.current);
+  }, []);
 
   return (
     <AnimationWrapper
@@ -66,33 +90,13 @@ const SingleBlog = ({
         </div>
       </div>
 
-      <div className="space-y-4 text-zinc-700 mb-4 w-full">
-        {parse(blog.description, {
-          replace: (domNode) => {
-            // Sadece <div class="post-carousel"> içindeki resimleri Carousel ile göster
-            if (
-              domNode.type === "tag" &&
-              domNode.name === "div" &&
-              domNode.attribs?.class?.includes("post-carousel")
-            ) {
-              const images: string[] = [];
-              const traverse = (node: any) => {
-                if (
-                  node.type === "tag" &&
-                  node.name === "img" &&
-                  node.attribs?.src
-                ) {
-                  const cleanSrc = node.attribs.src.trim();
-                  if (cleanSrc) images.push(cleanSrc);
-                }
-                if (node.children) node.children.forEach(traverse);
-              };
-              traverse(domNode);
-              return images.length > 0 ? <Carousel images={images} /> : null;
-            }
-          },
-        })}
-      </div>
+      {/* ✅ ESKİ: {parse(blog.description)} */}
+      {/* ✅ YENİ: dangerouslySetInnerHTML + script çalıştırma */}
+      <div
+        ref={contentRef}
+        className="space-y-4 text-zinc-700 mb-4 w-full"
+        dangerouslySetInnerHTML={{ __html: blog.description }}
+      />
 
       <div className="mt-2 self-end">
         <SocialMediaShareSet
