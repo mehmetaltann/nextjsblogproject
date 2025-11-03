@@ -76,7 +76,9 @@ const SingleBlog = ({
                   node.name === "img" &&
                   node.attribs?.src
                 ) {
-                  images.push(node.attribs.src);
+                  // 🔥 BOŞLUKLARI TEMİZLE!
+                  const cleanSrc = node.attribs.src.trim();
+                  if (cleanSrc) images.push(cleanSrc);
                 }
                 if (node.children) node.children.forEach(traverse);
               };
