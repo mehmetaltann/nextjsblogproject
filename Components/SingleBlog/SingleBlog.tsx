@@ -26,17 +26,14 @@ const SingleBlog = ({
     return item.title !== blog.title;
   });
 
-  // Carousel script – sadece varsa çalışır
   useEffect(() => {
+  const timer = setTimeout(() => {
     const carousels = document.querySelectorAll(".carousel-container");
-
     carousels.forEach((carousel) => {
       const track = carousel.querySelector(".carousel-track") as HTMLElement;
       const next = carousel.querySelector(".carousel-next");
       const prev = carousel.querySelector(".carousel-prev");
-
       if (!track || !next || !prev) return;
-
       let index = 0;
       const total = track.children.length;
       let startX = 0;
@@ -57,7 +54,6 @@ const SingleBlog = ({
         updateCarousel();
       });
 
-      // Dokunmatik kaydırma
       track.addEventListener("touchstart", (e) => {
         startX = e.touches[0].clientX;
         isDragging = true;
@@ -79,7 +75,11 @@ const SingleBlog = ({
         isDragging = false;
       });
     });
-  }, []);
+  }, 100); 
+
+  return () => clearTimeout(timer);
+}, [blog.description]);
+
 
   return (
     <AnimationWrapper
