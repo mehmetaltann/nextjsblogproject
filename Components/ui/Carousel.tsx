@@ -11,16 +11,16 @@ const Carousel = ({ images }: PropType) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
+    emblaApi?.scrollPrev();
   }, [emblaApi]);
 
   const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
+    emblaApi?.scrollNext();
   }, [emblaApi]);
 
   const scrollTo = useCallback(
     (index: number) => {
-      if (emblaApi) emblaApi.scrollTo(index);
+      emblaApi?.scrollTo(index);
     },
     [emblaApi]
   );
@@ -28,12 +28,10 @@ const Carousel = ({ images }: PropType) => {
   useEffect(() => {
     if (!emblaApi) return;
 
-    const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-    };
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
 
     emblaApi.on("select", onSelect);
-    onSelect(); // ilk indeksi ayarla
+    onSelect();
 
     return () => {
       emblaApi.off("select", onSelect);
@@ -42,7 +40,6 @@ const Carousel = ({ images }: PropType) => {
 
   return (
     <div className="relative w-full max-w-3xl mx-auto my-6">
-      {/* Embla Viewport */}
       <div className="overflow-hidden rounded-lg" ref={emblaRef}>
         <div className="flex">
           {images.map((src, index) => (
@@ -57,7 +54,7 @@ const Carousel = ({ images }: PropType) => {
         </div>
       </div>
 
-      {/* Navigation arrows - sadece md ekran ve üstü */}
+      {/* Navigation arrows */}
       <button
         onClick={scrollPrev}
         className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-black/60 md:block hidden"
@@ -73,7 +70,7 @@ const Carousel = ({ images }: PropType) => {
         ❯
       </button>
 
-      {/* Dot indicators - tüm ekranlarda */}
+      {/* Dot indicators */}
       <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
         {images.map((_, index) => (
           <button
