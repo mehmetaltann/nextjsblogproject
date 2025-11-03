@@ -1,13 +1,15 @@
 "use client";
+import dynamic from "next/dynamic";
 import Comments from "./Comments/Comments";
 import SocialMediaShareSet from "../Layouts/SocialMediaShareSet";
 import parse from "html-react-parser";
 import SimilarPosts from "./SimilarPosts";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
-import Carousel from "../ui/Carousel";
 import { CldImage } from "next-cloudinary";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CommentType, PostType } from "@/lib/types/types";
+
+const Carousel = dynamic(() => import("../ui/Carousel"), { ssr: false });
 
 interface SingleBlogProps {
   blog: PostType;
@@ -50,7 +52,7 @@ const SingleBlog = ({
         <div className="flex flex-col ">
           <span className="text-zinc-500">{getFormatDate(blog.date)}</span>
         </div>
-        <div className="flex md:absolute mt-2 md:right-0  md:mt-0">
+        <div className="flex md:absolute mt-2 md:right-0 md:mt-0">
           <div>
             {blog.category.map((item, index) => (
               <span
@@ -67,6 +69,7 @@ const SingleBlog = ({
       <div className="space-y-4 text-zinc-700 mb-4 w-full">
         {parse(blog.description, {
           replace: (domNode) => {
+            // Sadece <div class="post-carousel"> içindeki resimleri Carousel ile göster
             if (
               domNode.type === "tag" &&
               domNode.name === "div" &&
@@ -74,7 +77,11 @@ const SingleBlog = ({
             ) {
               const images: string[] = [];
               const traverse = (node: any) => {
-                if (node.type === "tag" && node.name === "img" && node.attribs?.src) {
+                if (
+                  node.type === "tag" &&
+                  node.name === "img" &&
+                  node.attribs?.src
+                ) {
                   const cleanSrc = node.attribs.src.trim();
                   if (cleanSrc) images.push(cleanSrc);
                 }
