@@ -1,5 +1,4 @@
 "use client";
-import dynamic from "next/dynamic";
 import Comments from "./Comments/Comments";
 import SocialMediaShareSet from "../Layouts/SocialMediaShareSet";
 import parse from "html-react-parser";
@@ -8,8 +7,6 @@ import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import { CldImage } from "next-cloudinary";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CommentType, PostType } from "@/lib/types/types";
-
-const Carousel = dynamic(() => import("../ui/Carousel"), { ssr: false });
 
 interface SingleBlogProps {
   blog: PostType;
@@ -24,9 +21,9 @@ const SingleBlog = ({
   comments,
   siteUrl,
 }: SingleBlogProps) => {
-  const filteredBlogsByCategory = sameCategoryBlogs.filter(
-    (item) => item.title !== blog.title
-  );
+  const filteredBlogsByCategory = sameCategoryBlogs.filter((item) => {
+    return item.title !== blog.title;
+  });
 
   return (
     <AnimationWrapper
@@ -36,7 +33,6 @@ const SingleBlog = ({
       <h1 className="mb-8 text-3xl font-extrabold leading-tight tracking-tighter text-color1 md:text-4xl">
         {blog.title}
       </h1>
-
       <div className="mb-4 w-full overflow-hidden rounded-xl">
         <CldImage
           src={blog.cloudinaryImageId}
@@ -47,16 +43,15 @@ const SingleBlog = ({
           priority={true}
         />
       </div>
-
       <div className="mb-6 md:flex items-center">
         <div className="flex flex-col ">
           <span className="text-zinc-500">{getFormatDate(blog.date)}</span>
         </div>
-        <div className="flex md:absolute mt-2 md:right-0 md:mt-0">
+        <div className="flex md:absolute mt-2 md:right-0  md:mt-0">
           <div>
             {blog.category.map((item, index) => (
               <span
-                className="mb-1 mr-1 rounded-xl px-1 py-1 opacity-60 hover:opacity-100 text-color6"
+                className={`mb-1 mr-1 rounded-xl px-1 py-1 opacity-60 hover:opacity-100 text-color6`}
                 key={index}
               >
                 #{item.name}
@@ -65,35 +60,9 @@ const SingleBlog = ({
           </div>
         </div>
       </div>
-
       <div className="space-y-4 text-zinc-700 mb-4 w-full">
-        {parse(blog.description, {
-          replace: (domNode) => {
-            // Sadece <div class="post-carousel"> içindeki resimleri Carousel ile göster
-            if (
-              domNode.type === "tag" &&
-              domNode.name === "div" &&
-              domNode.attribs?.class?.includes("post-carousel")
-            ) {
-              const images: string[] = [];
-              const traverse = (node: any) => {
-                if (
-                  node.type === "tag" &&
-                  node.name === "img" &&
-                  node.attribs?.src
-                ) {
-                  const cleanSrc = node.attribs.src.trim();
-                  if (cleanSrc) images.push(cleanSrc);
-                }
-                if (node.children) node.children.forEach(traverse);
-              };
-              traverse(domNode);
-              return images.length > 0 ? <Carousel images={images} /> : null;
-            }
-          },
-        })}
+        {parse(blog.description)}
       </div>
-
       <div className="mt-2 self-end">
         <SocialMediaShareSet
           shareURL={`${siteUrl}/home/blog/${blog.title}`}
@@ -101,11 +70,8 @@ const SingleBlog = ({
           size={20}
         />
       </div>
-
       <hr />
-
       <Comments postId={blog._id} postTitle={blog.title} comments={comments} />
-
       <div className="font-semibold text-xl py-4 opacity-80 text-color1">
         Benzer Yazılar
       </div>
