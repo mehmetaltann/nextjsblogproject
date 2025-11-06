@@ -39,7 +39,7 @@ const BlogPosts = ({ allPosts }: BlogPostsProps) => {
 
   const { totalPages, displayPosts, onPageChange, currentPage } = usePagination(
     filteredData || allPosts,
-    6
+    8
   );
 
   const handlePageChange = (page: number) => {
