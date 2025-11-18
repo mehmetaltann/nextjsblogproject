@@ -94,7 +94,7 @@ export default async function Blog({ params }: Params) {
       image: `${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}/${blog.cloudinaryImageId}`,
       description: blog.description,
       author: { "@type": "Person", name: "Mehmet ALTAN" },
-      datePublished: blog.updated_at || blog.date,
+      datePublished: blog.updatedAt || blog.date,
     };
 
     return (
