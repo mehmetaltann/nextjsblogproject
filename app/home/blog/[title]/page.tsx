@@ -1,6 +1,9 @@
+"use client";
 import SingleBlog from "@/Components/SingleBlog/SingleBlog";
 import { Loader } from "@/Components/Layouts/Loader";
 import { Suspense } from "react";
+import { slugify } from "@/lib/utils/helpers";
+import { notFound } from "next/navigation";
 import { CommentType, PostTitle, PostType } from "@/lib/types/types";
 import {
   fetchComment,
@@ -23,10 +26,11 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Params) {
-  const siteUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://altans.com.tr";
 
   try {
     const blog = (await fetchBlog(params.title)) as PostType;
+
     if (!blog) {
       return {
         title: "Yazı bulunamadı",
@@ -37,7 +41,7 @@ export async function generateMetadata({ params }: Params) {
           description: "The post you are looking for does not exist.",
           url: "",
           images: "",
-          publishedTime: new Date(),
+          publishedTime: new Date().toISOString(),
           type: "article",
         },
         twitter: {
@@ -49,21 +53,20 @@ export async function generateMetadata({ params }: Params) {
     }
 
     const { title, description, cloudinaryImageId, category, date } = blog;
-
-    var designedDesc = description
-      .replace(/(<([^>]+)>)*/g, "")
+    const designedDesc = description
+      ?.replace(/(<([^>]+)>)*/g, "")
       .substring(0, 600);
 
     return {
       title,
       description: designedDesc,
-      keywords: category.map((i: { name: string }) => i.name),
+      keywords: category?.map((i: { name: string }) => i.name) || [],
       openGraph: {
         title,
         description: designedDesc,
-        url: `${siteUrl}/home/blog/${title}`,
+        url: `${siteUrl}/home/blog/${slugify(title)}`,
         images: `${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}/${cloudinaryImageId}`,
-        publishedTime: date,
+        publishedTime: (blog.updatedAt || date)?.toString(),
         type: "article",
       },
       twitter: {
@@ -74,6 +77,7 @@ export async function generateMetadata({ params }: Params) {
     };
   } catch (error) {
     console.log(error);
+    return {};
   }
 }
 
@@ -83,7 +87,12 @@ export default async function Blog({ params }: Params) {
 
   try {
     const blog = (await fetchBlog(title)) as PostType;
-    const categoryArray = blog.category.map((obj) => obj.name);
+
+    if (!blog) {
+      notFound();
+    }
+
+    const categoryArray = blog.category?.map((obj) => obj.name) || [];
     const similarPosts = (await fetchSimilarPosts(categoryArray)) as PostType[];
     const comments = (await fetchComment(blog._id)) as CommentType[];
 
@@ -94,7 +103,7 @@ export default async function Blog({ params }: Params) {
       image: `${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}/${blog.cloudinaryImageId}`,
       description: blog.description,
       author: { "@type": "Person", name: "Mehmet ALTAN" },
-      datePublished: blog.updatedAt || blog.date,
+      datePublished: (blog.updatedAt || blog.date)?.toString(),
     };
 
     return (
@@ -113,6 +122,6 @@ export default async function Blog({ params }: Params) {
     );
   } catch (error) {
     console.log(error);
-    return null;
+    notFound();
   }
 }
