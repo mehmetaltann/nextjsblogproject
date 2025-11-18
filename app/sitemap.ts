@@ -47,8 +47,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
 
   const post: siteMapType[] = data.map((item: PostType) => {
+    console.log("Original title:", item.title);
     const slug = slugify(item.title);
+    console.log("Slugified title:", slug);
     const fullUrl = `${siteUrl}/home/blog/${slug}`;
+    console.log("Full URL:", fullUrl);
     return {
       url: encodeUrl(fullUrl),
       lastModified: item.updated_at || item.created_at || item.date,
