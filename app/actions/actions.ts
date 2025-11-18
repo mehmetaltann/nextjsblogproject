@@ -26,7 +26,7 @@ interface InfoData {
   name: string;
 }
 
-type filteredPostType = Omit<PostType, "date" | "updated_at" | "created_at">;
+type filteredPostType = Omit<PostType, "date" | "updatedAt" | "createdAt">;
 
 ///////////////////////// CATEGORY ACTIONS ///////////////////////
 export const addCategory = async (prevState: any, formData: any) => {
@@ -35,12 +35,7 @@ export const addCategory = async (prevState: any, formData: any) => {
       name: formData.get("catName"),
       color: formData.get("catColor"),
     };
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     await CategoryModel.create(newData);
     revalidatePath("/admin/categories");
     revalidatePath("/admin/write");
@@ -52,12 +47,7 @@ export const addCategory = async (prevState: any, formData: any) => {
 
 export const deleteCategory = async (_id: string) => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     await CategoryModel.findByIdAndDelete(_id);
     revalidatePath("/admin/categories");
     revalidatePath("/admin/write");
@@ -71,12 +61,7 @@ export const deleteCategory = async (_id: string) => {
 
 export const addPost = async (formData: any) => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     delete formData._id;
     console.log(formData);
     await BlogModel.create(formData);
@@ -90,58 +75,80 @@ export const addPost = async (formData: any) => {
   }
 };
 
-export const updatePost = async (formData: filteredPostType) => {
+export function slugify(text: string) {
+  return text
+    .toString()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[\u2018\u2019\u201C\u201D'"]/g, "")
+    .replace(/[çÇ]/g, "c")
+    .replace(/[ğĞ]/g, "g")
+    .replace(/[ıİ]/g, "i")
+    .replace(/[öÖ]/g, "o")
+    .replace(/[şŞ]/g, "s")
+    .replace(/[üÜ]/g, "u")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-zA-Z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+}
+
+export const updatePost = async (
+  formData: Partial<PostType> & { _id: string }
+) => {
   try {
-    const { title, _id } = formData;
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-    await BlogModel.findByIdAndUpdate({ _id }, formData, { new: true });
+    await dbConnect();
+    const oldPost = await BlogModel.findById(formData._id);
+    if (!oldPost) return { msg: "Post bulunamadı!" };
+    const oldSlug = slugify(oldPost.title);
+    const updated = await BlogModel.findByIdAndUpdate(
+      formData._id,
+      { ...formData, updatedAt: new Date() },
+      { new: true }
+    );
+
+    if (!updated) return { msg: "Güncelleme başarısız!" };
+    const newSlug = slugify(updated.title);
     revalidatePath("/");
-    revalidatePath("/admin");
     revalidatePath("/home");
+    revalidatePath("/admin");
     revalidatePath("/home/bloglist");
-    revalidatePath(`/home/blog/${title}`);
+    revalidatePath(`/home/blog/${oldSlug}`);
+    revalidatePath(`/home/blog/${newSlug}`);
+
     return { msg: "Yazı Güncellendi" };
   } catch (error) {
     return { msg: `Yazı Güncellenemedi: ${error}` };
   }
 };
 
-export const deletePost = async (_id: string) => {
+export const deletePost = async (id: string) => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-    await BlogModel.findByIdAndDelete(_id);
+    await dbConnect();
+    const post = await BlogModel.findById(id);
+    if (!post) return { msg: "Post bulunamadı!" };
+
+    const oldSlug = slugify(post.title);
+    await BlogModel.findByIdAndDelete(id);
     revalidatePath("/");
-    revalidatePath("/admin");
     revalidatePath("/home");
+    revalidatePath("/admin");
     revalidatePath("/home/bloglist");
-    return { msg: "Blog Silindi" };
+    revalidatePath(`/home/blog/${oldSlug}`);
+
+    return { msg: "Yazı Silindi" };
   } catch (error) {
-    return { msg: `Blog Silinemedi: ${error}` };
+    return { msg: `Yazı Silinemedi: ${error}` };
   }
 };
-
 ///////////////////////// USER ACTIONS ///////////////////////
 export const userRegister = async (prevState: any, formData: any) => {
   try {
     const isim = formData.get("isim");
     const email = formData.get("email");
     const password = formData.get("password");
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     const user = await UserModel.findOne({ email }).select("_id");
     if (user) {
       return { msg: "Bu kullanıcı kayıtlıdır", isSuccess: false };
@@ -160,12 +167,7 @@ export const userRegister = async (prevState: any, formData: any) => {
 
 export const addComment = async (formData: CommentData) => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     const { postTitle, authorEmail, content, parentCommentId } = formData;
 
     if (!parentCommentId) {
@@ -233,12 +235,7 @@ export const updateComment = async (
   postTitle: string
 ) => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     const { content, _id } = formData;
     await CommentModel.findByIdAndUpdate(_id, { content });
     revalidatePath(`/home/blog/${postTitle}`);
@@ -250,12 +247,7 @@ export const updateComment = async (
 
 export const deleteComment = async (_id: string, postTitle: string) => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     await CommentModel.findByIdAndDelete(_id);
     revalidatePath(`/home/blog/${postTitle}`);
     return { msg: "Yorum Silindi" };
@@ -272,12 +264,7 @@ export const addInfo = async (prevState: any, formData: any) => {
       name: formData.get("isim"),
       content: formData.get("content"),
     };
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     await InfoModel.create(newData);
     revalidatePath("/admin/infos");
     return { msg: "Bilgi Eklendi" };
@@ -288,12 +275,7 @@ export const addInfo = async (prevState: any, formData: any) => {
 
 export const deleteInfo = async (_id: string) => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     await InfoModel.findByIdAndDelete(_id);
     revalidatePath("/admin/infos");
     return { msg: "Bilgi Silindi" };
@@ -304,13 +286,8 @@ export const deleteInfo = async (_id: string) => {
 
 export const updateInfo = async (formData: InfoData) => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
     const { _id, content, name } = formData;
+    await dbConnect();
     await InfoModel.findByIdAndUpdate(_id, { content, name });
     revalidatePath("/admin/infos");
     revalidatePath("/home/about");
@@ -324,12 +301,7 @@ export const updateInfo = async (formData: InfoData) => {
 ///////////////////////// OTHER ACTIONS ///////////////////////
 
 export const sendMessage = async (prevState: any, formData: any) => {
-  try {
-    await dbConnect();
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  await dbConnect();
   const templatePath = path.join(
     process.cwd(),
     "templates",

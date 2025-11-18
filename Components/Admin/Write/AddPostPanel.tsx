@@ -17,7 +17,7 @@ interface AddPostPanelProps {
   allCategories: Category[];
 }
 
-type filteredPostType = Omit<PostType, "date" | "updated_at" | "created_at">;
+type filteredPostType = Omit<PostType, "date" | "updatedAt" | "createdAt">;
 
 const AddPostPanel = ({ allCategories }: AddPostPanelProps) => {
   const context = useContext(AdminContext);

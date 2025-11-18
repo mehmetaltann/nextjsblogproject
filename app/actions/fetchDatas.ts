@@ -14,13 +14,7 @@ import {
 
 export const fetchPosts = async () => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-
+    await dbConnect();
     const posts = await BlogModel.find({}).sort({ date: -1 }).lean();
     const allPosts: PostType[] = JSON.parse(JSON.stringify(posts));
     return allPosts;
@@ -31,12 +25,7 @@ export const fetchPosts = async () => {
 
 export const fetchCategories = async () => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     const categories = await CategoryModel.find({}).lean();
     const allCategories: CategoryType[] = JSON.parse(
       JSON.stringify(categories)
@@ -49,12 +38,7 @@ export const fetchCategories = async () => {
 
 export const fetchComment = async (id: string) => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     const commentsData = await CommentModel.find({ postId: id }).lean();
     const comments: CommentType[] = JSON.parse(JSON.stringify(commentsData));
     return comments;
@@ -65,12 +49,7 @@ export const fetchComment = async (id: string) => {
 
 export const fetchBlog = async (title: string) => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     const data = await BlogModel.findOne({ title: decodeURI(title) });
     const blog: PostType = JSON.parse(JSON.stringify(data));
     return blog;
@@ -81,12 +60,7 @@ export const fetchBlog = async (title: string) => {
 
 export const fetchSimilarPosts = async (categoryArray: string[]) => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     const sameCategoryBlogsData = await BlogModel.find({
       "category.name": {
         $in: categoryArray,
@@ -104,12 +78,7 @@ export const fetchSimilarPosts = async (categoryArray: string[]) => {
 export const fetchInfos = async (searchType: string) => {
   const filteringdata = searchType === "All" ? { $exists: true } : searchType;
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    await dbConnect();
     const infos = await InfoModel.aggregate([
       {
         $match: {
@@ -126,13 +95,7 @@ export const fetchInfos = async (searchType: string) => {
 
 export const fetchHomePosts = async () => {
   try {
-    try {
-      await dbConnect();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-
+    await dbConnect();
     const posts: HomePost[] = await BlogModel.aggregate([
       {
         $match: {
