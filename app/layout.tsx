@@ -13,26 +13,31 @@ const myFont = localFont({
   variable: "--font-notosans",
 });
 
-export async function generateMetadata() {
+export async function generateMetadata({ params, searchParams }: any) {
   const allCategories = (await fetchCategories()) as CategoryType[];
 
-  try {
-    return {
-      keywords: allCategories.map((i: { name: string }) => i.name),
-      metadataBase: siteConfig.siteUrl,
-      site_name: siteConfig.site_name,
-      title: { default: siteConfig.title, template: "%s - Altan's Blog" },
-      description: siteConfig.description,
-      publisher: siteConfig.publisher,
-      creator: siteConfig.author,
-      author: siteConfig.author,
-      robots: siteConfig.robots,
-      twitter: siteConfig.twitter,
-      openGraph: siteConfig.openGraph,
-    };
-  } catch (error) {
-    console.log(error);
-  }
+  return {
+    title: {
+      default: siteConfig.title,
+      template: "%s - Altan's Blog",
+    },
+    description: siteConfig.description,
+    keywords: [...siteConfig.keywords, ...allCategories.map((i) => i.name)],
+    metadataBase: new URL(siteConfig.siteUrl!),
+    authors: [{ name: siteConfig.author }],
+    publisher: siteConfig.publisher,
+    robots: siteConfig.robots,
+    openGraph: {
+      ...siteConfig.openGraph,
+      url: siteConfig.siteUrl!,
+      type: "website",
+      images: siteConfig.openGraph.images,
+    },
+    twitter: {
+      ...siteConfig.twitter,
+      images: siteConfig.twitter.images,
+    },
+  };
 }
 
 interface RootLayoutProps {

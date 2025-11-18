@@ -2,22 +2,21 @@ import { MetadataRoute } from "next";
 import { fetchPosts } from "./actions/fetchDatas";
 import { PostType } from "@/lib/types/types";
 
-type siteMapType = {
+type SiteMapItem = {
   url: string;
-  lastModified?: string | Date | undefined;
+  lastModified?: string | Date;
   changeFrequency?:
-    | "monthly"
     | "always"
     | "hourly"
     | "daily"
     | "weekly"
+    | "monthly"
     | "yearly"
-    | "never"
-    | undefined;
-  priority?: number | undefined;
+    | "never";
+  priority?: number;
 };
 
-export const revalidate = 1;
+export const revalidate = 43200;
 
 function slugify(text: string) {
   return text
@@ -38,23 +37,15 @@ function slugify(text: string) {
     .toLowerCase();
 }
 
-function encodeUrl(url: string) {
-  return encodeURI(url);
-}
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const data = (await fetchPosts()) as PostType[];
-  const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
+  const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://altans.com.tr";
+  const posts = (await fetchPosts()) as PostType[];
 
-  const post: siteMapType[] = data.map((item: PostType) => {
-    console.log("Original title:", item.title);
-    const slug = slugify(item.title);
-    console.log("Slugified title:", slug);
-    const fullUrl = `${siteUrl}/home/blog/${slug}`;
-    console.log("Full URL:", fullUrl);
+  const postUrls: SiteMapItem[] = posts.map((post) => {
+    const slug = slugify(post.title);
     return {
-      url: encodeUrl(fullUrl),
-      lastModified: item.updated_at || item.created_at || item.date,
+      url: encodeURI(`${siteUrl}/home/blog/${slug}`),
+      lastModified: post.updatedAt || post.createdAt || post.date,
       changeFrequency: "monthly",
       priority: 0.8,
     };
@@ -91,6 +82,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.7,
     },
-    ...post,
+    ...postUrls,
   ];
 }

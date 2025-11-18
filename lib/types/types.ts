@@ -6,8 +6,8 @@ export type PostType = {
   date: string;
   category: PostCategoryType[];
   isHome: boolean;
-  updated_at: string;
-  created_at: string;
+  updatedAt: string;
+  createdAt: string;
   author: string;
 };
 
