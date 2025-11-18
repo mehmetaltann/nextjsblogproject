@@ -1,4 +1,3 @@
-"use client";
 import SingleBlog from "@/Components/SingleBlog/SingleBlog";
 import { Loader } from "@/Components/Layouts/Loader";
 import { Suspense } from "react";
