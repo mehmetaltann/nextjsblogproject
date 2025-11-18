@@ -21,20 +21,22 @@ export const revalidate = 43200;
 
 function slugify(text: string) {
   return text
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[’‘'"]/g, "")
+    .toString()
+    .normalize("NFD") 
+    .replace(/[\u0300-\u036f]/g, "") 
+    .toLowerCase()
+    .replace(/[’‘'"]/g, "") 
     .replace(/ç/g, "c")
     .replace(/ğ/g, "g")
     .replace(/ı/g, "i")
     .replace(/ö/g, "o")
     .replace(/ş/g, "s")
     .replace(/ü/g, "u")
-    .replace(/\s+/g, "-")
-    .replace(/[^a-zA-Z0-9-]/g, "")
-    .replace(/-+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .toLowerCase();
+    .replace(/\s+/g, "-") 
+    .replace(/[^a-z0-9-]/g, "") 
+    .replace(/-+/g, "-") 
+    .replace(/^-+/, "") 
+    .replace(/-+$/, "");
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
