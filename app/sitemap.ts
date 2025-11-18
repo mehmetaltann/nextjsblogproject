@@ -17,7 +17,7 @@ type siteMapType = {
   priority?: number | undefined;
 };
 
-export const revalidate = 43200;
+export const revalidate = 1;
 
 function slugify(text: string) {
   return text
@@ -31,10 +31,10 @@ function slugify(text: string) {
     .replace(/[öÖ]/g, "o")
     .replace(/[şŞ]/g, "s")
     .replace(/[üÜ]/g, "u")
-    .replace(/\s+/g, "-") 
-    .replace(/[^a-zA-Z0-9-]/g, "") 
-    .replace(/-+/g, "-") 
-    .replace(/^-+|-+$/g, "") 
+    .replace(/\s+/g, "-")
+    .replace(/[^a-zA-Z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "")
     .toLowerCase();
 }
 
