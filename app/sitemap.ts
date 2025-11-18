@@ -21,18 +21,20 @@ export const revalidate = 43200;
 
 function slugify(text: string) {
   return text
-    .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’‘'"]/g, "")
     .replace(/ç/g, "c")
     .replace(/ğ/g, "g")
     .replace(/ı/g, "i")
     .replace(/ö/g, "o")
     .replace(/ş/g, "s")
     .replace(/ü/g, "u")
-    .replace(/’/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/\s+/g, "-")
+    .replace(/[^a-zA-Z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -40,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
 
   const post: siteMapType[] = data.map((item: PostType) => ({
-    url: `${siteUrl}/home/blog/${slugify(item.title.toString())}`,
+    url: `${siteUrl}/home/blog/${slugify(item.title)}`,
     lastModified: item.updated_at || item.created_at || item.date,
     changeFrequency: "monthly",
     priority: 0.8,
