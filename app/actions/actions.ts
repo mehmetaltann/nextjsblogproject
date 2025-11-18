@@ -11,6 +11,7 @@ import dbConnect from "@/lib/config/dbConnect";
 import { envEmail, transporter } from "@/lib/config/nodemailer";
 import { revalidatePath } from "next/cache";
 import { PostType } from "@/lib/types/types";
+import { slugify } from "@/lib/utils/helpers";
 
 interface CommentData {
   postTitle: string;
@@ -74,25 +75,6 @@ export const addPost = async (formData: any) => {
     return { msg: `Yazı Eklenemedi: ${error}`, isSuccess: false };
   }
 };
-
-export function slugify(text: string) {
-  return text
-    .toString()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[\u2018\u2019\u201C\u201D'"]/g, "")
-    .replace(/[çÇ]/g, "c")
-    .replace(/[ğĞ]/g, "g")
-    .replace(/[ıİ]/g, "i")
-    .replace(/[öÖ]/g, "o")
-    .replace(/[şŞ]/g, "s")
-    .replace(/[üÜ]/g, "u")
-    .replace(/\s+/g, "-")
-    .replace(/[^a-zA-Z0-9-]/g, "")
-    .replace(/-+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .toLowerCase();
-}
 
 export const updatePost = async (
   formData: Partial<PostType> & { _id: string }
