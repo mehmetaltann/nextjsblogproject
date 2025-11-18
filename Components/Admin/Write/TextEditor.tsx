@@ -1,4 +1,4 @@
-import { useRef, useMemo, useContext, SetStateAction } from "react";
+import { useRef, useMemo, useContext } from "react";
 import { AdminContext } from "@/store/AdminContext";
 import dynamic from "next/dynamic";
 
@@ -10,24 +10,22 @@ const TextEditor = () => {
   const context = useContext(AdminContext);
   if (!context) {
     throw new Error(
-      "useClientContext must be used within a ClientContextProvider"
+      "AdminContext must be used within an AdminContextProvider"
     );
   }
   const { setDescription, description } = context;
   const editor = useRef(null);
 
-  const config = useMemo(
-    () => ({
-      readonly: false,
-      placeholder: "Yazınız...",
-      height: 600,
-      uploader: {
-        insertImageAsBase64URI: true,
-        imagesExtensions: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
-      },
-    }),
-    []
-  );
+  const config = useMemo(() => ({
+  readonly: false,
+  placeholder: "Yazınız...",
+  height: 600,
+  uploader: {
+    insertImageAsBase64URI: true,
+    imagesExtensions: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
+  },
+  cleanHTML: false
+}), []);
 
   return (
     <div tabIndex={1}>
@@ -35,9 +33,7 @@ const TextEditor = () => {
         ref={editor}
         value={description}
         config={config}
-        onBlur={(newContent: SetStateAction<string>) =>
-          setDescription(newContent)
-        }
+        onBlur={(newContent) => setDescription(newContent)}
         onChange={(newContent) => {}}
       />
     </div>

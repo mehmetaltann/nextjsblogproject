@@ -1,4 +1,8 @@
 "use client";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0728e0cdedab5a77956c62570a778f5ae0bfc647
 import Comments from "./Comments/Comments";
 import SocialMediaShareSet from "../Layouts/SocialMediaShareSet";
 import parse from "html-react-parser";
@@ -8,6 +12,10 @@ import { CldImage } from "next-cloudinary";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CommentType, PostType } from "@/lib/types/types";
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0728e0cdedab5a77956c62570a778f5ae0bfc647
 interface SingleBlogProps {
   blog: PostType;
   sameCategoryBlogs: PostType[];
@@ -62,6 +70,10 @@ const SingleBlog = ({
       </div>
       <div className="space-y-4 text-zinc-700 mb-4 w-full">
         {parse(blog.description)}
+<<<<<<< HEAD
+=======
+          
+>>>>>>> 0728e0cdedab5a77956c62570a778f5ae0bfc647
       </div>
       <div className="mt-2 self-end">
         <SocialMediaShareSet
