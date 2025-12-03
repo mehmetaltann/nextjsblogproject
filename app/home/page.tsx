@@ -4,7 +4,16 @@ import { fetchHomePosts } from "../actions/fetchDatas";
 import { HomePost } from "@/lib/types/types";
 
 export default async function Home() {
-  const allPosts = (await fetchHomePosts()) as HomePost[];
+  let allPosts: HomePost[] = [];
+
+  try {
+    const fetchedPosts = (await fetchHomePosts()) as HomePost[];
+    if (fetchedPosts) {
+      allPosts = fetchedPosts;
+    }
+  } catch (error) {
+    console.error("Anasayfa gönderileri çekilemedi:", error);
+  }
 
   return (
     <>

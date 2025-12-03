@@ -14,7 +14,12 @@ const myFont = localFont({
 });
 
 export async function generateMetadata({ params, searchParams }: any) {
-  const allCategories = (await fetchCategories()) as CategoryType[];
+  let allCategories: CategoryType[] = [];
+  try {
+    allCategories = (await fetchCategories()) as CategoryType[];
+  } catch (error) {
+    console.error("Global kategoriler çekilemedi:", error);
+  }
 
   return {
     title: {

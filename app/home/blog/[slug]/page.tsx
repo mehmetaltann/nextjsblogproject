@@ -1,7 +1,6 @@
 import SingleBlog from "@/Components/SingleBlog/SingleBlog";
 import { Loader } from "@/Components/Layouts/Loader";
 import { Suspense } from "react";
-import { slugify } from "@/lib/utils/helpers";
 import { notFound } from "next/navigation";
 import { CommentType, PostTitle, PostType } from "@/lib/types/types";
 import {
@@ -13,22 +12,24 @@ import {
 
 interface Params {
   params: {
-    title: string;
+    slug: string;
   };
 }
 
 export async function generateStaticParams() {
   const allPostTitles = (await fetchPostTitles()) as PostTitle[];
-  return allPostTitles.map(({ title }) => ({
-    title,
+
+  return allPostTitles.map(({ slug }) => ({
+    slug,
   }));
 }
 
 export async function generateMetadata({ params }: Params) {
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://altans.com.tr";
 
+  const urlSlug = decodeURIComponent(params.slug);
   try {
-    const blog = (await fetchBlog(params.title)) as PostType;
+    const blog = (await fetchBlog(urlSlug)) as PostType;
 
     if (!blog) {
       return {
@@ -51,7 +52,8 @@ export async function generateMetadata({ params }: Params) {
       };
     }
 
-    const { title, description, cloudinaryImageId, category, date } = blog;
+    const { title, description, cloudinaryImageId, category, date, slug } =
+      blog;
     const designedDesc = description
       ?.replace(/(<([^>]+)>)*/g, "")
       .substring(0, 600);
@@ -63,7 +65,7 @@ export async function generateMetadata({ params }: Params) {
       openGraph: {
         title,
         description: designedDesc,
-        url: `${siteUrl}/home/blog/${slugify(title)}`,
+        url: `${siteUrl}/home/blog/${slug}`,
         images: `${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}/${cloudinaryImageId}`,
         publishedTime: (blog.updatedAt || date)?.toString(),
         type: "article",
@@ -82,10 +84,10 @@ export async function generateMetadata({ params }: Params) {
 
 export default async function Blog({ params }: Params) {
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
-  const { title } = params;
+  const urlSlug = decodeURIComponent(params.slug);
 
   try {
-    const blog = (await fetchBlog(title)) as PostType;
+    const blog = (await fetchBlog(urlSlug)) as PostType;
 
     if (!blog) {
       notFound();
@@ -97,7 +99,7 @@ export default async function Blog({ params }: Params) {
 
     const jsonLd = {
       "@context": "https://schema.org",
-      "@type": "Blog",
+      "@type": "BlogPosting",
       name: blog.title,
       image: `${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}/${blog.cloudinaryImageId}`,
       description: blog.description,

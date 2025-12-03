@@ -23,7 +23,7 @@ const SingleBlog = ({
   siteUrl,
 }: SingleBlogProps) => {
   const filteredBlogsByCategory = sameCategoryBlogs.filter(
-    (item) => item.title !== blog.title
+    (item) => item._id !== blog._id
   );
 
   return (
@@ -66,13 +66,13 @@ const SingleBlog = ({
       </div>
       <div className="mt-2 self-end">
         <SocialMediaShareSet
-          shareURL={`${siteUrl}/home/blog/${blog.title}`}
+          shareURL={`${siteUrl}/home/blog/${blog.slug}`}
           title={blog.title}
           size={20}
         />
       </div>
       <hr />
-      <Comments postId={blog._id} postTitle={blog.title} comments={comments} />
+      <Comments postId={blog._id} postTitle={blog.slug} comments={comments} />
       <div className="font-semibold text-xl py-4 opacity-80 text-color1">
         Benzer Yazılar
       </div>

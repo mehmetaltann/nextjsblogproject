@@ -4,15 +4,20 @@ import { fetchPosts } from "../actions/fetchDatas";
 import { PostType } from "@/lib/types/types";
 
 export default async function Admin() {
-  const allPosts = (await fetchPosts()) as PostType[];
+  let allPosts: PostType[] = [];
 
-  return (
-    <>
-      {allPosts && allPosts.length > 0 ? (
-        <ManagePost allPosts={allPosts} />
-      ) : (
-        <Loader />
-      )}
-    </>
-  );
+  try {
+    const fetchedPosts = (await fetchPosts()) as PostType[];
+    if (fetchedPosts) {
+      allPosts = fetchedPosts;
+    }
+  } catch (error) {
+    console.error("Yönetici gönderileri çekilemedi:", error);
+  }
+
+  if (allPosts.length === 0) {
+    return <Loader />;
+  }
+
+  return <ManagePost allPosts={allPosts} />;
 }

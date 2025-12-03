@@ -23,7 +23,7 @@ const BlogPostPreview = ({ post }: BlogPostPreviewProps) => {
 
   return (
     <div className="break-words">
-      <Link href={`/home/blog/${post.title}`}>
+      <Link href={`/home/blog/${post.slug}`}>
         <div className="aspect-[16/9] relative">
           <CldImage
             src={post.cloudinaryImageId}
@@ -37,7 +37,7 @@ const BlogPostPreview = ({ post }: BlogPostPreviewProps) => {
       </Link>
       <div className="grid grid-cols-1 gap-3 md:col-span-2 mt-4">
         <h2 className="font-semibold tracking-tighter text-primary-txt text-2xl md:text-3xl">
-          <Link href={`/home/blog/${post.title}`}>{post.title}</Link>
+          <Link href={`/home/blog/${post.slug}`}>{post.title}</Link>
         </h2>
         <div className="prose text-color1 lg:prose-lg tracking-tighter text-muted-foreground">
           {getFormatDate(post.date)}

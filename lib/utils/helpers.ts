@@ -5,7 +5,7 @@ export async function delay(ms: Number | any) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export const getFormatDate = (date: string): string => {
+export const getFormatDate = (date: Date | string): string => {
   moment.locale("tr");
   const formattedDate = moment(date).format("Do MMMM YYYY");
   return formattedDate;

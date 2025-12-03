@@ -64,8 +64,14 @@ export const addPost = async (formData: any) => {
   try {
     await dbConnect();
     delete formData._id;
-    console.log(formData);
-    await BlogModel.create(formData);
+    const title = formData.get("title");
+    if (!title) return { msg: "Başlık eksik!", isSuccess: false };
+    const newSlug = slugify(title);
+    const postData = {
+      ...formData,
+      slug: newSlug,
+    };
+    await BlogModel.create(postData);
     revalidatePath("/");
     revalidatePath("/admin");
     revalidatePath("/home");
@@ -83,15 +89,24 @@ export const updatePost = async (
     await dbConnect();
     const oldPost = await BlogModel.findById(formData._id);
     if (!oldPost) return { msg: "Post bulunamadı!" };
-    const oldSlug = slugify(oldPost.title);
+
+    const oldSlug = oldPost.slug;
+    let updateData: Partial<PostType> = { ...formData, updatedAt: new Date() };
+    let newSlug = oldSlug;
+
+    if (formData.title && formData.title !== oldPost.title) {
+      newSlug = slugify(formData.title);
+      updateData.slug = newSlug;
+    }
+
     const updated = await BlogModel.findByIdAndUpdate(
       formData._id,
-      { ...formData, updatedAt: new Date() },
+      updateData,
       { new: true }
     );
 
     if (!updated) return { msg: "Güncelleme başarısız!" };
-    const newSlug = slugify(updated.title);
+
     revalidatePath("/");
     revalidatePath("/home");
     revalidatePath("/admin");
@@ -111,7 +126,7 @@ export const deletePost = async (id: string) => {
     const post = await BlogModel.findById(id);
     if (!post) return { msg: "Post bulunamadı!" };
 
-    const oldSlug = slugify(post.title);
+    const oldSlug = post.slug;
     await BlogModel.findByIdAndDelete(id);
     revalidatePath("/");
     revalidatePath("/home");

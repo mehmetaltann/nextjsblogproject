@@ -17,7 +17,15 @@ interface AddPostPanelProps {
   allCategories: Category[];
 }
 
-type filteredPostType = Omit<PostType, "date" | "updatedAt" | "createdAt">;
+type SubmitPayload = Omit<
+  PostType,
+  "_id" | "date" | "updatedAt" | "createdAt" | "slug"
+>;
+
+const getErrorMessage = (error: unknown) => {
+  if (error instanceof Error) return error.message;
+  return "Bilinmeyen bir hata oluştu.";
+};
 
 const AddPostPanel = ({ allCategories }: AddPostPanelProps) => {
   const context = useContext(AdminContext);
@@ -50,19 +58,18 @@ const AddPostPanel = ({ allCategories }: AddPostPanelProps) => {
   const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    const postData: filteredPostType = {
+    const basePostData: SubmitPayload = {
       title,
       description,
       isHome,
       author: "Mehmet Altan",
       cloudinaryImageId,
       category: categories,
-      _id: "",
     };
 
     if (isNewPost) {
       try {
-        const response = await addPost(postData);
+        const response = await addPost(basePostData);
         const { isSuccess, msg } = response as {
           isSuccess: boolean;
           msg: string;
@@ -76,18 +83,21 @@ const AddPostPanel = ({ allCategories }: AddPostPanelProps) => {
           toast.success(msg);
         }
       } catch (error) {
-        toast.error((error as Error).message);
+        toast.error(getErrorMessage(error));
       }
     } else {
-      postData._id = postId;
+      const updatePayload = {
+        ...basePostData,
+        _id: postId,
+      };
       try {
-        const response = await updatePost(postData);
+        const response = await updatePost(updatePayload);
         const { msg } = response as {
           msg: string;
         };
         toast.success(msg);
       } catch (error) {
-        toast.error((error as Error).message);
+        toast.error(getErrorMessage(error));
       }
     }
     setIsLoading(false);

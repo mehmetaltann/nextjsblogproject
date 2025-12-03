@@ -1,9 +1,14 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 
+interface ICategory {
+  name: string;
+}
+
 interface IBlogPost extends Document {
   title: string;
+  slug: string;
   description: string;
-  category: string[];
+  category: ICategory[];
   author: string;
   cloudinaryImageId: string;
   date?: Date;
@@ -16,12 +21,18 @@ const BlogPostSchema: Schema = new Schema(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
     description: {
       type: String,
       required: true,
     },
     category: {
-      type: [],
+      type: [{ name: { type: String, required: true } }],
       required: true,
     },
     author: {

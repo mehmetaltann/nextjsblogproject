@@ -1,26 +1,28 @@
 export type PostType = {
   _id: string;
   title: string;
+  slug: string;
   description: string;
   cloudinaryImageId: string;
   date: string;
   category: PostCategoryType[];
   isHome: boolean;
-  updatedAt: string;
-  createdAt: string;
+  updatedAt: Date | string;
+  createdAt: Date | string;
   author: string;
 };
 
 export type HomePost = {
   title: string;
+  slug: string;
   description: string;
   cloudinaryImageId: string;
-  date: string;
+  date: Date | string;
   category: PostCategoryType[];
 };
 
 export type PostTitle = {
-  title: string;
+  slug: string;
 };
 
 export type CommentType = {
@@ -31,8 +33,8 @@ export type CommentType = {
   postId: string;
   parentCommentId: string | null;
   date: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
 };
 
 export type CategoryType = {

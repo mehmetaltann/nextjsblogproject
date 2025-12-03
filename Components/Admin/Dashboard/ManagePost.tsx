@@ -11,7 +11,7 @@ import { usePagination } from "@/lib/hooks/usePagination";
 import { deletePost } from "@/app/actions/actions";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CldImage } from "next-cloudinary";
-import { PostType } from "@/lib/types/types"; // Ensure you have a type definition for PostType
+import { PostType } from "@/lib/types/types";
 
 const tableHeads = ["Başlık", "Kategoriler", "Tarih", "Ana Sayfa", "İşlemler"];
 

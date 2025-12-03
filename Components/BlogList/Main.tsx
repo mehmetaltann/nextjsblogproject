@@ -51,7 +51,7 @@ const Main = ({ allPosts }: MainProps) => {
 
   return (
     <AnimationWrapper
-      className="flex flex-col md:flex-row gap-4 justify-center px-5 py-4 lg:w-4/6 xl:w-3/6 mt-4"
+      className="flex flex-col md:flex-row gap-8 px-4 py-4 max-w-screen-xl mx-auto mt-4"
       keyValue="BlogListPage"
     >
       <TagsTable
@@ -60,7 +60,7 @@ const Main = ({ allPosts }: MainProps) => {
         setSelectedCategory={setSelectedCategory}
         setCurrentPage={setCurrentPage}
       />
-      <div className="flex flex-col">
+      <div className="flex flex-col md:flex-[3]">
         <PostList posts={displayPosts} />
         {totalPages > 1 && (
           <Pagination

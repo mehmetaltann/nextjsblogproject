@@ -4,7 +4,20 @@ import { Loader } from "@/Components/Layouts/Loader";
 import { InfoType } from "@/lib/types/types";
 
 export default async function Info() {
-  const allInfos = (await fetchInfos("All")) as InfoType[];
+  let allInfos: InfoType[] = [];
 
-  return <>{allInfos ? <Infos allInfos={allInfos} /> : <Loader />}</>;
+  try {
+    const fetchedInfos = (await fetchInfos("All")) as InfoType[];
+    if (fetchedInfos) {
+      allInfos = fetchedInfos;
+    }
+  } catch (error) {
+    console.error("Bilgiler çekilemedi:", error);
+  }
+
+  if (allInfos.length === 0) {
+    return <Loader />;
+  }
+
+  return <Infos allInfos={allInfos} />;
 }

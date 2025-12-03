@@ -1,6 +1,7 @@
+"use client";
 import Select, { MultiValue } from "react-select";
 import { AdminContext } from "@/store/AdminContext";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext } from "react";
 
 interface CategoryOption {
   value: string;
@@ -15,16 +16,10 @@ const CategorySelect = ({ optionsData }: CategorySelectProps) => {
   const context = useContext(AdminContext);
   if (!context) {
     throw new Error(
-      "useClientContext must be used within a ClientContextProvider"
+      "useClientContext must be used within a AdminContextProvider"
     );
   }
-  const { setCategories, options, setOptions, selectDefaultValue } = context;
-
-  useEffect(() => {
-    if (JSON.stringify(options) !== JSON.stringify(optionsData)) {
-      setOptions(optionsData);
-    }
-  }, [optionsData, setOptions]);
+  const { setCategories, selectDefaultValue } = context;
 
   const handleChange = (selectedOptions: MultiValue<CategoryOption> | null) => {
     setCategories(
@@ -35,20 +30,20 @@ const CategorySelect = ({ optionsData }: CategorySelectProps) => {
   };
 
   return (
-    <>
-      {options && (
+    <div className="w-full">
+      {optionsData && (
         <Select
           isMulti
           defaultValue={selectDefaultValue || []}
           instanceId="categoryType"
           placeholder="Kategori ..."
-          options={options}
+          options={optionsData}
           className="z-40 basic-multi-select border text-lg text-opacity-60 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5"
           classNamePrefix="select"
           onChange={handleChange}
         />
       )}
-    </>
+    </div>
   );
 };
 

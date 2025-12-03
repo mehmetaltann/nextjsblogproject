@@ -9,6 +9,7 @@ const CategoriesSchema: Schema = new Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   color: {
     type: String,
@@ -17,6 +18,7 @@ const CategoriesSchema: Schema = new Schema({
 });
 
 const CategoryModel: Model<ICategory> =
-  mongoose.models.category || mongoose.model<ICategory>("category", CategoriesSchema);
+  mongoose.models.category ||
+  mongoose.model<ICategory>("category", CategoriesSchema);
 
 export default CategoryModel;

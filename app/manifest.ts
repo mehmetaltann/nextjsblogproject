@@ -6,6 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Altan's Blog",
     short_name: "Altans",
+    lang: "tr",
     description: "Tatil, Yazılım ve daha birçok konuda rehberiniz",
     start_url: `${siteUrl}/`,
     display: "standalone",

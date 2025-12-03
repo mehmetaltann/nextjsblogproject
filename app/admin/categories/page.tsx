@@ -4,9 +4,20 @@ import { fetchCategories } from "@/app/actions/fetchDatas";
 import { CategoryType } from "@/lib/types/types";
 
 export default async function Category() {
-  const allCategories = (await fetchCategories()) as CategoryType[];
+  let allCategories: CategoryType[] = [];
 
-  return (
-    <>{allCategories ? <Main allCategories={allCategories} /> : <Loader />}</>
-  );
+  try {
+    const fetchedCategories = (await fetchCategories()) as CategoryType[];
+    if (fetchedCategories) {
+      allCategories = fetchedCategories;
+    }
+  } catch (error) {
+    console.error("Kategoriler çekilemedi:", error);
+  }
+
+  if (allCategories.length === 0) {
+    return <Loader />;
+  }
+
+  return <Main allCategories={allCategories} />;
 }

@@ -8,15 +8,20 @@ export const metadata = {
 };
 
 export default async function BlogList() {
-  const allPosts = (await fetchHomePosts()) as HomePost[];
+  let allPosts: HomePost[] = [];
 
-  return (
-    <>
-      {allPosts && allPosts.length > 0 ? (
-        <Main allPosts={allPosts} />
-      ) : (
-        <Loader />
-      )}
-    </>
-  );
+  try {
+    const fetchedPosts = (await fetchHomePosts()) as HomePost[];
+    if (fetchedPosts) {
+      allPosts = fetchedPosts;
+    }
+  } catch (error) {
+    console.error("Blog gönderileri çekilemedi:", error);
+  }
+
+  if (allPosts.length === 0) {
+    return <Loader />;
+  }
+
+  return <Main allPosts={allPosts} />;
 }

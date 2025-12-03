@@ -48,14 +48,12 @@ const BlogPosts = ({ allPosts }: BlogPostsProps) => {
   };
 
   return (
-    <>
-      <section className="grid grid-cols-1 gap-12 lg:gap-18 md:grid-cols-2 md:my-16 my-8">
-        {displayPosts.map((post: HomePost, index) => (
-          <AnimationWrapper key={index} keyValue="Blog Post Preview">
-            <BlogPostPreview post={post} />
-          </AnimationWrapper>
-        ))}
-      </section>
+    <section className="grid grid-cols-1 gap-12 lg:gap-18 md:grid-cols-2 md:my-16 my-8">
+      {displayPosts.map((post: HomePost, index) => (
+        <AnimationWrapper key={index} keyValue="Blog Post Preview">
+          <BlogPostPreview post={post} />
+        </AnimationWrapper>
+      ))}
       {totalPages > 1 && (
         <Pagination
           totalPages={totalPages}
@@ -63,7 +61,7 @@ const BlogPosts = ({ allPosts }: BlogPostsProps) => {
           onPageChange={handlePageChange}
         />
       )}
-    </>
+    </section>
   );
 };
 

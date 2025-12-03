@@ -8,12 +8,12 @@ interface SimilarPostItemProps {
 }
 
 const SimilarPostItem = ({ post }: SimilarPostItemProps) => {
-  const { _id, title, date, cloudinaryImageId } = post;
+  const { title, date, cloudinaryImageId, slug } = post;
 
   return (
     <div className="flex-grow">
       <div className="mb-4 w-full overflow-hidden rounded-xl">
-        <Link href={`/home/blog/${title}`}>
+        <Link href={`/home/blog/${slug}`}>
           <CldImage
             src={cloudinaryImageId}
             alt={title}
@@ -26,7 +26,7 @@ const SimilarPostItem = ({ post }: SimilarPostItemProps) => {
           />
         </Link>
       </div>
-      <Link href={`/home/blog/${title}`}>
+      <Link href={`/home/blog/${slug}`}>
         <h3 className="text-zinc-500 font-semibold ms-1">{title}</h3>
         <p className="text-zinc-500 ms-1">{getFormatDate(date)}</p>
       </Link>

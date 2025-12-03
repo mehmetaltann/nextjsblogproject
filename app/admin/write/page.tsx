@@ -4,15 +4,19 @@ import { Loader } from "@/Components/Layouts/Loader";
 import { CategoryType } from "@/lib/types/types";
 
 export default async function Write() {
-  const allCategories = (await fetchCategories()) as CategoryType[];
+  let allCategories: CategoryType[] = [];
 
-  return (
-    <>
-      {allCategories ? (
-        <AddPostPanel allCategories={allCategories} />
-      ) : (
-        <Loader />
-      )}
-    </>
-  );
+  try {
+    const fetchedCategories = (await fetchCategories()) as CategoryType[];
+    if (fetchedCategories) {
+      allCategories = fetchedCategories;
+    }
+  } catch (error) {
+    console.error("Kategoriler çekilemedi:", error);
+  }
+
+  if (allCategories.length === 0) {
+    return <Loader />;
+  }
+  return <AddPostPanel allCategories={allCategories} />;
 }

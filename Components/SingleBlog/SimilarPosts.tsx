@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { PostType } from "@/lib/types/types";
+import { useMemo } from "react";
 
 const SimilarPostItem = dynamic(() => import("./SimilarPostItem"), {
   ssr: false,
@@ -17,11 +18,13 @@ const SimilarPosts = ({
 }: SimilarPostsProps) => {
   if (!similarposts || similarposts.length === 0) return <div></div>;
 
-  const shuffled = [...similarposts].sort(() => 0.5 - Math.random());
+  const randomPosts = useMemo(() => {
+    return [...similarposts].sort(() => 0.5 - Math.random());
+  }, [similarposts]);
 
   return (
     <div className="flex flex-col w-full md:flex-row gap-2">
-      {shuffled.slice(0, displayCount).map((post) => (
+      {randomPosts.slice(0, displayCount).map((post) => (
         <SimilarPostItem key={post._id} post={post} />
       ))}
     </div>

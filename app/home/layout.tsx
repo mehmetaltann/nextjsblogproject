@@ -9,11 +9,11 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="mx-auto flex flex-col items-center justify-between w-full h-screen">
+    <main className="mx-auto flex flex-col items-center justify-between w-full h-screen">
       <Navbar />
       {children}
       <Footer />
-    </div>
+    </main>
   );
 };
 

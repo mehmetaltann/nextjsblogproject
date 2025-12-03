@@ -47,10 +47,11 @@ export const fetchComment = async (id: string) => {
   }
 };
 
-export const fetchBlog = async (title: string) => {
+export const fetchBlog = async (slug: string) => {
   try {
     await dbConnect();
-    const data = await BlogModel.findOne({ title: decodeURI(title) });
+    const decodedSlug = decodeURIComponent(slug);
+    const data = await BlogModel.findOne({ slug: decodedSlug });
     const blog: PostType = JSON.parse(JSON.stringify(data));
     return blog;
   } catch (error) {
@@ -111,6 +112,7 @@ export const fetchHomePosts = async () => {
         $project: {
           _id: 0,
           title: 1,
+          slug: 1,
           category: 1,
           date: 1,
           cloudinaryImageId: 1,
@@ -131,7 +133,7 @@ export const fetchPostTitles = async () => {
       {
         $project: {
           _id: 0,
-          title: 1,
+          slug: 1,
         },
       },
     ]);

@@ -8,8 +8,8 @@ interface PostListProps {
 const PostList = ({ posts }: PostListProps) => {
   return (
     <div className="flex flex-col gap-4">
-      {posts.map((item, index) => (
-        <PostCard key={index} data={item} />
+      {posts.map((item) => (
+        <PostCard key={item.slug} data={item} />
       ))}
     </div>
   );
