@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { fetchPosts } from "./actions/fetchDatas";
 import { PostType, SiteMapItem } from "@/lib/types/types";
 
-export const revalidate = 0;
+export const revalidate = 43200;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://altans.com.tr";
