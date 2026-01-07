@@ -11,9 +11,9 @@ import {
 } from "@/app/actions/fetchDatas";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export async function generateStaticParams() {
@@ -25,9 +25,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params; // ⬅️ KRİTİK DEĞİŞİKLİK
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://altans.com.tr";
 
-  const urlSlug = decodeURIComponent(params.slug);
+  const urlSlug = decodeURIComponent(slug);
   try {
     const blog = (await fetchBlog(urlSlug)) as PostType;
 
@@ -54,6 +55,7 @@ export async function generateMetadata({ params }: PageProps) {
 
     const { title, description, cloudinaryImageId, category, date, slug } =
       blog;
+
     const designedDesc = description
       ?.replace(/(<([^>]+)>)*/g, "")
       .substring(0, 600);
@@ -83,8 +85,9 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function Blog({ params }: PageProps) {
+  const { slug } = await params; // ⬅️ KRİTİK DEĞİŞİKLİK
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
-  const urlSlug = decodeURIComponent(params.slug);
+  const urlSlug = decodeURIComponent(slug);
 
   try {
     const blog = (await fetchBlog(urlSlug)) as PostType;

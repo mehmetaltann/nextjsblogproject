@@ -13,7 +13,7 @@ const myFont = localFont({
   variable: "--font-notosans",
 });
 
-export async function generateMetadata({ params, searchParams }: any) {
+export async function generateMetadata() {
   let allCategories: CategoryType[] = [];
   try {
     allCategories = (await fetchCategories()) as CategoryType[];
