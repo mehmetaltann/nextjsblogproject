@@ -32,7 +32,7 @@ const tailwindConfig: Config = {
       },
     },
   },
-  darkMode: 'class', // Optional: Enable dark mode support
+  darkMode: 'class',
 };
 
 export default tailwindConfig;

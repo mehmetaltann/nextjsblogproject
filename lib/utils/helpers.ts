@@ -1,9 +1,9 @@
 import moment from "moment";
 import "moment/locale/tr";
 
-export async function delay(ms: Number | any) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+export const delay = (ms: number) => {
+  return new Promise<void>((resolve) => setTimeout(resolve, ms));
+};
 
 export const getFormatDate = (date: Date | string): string => {
   moment.locale("tr");
