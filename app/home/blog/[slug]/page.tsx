@@ -10,11 +10,11 @@ import {
   fetchPostTitles,
 } from "@/app/actions/fetchDatas";
 
-interface Params {
+type PageProps = {
   params: {
     slug: string;
   };
-}
+};
 
 export async function generateStaticParams() {
   const allPostTitles = (await fetchPostTitles()) as PostTitle[];
@@ -24,7 +24,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: Params) {
+export async function generateMetadata({ params }: PageProps) {
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://altans.com.tr";
 
   const urlSlug = decodeURIComponent(params.slug);
@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: Params) {
   }
 }
 
-export default async function Blog({ params }: Params) {
+export default async function Blog({ params }: PageProps) {
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
   const urlSlug = decodeURIComponent(params.slug);
 
