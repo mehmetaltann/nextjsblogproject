@@ -1,4 +1,5 @@
-import clsx from "clsx";
+"use client";
+
 import { useState, ChangeEvent, FormEvent } from "react";
 import { toast } from "react-toastify";
 
@@ -18,7 +19,7 @@ interface CommentFormProps {
 const CommentForm: React.FC<CommentFormProps> = ({
   formSubmitHandler,
   btnLabel,
-  formCancelHandler = null,
+  formCancelHandler,
   initialText = "",
 }) => {
   const [formData, setFormData] = useState<FormData>({
@@ -33,8 +34,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
@@ -42,9 +43,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (btnLabel !== "Güncelle" && (!authorName || !authorEmail || !content)) {
-      toast.error("Tüm Alanları Doldurunuz");
-      return;
+    if (btnLabel !== "Güncelle") {
+      if (!authorName || !authorEmail || !content) {
+        toast.error("Tüm alanları doldurunuz.");
+        return;
+      }
     }
 
     if (content.trim() === "") {
@@ -53,11 +56,14 @@ const CommentForm: React.FC<CommentFormProps> = ({
     }
 
     formSubmitHandler(formData);
-    setFormData({
-      authorName: "",
-      authorEmail: "",
-      content: "",
-    });
+
+    if (btnLabel !== "Güncelle") {
+      setFormData({
+        authorName: "",
+        authorEmail: "",
+        content: "",
+      });
+    }
   };
 
   const autoResize = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -68,73 +74,82 @@ const CommentForm: React.FC<CommentFormProps> = ({
   return (
     <form onSubmit={submitHandler}>
       <div
-        className={clsx(
-          "flex flex-col items-end border border-color7 rounded-lg p-4",
-          btnLabel === "Yanıtla" && "mt-4 ms-4"
-        )}
+        className={`
+          flex flex-col gap-4 bg-zinc-50 rounded-xl p-5
+          ${btnLabel === "Yanıtla" ? "mt-4" : ""}
+        `}
       >
         <textarea
-          className="w-full focus:outline-none bg-transparent tracking-wide"
+          name="content"
+          value={content}
           rows={btnLabel === "Gönder" ? 5 : 4}
-          placeholder="Yorum, Soru, Düşünce, Katkı ..."
-          onInput={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+          placeholder="Yorum, soru, düşünce..."
+          onChange={(e) => {
             handleInputChange(e);
             autoResize(e);
           }}
-          name="content"
-          value={content}
+          className="
+            w-full resize-none bg-transparent
+            text-zinc-800 placeholder:text-muted-foreground
+            focus:outline-none
+          "
         />
-        <div className="flex gap-y-2 items-center gap-x-2 pt-2 min-[420px]:flex-row">
-          {btnLabel !== "Güncelle" && (
-            <>
-              <input
-                type="text"
-                id="authorName"
-                name="authorName"
-                className="w-full px-5 py-2 border border-color7 rounded-md focus:outline-none focus:ring-2 focus:[#36d1d1] placeholder:text-sm"
-                required={btnLabel === "Gönder"}
-                placeholder={
-                  btnLabel === "Gönder"
-                    ? "İsim ... (yorumda gözükmez)"
-                    : "İsim ..."
-                }
-                onChange={handleInputChange}
-                value={authorName}
-              />
-              <input
-                type="email"
-                id="authorEmail"
-                name="authorEmail"
-                className="w-full px-5 py-2 border border-color7 rounded-md focus:outline-none focus:ring-2 focus:[#36d1d1] placeholder:text-sm"
-                required={btnLabel === "Gönder"}
-                placeholder={
-                  btnLabel === "Gönder"
-                    ? "Mail ... (yorumda gözükmez)"
-                    : "Mail ..."
-                }
-                onChange={handleInputChange}
-                value={authorEmail}
-              />
-            </>
+
+        {btnLabel !== "Güncelle" && (
+          <div className="flex flex-col md:flex-row gap-3">
+            <input
+              type="text"
+              name="authorName"
+              value={authorName}
+              onChange={handleInputChange}
+              placeholder="İsim (yorumda gözükmez)"
+              className="
+                w-full px-4 py-2 bg-white
+                rounded-lg border border-zinc-200
+                focus:outline-none focus:ring-2 focus:ring-color1
+              "
+            />
+
+            <input
+              type="email"
+              name="authorEmail"
+              value={authorEmail}
+              onChange={handleInputChange}
+              placeholder="Mail (yorumda gözükmez)"
+              className="
+                w-full px-4 py-2 bg-white
+                rounded-lg border border-zinc-200
+                focus:outline-none focus:ring-2 focus:ring-color1
+              "
+            />
+          </div>
+        )}
+
+        <div className="flex justify-end gap-3 pt-2">
+          {formCancelHandler && (
+            <button
+              type="button"
+              onClick={formCancelHandler}
+              className="
+                px-5 py-2 text-sm rounded-lg
+                border border-zinc-300 text-zinc-600
+                hover:bg-zinc-100 transition
+              "
+            >
+              İptal
+            </button>
           )}
 
-          <div className="flex items-center gap-x-2">
-            <button
-              type="submit"
-              className="px-5 py-2 rounded-lg bg-color3 text-white"
-            >
-              {btnLabel}
-            </button>
-            {formCancelHandler && (
-              <button
-                onClick={formCancelHandler}
-                type="button"
-                className="px-5 py-2 text-color8 rounded-lg border border-color8"
-              >
-                İptal
-              </button>
-            )}
-          </div>
+          <button
+            type="submit"
+            className="
+              px-6 py-2 text-sm rounded-lg
+              bg-color1 text-white
+              hover:opacity-90 transition
+            "
+          >
+            {btnLabel}
+          </button>
         </div>
       </div>
     </form>

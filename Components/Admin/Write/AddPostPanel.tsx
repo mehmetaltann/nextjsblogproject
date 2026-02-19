@@ -3,7 +3,7 @@ import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import CategorySelect from "./CategorySelect";
 import TextEditor from "./TextEditor";
 import PhotoSection from "./PhotoSection";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { AdminContext } from "@/store/AdminContext";
 import { addPost, updatePost } from "@/app/actions/actions";
 import { toast } from "react-toastify";
@@ -22,23 +22,18 @@ type SubmitPayload = Omit<
   "_id" | "date" | "updatedAt" | "createdAt" | "slug"
 >;
 
-const getErrorMessage = (error: unknown) => {
-  if (error instanceof Error) return error.message;
-  return "Bilinmeyen bir hata oluştu.";
-};
-
 const AddPostPanel = ({ allCategories }: AddPostPanelProps) => {
   const context = useContext(AdminContext);
   if (!context) {
     throw new Error(
-      "useClientContext must be used within a AdminContextProvider"
+      "useClientContext must be used within a AdminContextProvider",
     );
   }
+
   const {
     title,
     setTitle,
     categories,
-    description,
     isHome,
     setIsHome,
     cloudinaryImageId,
@@ -48,6 +43,7 @@ const AddPostPanel = ({ allCategories }: AddPostPanelProps) => {
     postId,
   } = context;
 
+  const editorRef = useRef<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const optionsData = allCategories.map((o) => ({
@@ -58,48 +54,42 @@ const AddPostPanel = ({ allCategories }: AddPostPanelProps) => {
   const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+
+    const html = editorRef.current?.getContent() || "";
+
     const basePostData: SubmitPayload = {
       title,
-      description,
+      description: html,
       isHome,
       author: "Mehmet Altan",
       cloudinaryImageId,
       category: categories,
     };
 
-    if (isNewPost) {
-      try {
-        const response = await addPost(basePostData);
-        const { isSuccess, msg } = response as {
-          isSuccess: boolean;
-          msg: string;
-        };
-        if (isSuccess) {
-          setTitle("");
-          setDescription("");
-          setCloudinaryImageId("");
-          setIsHome(false);
-          (document.getElementById("blog-submit") as HTMLFormElement).reset();
-          toast.success(msg);
-        }
-      } catch (error) {
-        toast.error(getErrorMessage(error));
-      }
-    } else {
-      const updatePayload = {
-        ...basePostData,
-        _id: postId,
+    try {
+      const response = isNewPost
+        ? await addPost(basePostData)
+        : await updatePost({ ...basePostData, _id: postId });
+
+      const { isSuccess, msg } = response as {
+        isSuccess: boolean;
+        msg: string;
       };
-      try {
-        const response = await updatePost(updatePayload);
-        const { msg } = response as {
-          msg: string;
-        };
+
+      if (isSuccess) {
+        setTitle("");
+        setDescription("");
+        setCloudinaryImageId("");
+        setIsHome(false);
         toast.success(msg);
-      } catch (error) {
-        toast.error(getErrorMessage(error));
+      } else {
+        toast.error(msg);
       }
+    } catch (error) {
+      toast.error("Beklenmeyen bir hata oluştu.");
+      console.error(error);
     }
+
     setIsLoading(false);
   };
 
@@ -110,41 +100,40 @@ const AddPostPanel = ({ allCategories }: AddPostPanelProps) => {
     >
       <form
         onSubmit={onSubmitHandler}
-        id="blog-submit"
-        className="flex flex-col w-full gap-3 mt-6 mb-16"
+        className="flex flex-col w-full gap-4 mt-6 mb-16"
       >
         <PhotoSection isNewPost={isNewPost} />
+
         <input
-          className="border text-xl border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 "
+          className="border text-xl border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
           type="text"
-          id="title"
           placeholder="Başlık"
           onChange={(e) => setTitle(e.target.value)}
           value={title}
           required
         />
-        <div className="flex flex-col md:flex-row gap-2">
+
+        <div className="flex flex-col md:flex-row gap-4">
           <CategorySelect optionsData={optionsData} />
-          <div className="md:flex-[2] min-w-[250px] flex ms-2 gap-2 items-center mt-2">
+
+          <div className="flex items-center gap-3">
             <input
-              id="default-checkbox"
               type="checkbox"
               checked={isHome}
               onChange={() => setIsHome(!isHome)}
-              className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+              className="w-5 h-5"
             />
-            <label
-              htmlFor="default-checkbox"
-              className="ms-2 opacity-70 font-semibold text-lg"
-            >
+            <label className="opacity-70 font-semibold">
               Anasayfada Gözüksün
             </label>
           </div>
         </div>
-        <TextEditor />
+
+        <TextEditor ref={editorRef} />
+
         <button
           type="submit"
-          className="w-full opacity-90 h-12 bg-color1 text-white text-base border hover:bg-white hover:text-color1"
+          className="w-full h-12 bg-color1 text-white border hover:bg-white hover:text-color1 transition"
           disabled={isLoading}
         >
           {isLoading ? "Yükleniyor..." : isNewPost ? "Ekle" : "Güncelle"}

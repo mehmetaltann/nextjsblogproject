@@ -28,7 +28,7 @@ export const fetchCategories = async () => {
     await dbConnect();
     const categories = await CategoryModel.find({}).lean();
     const allCategories: CategoryType[] = JSON.parse(
-      JSON.stringify(categories)
+      JSON.stringify(categories),
     );
     return allCategories;
   } catch (error) {
@@ -68,7 +68,7 @@ export const fetchSimilarPosts = async (categoryArray: string[]) => {
       },
     });
     const sameCategoryBlogs: PostType[] = sameCategoryBlogsData.map((item) =>
-      JSON.parse(JSON.stringify(item))
+      JSON.parse(JSON.stringify(item)),
     );
     return sameCategoryBlogs;
   } catch (error) {
@@ -120,7 +120,7 @@ export const fetchHomePosts = async () => {
         },
       },
     ]);
-    return posts;
+    return JSON.parse(JSON.stringify(posts));
   } catch (error) {
     console.log(error);
   }

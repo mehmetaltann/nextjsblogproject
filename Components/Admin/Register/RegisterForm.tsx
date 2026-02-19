@@ -2,18 +2,20 @@
 import Link from "next/link";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
-import { useFormState } from "react-dom"; // Bunu kontrol edin, doğru import mu?
+import { useEffect, useRef } from "react";
+import { useActionState } from "react";
 import { userRegister } from "@/app/actions/actions";
 
 const RegisterForm = () => {
-  const [formState, formAction] = useFormState(userRegister, null);
+  const [formState, formAction] = useActionState(userRegister, null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (Array.isArray(formState)) return;
+    if (!formState || Array.isArray(formState)) return;
+
     if (formState?.isSuccess) {
       toast.success(formState?.msg);
-      (document.getElementById("registerForm") as HTMLFormElement).reset();
+      formRef.current?.reset();
     } else {
       toast.error(formState?.msg);
     }
@@ -31,7 +33,7 @@ const RegisterForm = () => {
         Kayıt Formu
       </h1>
       <form
-        id="registerForm"
+        ref={formRef}
         action={formAction}
         className="flex flex-col w-full gap-3 bg-[#f9f9f9]"
       >

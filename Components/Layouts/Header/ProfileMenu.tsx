@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { FaLinkedin } from "react-icons/fa";
@@ -9,11 +11,18 @@ interface ProfileMenuProps {
 }
 
 const ProfileMenu = ({ setOpenProfile }: ProfileMenuProps) => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const ref = useOnclickOutside(() => {
     setOpenProfile(false);
   });
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
+    window.location.href = "/";
+  };
+
+  if (status === "loading") return null;
 
   return (
     <div
@@ -46,7 +55,7 @@ const ProfileMenu = ({ setOpenProfile }: ProfileMenuProps) => {
             Yönetici Paneli
           </Link>
           <button
-            onClick={() => signOut({ callbackUrl: "/", redirect: true })}
+            onClick={handleLogout}
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
           >
             Çıkış Yap

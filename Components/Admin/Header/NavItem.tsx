@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { ReactNode } from "react";
@@ -19,16 +20,20 @@ const NavItem = ({
   activeNavName,
   setActiveNavName,
 }: NavItemProps) => {
-  const handleClick = () => {
-    setActiveNavName(name);
+  const handleClick = async (e: React.MouseEvent) => {
     if (name === "signOut") {
-      signOut({ callbackUrl: "/", redirect: true });
+      e.preventDefault();
+      await signOut({ redirect: false });
+      window.location.href = "/";
+      return;
     }
+
+    setActiveNavName(name);
   };
 
   return (
     <Link
-      href={link}
+      href={name === "signOut" ? "#" : link}
       aria-label={title}
       className={`flex items-center gap-x-2 py-2 text-lg ${
         name === activeNavName

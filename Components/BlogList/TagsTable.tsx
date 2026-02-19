@@ -26,38 +26,36 @@ const TagsTable = ({
   };
 
   return (
-    <div className="md:flex-initial md:w-64 rounded bg-gray-50 shadow-md">
-      <div className="px-6 py-4">
+    <div className="md:w-72 rounded-xl bg-white shadow-sm border border-gray-200">
+      <div className="px-6 py-5">
         <button
           onClick={() => {
             setSelectedCategory("Tümü");
             setCurrentPage(1);
           }}
           className={clsx(
-            "font-bold uppercase hover:text-color10 mb-2 md:mb-0 min-w-[180px]",
-            selectedCategory === "Tümü" ? "text-color9" : "text-gray-500"
+            "mb-4 block text-sm font-semibold uppercase transition-colors",
+            selectedCategory === "Tümü"
+              ? "text-color9"
+              : "text-gray-500 hover:text-color10"
           )}
         >
           Tüm Blog Yazıları
         </button>
 
-        <ul className="flex flex-col md:max-h-[80vh] md:overflow-y-auto md:border-t md:pt-4">
+        <ul className="flex flex-wrap gap-2 border-t pt-4">
           {categoryCountObj.map(({ name, count }) => (
-            <li key={name} className="my-1">
+            <li key={name}>
               <button
                 onClick={() => handleCategoryChange(name)}
-                aria-label={`Category: ${name}`}
+                className={clsx(
+                  "px-3 py-1.5 rounded-full text-xs transition-all whitespace-nowrap",
+                  selectedCategory === name
+                    ? "bg-gray-200 text-color9 font-medium"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                )}
               >
-                <h3
-                  className={clsx(
-                    "inline px-3 py-2 text-sm font-medium md:uppercase transition-colors",
-                    selectedCategory === name
-                      ? "text-color9"
-                      : "text-gray-500 hover:text-color10"
-                  )}
-                >
-                  {name} ({count})
-                </h3>
+                {name} ({count})
               </button>
             </li>
           ))}

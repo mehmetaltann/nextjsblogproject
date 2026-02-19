@@ -1,17 +1,34 @@
 "use server";
+
 import CategoryModel from "@/lib/models/CategoryModel";
 import CommentModel from "@/lib/models/CommentsModel";
 import BlogModel from "@/lib/models/BlogModel";
 import UserModel from "@/lib/models/UserModel";
 import InfoModel from "@/lib/models/InfoModel";
 import bcrypt from "bcryptjs";
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import dbConnect from "@/lib/config/dbConnect";
-import { envEmail, transporter } from "@/lib/config/nodemailer";
+import { transporter } from "@/lib/config/nodemailer";
 import { revalidatePath } from "next/cache";
 import { PostType } from "@/lib/types/types";
 import { slugify } from "@/lib/utils/helpers";
+
+const adminEmail = process.env.EMAIL as string;
+
+const readTemplate = async (fileName: string) => {
+  const filePath = path.join(process.cwd(), "lib/templates", fileName);
+  return await fs.readFile(filePath, "utf8");
+};
+
+interface AddPostPayload {
+  title: string;
+  description: string;
+  isHome: boolean;
+  author: string;
+  cloudinaryImageId: string;
+  category: { name: string }[];
+}
 
 interface CommentData {
   postTitle: string;
@@ -60,58 +77,63 @@ export const deleteCategory = async (_id: string) => {
 
 ///////////////////////// POST ACTIONS ///////////////////////
 
-export const addPost = async (formData: any) => {
+export const addPost = async (data: AddPostPayload) => {
   try {
     await dbConnect();
-    delete formData._id;
-    const title = formData.get("title");
-    if (!title) return { msg: "Başlık eksik!", isSuccess: false };
-    const newSlug = slugify(title);
-    const postData = {
-      ...formData,
+
+    if (!data.title || !data.description) {
+      return { msg: "Başlık veya içerik eksik!", isSuccess: false };
+    }
+    const newSlug = slugify(data.title);
+    await BlogModel.create({
+      ...data,
       slug: newSlug,
-    };
-    await BlogModel.create(postData);
+    });
+
     revalidatePath("/");
-    revalidatePath("/admin");
     revalidatePath("/home");
     revalidatePath("/home/bloglist");
+    revalidatePath("/admin");
+
     return { msg: "Yazı Eklendi", isSuccess: true };
   } catch (error) {
-    return { msg: `Yazı Eklenemedi: ${error}`, isSuccess: false };
+    console.error("AddPost Error:", error);
+    return { msg: "Yazı Eklenemedi!", isSuccess: false };
   }
 };
 
 export const updatePost = async (
-  formData: Partial<PostType> & { _id: string }
+  formData: Partial<PostType> & { _id: string },
 ) => {
   try {
     await dbConnect();
-    const oldPost = await BlogModel.findById(formData._id);
-    if (!oldPost) return { msg: "Post bulunamadı!" };
 
-    const oldSlug = oldPost.slug;
-    let updateData: Partial<PostType> = { ...formData, updatedAt: new Date() };
-    let newSlug = oldSlug;
+    const { _id, ...rest } = formData;
 
-    if (formData.title && formData.title !== oldPost.title) {
-      newSlug = slugify(formData.title);
+    const oldPost = await BlogModel.findById(_id).lean();
+    if (!oldPost) return { msg: "Post bulunamadı!", isSuccess: false };
+    let newSlug = oldPost.slug;
+
+    const updateData: Partial<PostType> = {
+      ...rest,
+      updatedAt: new Date(),
+    };
+
+    if (rest.title && rest.title !== oldPost.title) {
+      newSlug = slugify(rest.title);
       updateData.slug = newSlug;
     }
 
-    const updated = await BlogModel.findByIdAndUpdate(
-      formData._id,
-      updateData,
-      { new: true }
-    );
-
-    if (!updated) return { msg: "Güncelleme başarısız!" };
+    await BlogModel.findByIdAndUpdate(_id, updateData, {
+      new: true,
+      runValidators: true,
+    });
 
     revalidatePath("/");
     revalidatePath("/home");
     revalidatePath("/admin");
     revalidatePath("/home/bloglist");
-    revalidatePath(`/home/blog/${oldSlug}`);
+    revalidatePath(`/home/blog/${oldPost.slug}`);
     revalidatePath(`/home/blog/${newSlug}`);
 
     return { msg: "Yazı Güncellendi" };
@@ -168,56 +190,49 @@ export const addComment = async (formData: CommentData) => {
     const { postTitle, authorEmail, content, parentCommentId } = formData;
 
     if (!parentCommentId) {
-      const templatePathNewComment = path.join(
-        process.cwd(),
-        "lib/templates",
-        "newCommentEmailTemp.html"
-      );
-      let htmlTemplateNewComment = fs.readFileSync(
-        templatePathNewComment,
-        "utf8"
-      );
-      htmlTemplateNewComment = htmlTemplateNewComment
+      let html = await readTemplate("newCommentEmailTemp.html");
+
+      html = html
         .replace("{{postTitle}}", postTitle)
         .replace("{{authorEmail}}", authorEmail)
         .replace("{{content}}", content);
 
       await transporter.sendMail({
-        to: envEmail,
+        to: adminEmail,
         from: authorEmail,
         subject: postTitle,
-        html: htmlTemplateNewComment,
+        html,
       });
     } else {
-      const commentReplyEmailTemp = path.join(
-        process.cwd(),
-        "lib/templates",
-        "commentReplyEmailTemp.html"
-      );
-      let htmlTemplateReplyComment = fs.readFileSync(
-        commentReplyEmailTemp,
-        "utf8"
-      );
-      const { authorEmail: parentAuthor } = (await CommentModel.findById(
-        parentCommentId
-      )) as { authorEmail: string };
+      let html = await readTemplate("commentReplyEmailTemp.html");
 
-      htmlTemplateReplyComment = htmlTemplateReplyComment
+      const parent = await CommentModel.findById(parentCommentId)
+        .select("authorEmail")
+        .lean();
+
+      if (!parent) {
+        return { msg: "Üst yorum bulunamadı", isSuccess: false };
+      }
+
+      html = html
         .replace("{{postTitle}}", postTitle)
         .replace("{{authorEmail}}", authorEmail)
         .replace("{{content}}", content)
-        .replace("{{parentAuthor}}", parentAuthor);
+        .replace("{{parentAuthor}}", parent.authorEmail);
 
       await transporter.sendMail({
-        to: [parentAuthor, envEmail],
+        to: [parent.authorEmail, adminEmail],
         from: authorEmail,
         subject: postTitle,
-        html: htmlTemplateReplyComment,
+        html,
       });
     }
+
     delete (formData as any).postTitle;
+
     await CommentModel.create(formData);
     revalidatePath(`/home/blog/${postTitle}`);
+
     return { msg: "Yorum Eklendi", isSuccess: true };
   } catch (error) {
     return { msg: `Yorum Eklenemedi: ${error}`, isSuccess: false };
@@ -229,7 +244,7 @@ export const updateComment = async (
     content: string;
     _id: string;
   },
-  postTitle: string
+  postTitle: string,
 ) => {
   try {
     await dbConnect();
@@ -298,31 +313,27 @@ export const updateInfo = async (formData: InfoData) => {
 ///////////////////////// OTHER ACTIONS ///////////////////////
 
 export const sendMessage = async (prevState: any, formData: any) => {
-  await dbConnect();
-  const templatePath = path.join(
-    process.cwd(),
-    "templates",
-    "contactEmailTemp.html"
-  );
-  let htmlTemplate = fs.readFileSync(templatePath, "utf8");
   try {
+    let html = await readTemplate("contactEmailTemp.html");
+
     const email = formData.get("email");
     const title = formData.get("title");
     const message = formData.get("message");
 
-    htmlTemplate = htmlTemplate
+    html = html
       .replace("{{senderEmail}}", email)
       .replace("{{subject}}", title)
       .replace("{{message}}", message);
 
     await transporter.sendMail({
-      to: envEmail,
+      to: adminEmail,
       from: email,
       subject: title,
-      html: htmlTemplate,
+      html,
     });
+
     return { msg: "Mesajınız Gönderildi", success: true };
   } catch (error) {
-    return { msg: "Mesajınız Gönderildi: " + error, success: false };
+    return { msg: "Mesaj gönderilemedi: " + error, success: false };
   }
 };

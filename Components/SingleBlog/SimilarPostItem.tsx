@@ -11,26 +11,35 @@ const SimilarPostItem = ({ post }: SimilarPostItemProps) => {
   const { title, date, cloudinaryImageId, slug } = post;
 
   return (
-    <div className="flex-grow">
-      <div className="mb-4 w-full overflow-hidden rounded-xl">
-        <Link href={`/home/blog/${slug}`}>
+    <article className="group flex flex-col gap-3 transition-transform duration-300 hover:-translate-y-1">
+      
+      <Link href={`/home/blog/${slug}`} className="block">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-gray-100">
           <CldImage
             src={cloudinaryImageId}
             alt={title}
-            width={420}
-            height={280}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="aspect-video w-full object-cover"
+            fill
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+            sizes="(max-width: 768px) 100vw, 50vw"
             quality="auto"
             format="auto"
           />
-        </Link>
-      </div>
-      <Link href={`/home/blog/${slug}`}>
-        <h3 className="text-zinc-500 font-semibold ms-1">{title}</h3>
-        <p className="text-zinc-500 ms-1">{getFormatDate(date)}</p>
+        </div>
       </Link>
-    </div>
+
+      <div className="space-y-1">
+        <Link href={`/home/blog/${slug}`}>
+          <h3 className="text-base font-semibold text-zinc-900 transition-colors group-hover:text-color1">
+            {title}
+          </h3>
+        </Link>
+
+        <p className="text-xs text-muted-foreground">
+          {getFormatDate(date)}
+        </p>
+      </div>
+
+    </article>
   );
 };
 

@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import parse from "html-react-parser";
 import { ClientContext } from "@/store/ClientContext";
@@ -12,57 +13,61 @@ interface BlogPostPreviewProps {
 
 const BlogPostPreview = ({ post }: BlogPostPreviewProps) => {
   const context = useContext(ClientContext);
-
-  if (!context) {
-    throw new Error(
-      "useClientContext must be used within a ClientContextProvider"
-    );
-  }
+  if (!context) throw new Error("ClientContext gerekli");
 
   const { setSelectedCategory } = context;
 
   return (
-    <div className="break-words">
-      <Link href={`/home/blog/${post.slug}`}>
-        <div className="aspect-[16/9] relative">
+    <article className="group flex flex-col gap-4 sm:gap-5 transition md:hover:-translate-y-1 md:transition-transform duration-300">
+      
+      {/* IMAGE */}
+      <Link href={`/home/blog/${post.slug}`} className="block">
+        <div className="relative w-full aspect-[16/9] overflow-hidden rounded-xl bg-gray-100">
           <CldImage
             src={post.cloudinaryImageId}
             alt={post.title}
-            className="object-cover rounded-lg"
-            priority={true}
-            fill={true}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            fill
+            className="object-cover md:transition-transform md:duration-500 md:ease-out md:group-hover:scale-[1.05]"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
       </Link>
-      <div className="grid grid-cols-1 gap-3 md:col-span-2 mt-4">
-        <h2 className="font-semibold tracking-tighter text-primary-txt text-2xl md:text-3xl">
-          <Link href={`/home/blog/${post.slug}`}>{post.title}</Link>
+
+      {/* CONTENT */}
+      <div className="space-y-2 sm:space-y-3">
+        
+        <h2 className="text-lg sm:text-xl md:text-2xl font-semibold tracking-tight text-zinc-900">
+          <Link
+            href={`/home/blog/${post.slug}`}
+            className="transition-colors hover:text-color1"
+          >
+            {post.title}
+          </Link>
         </h2>
-        <div className="prose text-color1 lg:prose-lg tracking-tighter text-muted-foreground">
+
+        <p className="text-xs sm:text-sm text-muted-foreground">
           {getFormatDate(post.date)}
-        </div>
-        <div className="prose lg:prose-lg leading-relaxed md:text-lg line-clamp-5 text-muted-foreground">
+        </p>
+
+        <div className="text-sm sm:text-base text-muted-foreground leading-relaxed line-clamp-3 sm:line-clamp-4">
           {parse(post.description)}
         </div>
-        <div className="text-sm text-muted-foreground">
-          {post.category.map((cat, index) => (
-            <div
-              key={index}
-              className="mr-2 inline-block cursor-pointer hover:text-color1"
+
+        <div className="flex flex-wrap gap-2 sm:gap-3 text-xs sm:text-sm pt-1">
+          {post.category.map((cat) => (
+            <Link
+              key={cat.name}
+              href="/home/bloglist"
+              onClick={() => setSelectedCategory(cat.name)}
+              className="text-muted-foreground transition-colors hover:text-color1"
             >
-              <Link
-                href={`/home/bloglist`}
-                onClick={() => setSelectedCategory(cat.name)}
-                aria-label={`Filter posts by category ${cat.name}`}
-              >
-                #{cat.name}
-              </Link>
-            </div>
+              #{cat.name}
+            </Link>
           ))}
         </div>
+
       </div>
-    </div>
+    </article>
   );
 };
 

@@ -45,7 +45,7 @@ const Navbar = () => {
         className={clsx(
           "flex justify-between md:px-12 items-center pt-4 gap-4",
           pathname === "/home" && "flex-col md:flex-row px-4",
-          mobileMargin
+          mobileMargin,
         )}
       >
         <div className="flex items-center gap-3 w-full justify-between md:w-auto">
@@ -55,7 +55,7 @@ const Navbar = () => {
               className={`text-4xl ms-2 cursor-pointer lg:hidden`}
               onClick={() => setIsSideMenuOpen(true)}
             />
-            <Link href="/" className="text-4xl font-mono">
+            <Link href="/home" className="text-4xl font-mono">
               <CldImage
                 src="https://res.cloudinary.com/duixszfkd/image/upload/v1725431523/logo.png"
                 alt="navbar_logo"
@@ -116,7 +116,7 @@ const Navbar = () => {
         <div
           className={clsx(
             "z-50 fixed h-full w-screen md:hidden bg-black/50 backdrop-blur-sm top-0 right-0 -translate-x-full transition-all",
-            isSideMenuOpen && "translate-x-0"
+            isSideMenuOpen && "translate-x-0",
           )}
         >
           <section className="text-black bg-white flex flex-col w-56 absolute left-0 top-0 h-screen p-8 gap-8">

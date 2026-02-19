@@ -1,26 +1,31 @@
 import nodemailer from "nodemailer";
 
-export const envEmail = process.env.NEXT_PUBLIC_EMAIL as string;
-const pass = process.env.NEXT_PUBLIC_EMAIL_PASS as string;
+const email = process.env.EMAIL as string;
+const pass = process.env.EMAIL_PASS as string;
 
-if (!envEmail || !pass) {
+if (!email || !pass) {
   throw new Error("Email or password environment variables are not set");
 }
 
 export const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "smtp.gmail.com", 
   port: 587,
   secure: false,
   auth: {
-    user: envEmail,
+    user: email,
     pass,
   },
 });
 
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("Error setting up transporter:", error);
-  } else {
+transporter
+  .verify()
+  .then(() => {
     console.log("Transporter is ready to send emails");
-  }
-});
+  })
+  .catch((error: unknown) => {
+    if (error instanceof Error) {
+      console.error("Error setting up transporter:", error.message);
+    } else {
+      console.error("Unknown error setting up transporter:", error);
+    }
+  });

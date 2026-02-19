@@ -26,13 +26,18 @@ const Main = ({ allPosts }: MainProps) => {
 
   const { selectedCategory, setSelectedCategory } = context;
 
-  const categoryCountObj = useMemo(() => getAttCount(allPosts), [allPosts]);
+  const categoryCountObj = useMemo(
+    () => getAttCount(allPosts),
+    [allPosts]
+  );
 
   const filteredPosts = useMemo(() => {
     return selectedCategory === ALL_CATEGORIES
       ? allPosts
       : allPosts.filter((item) =>
-          item.category.some((insItem) => insItem.name === selectedCategory)
+          item.category.some(
+            (insItem) => insItem.name === selectedCategory
+          )
         );
   }, [selectedCategory, allPosts]);
 
@@ -51,7 +56,7 @@ const Main = ({ allPosts }: MainProps) => {
 
   return (
     <AnimationWrapper
-      className="flex flex-col md:flex-row gap-8 px-4 py-4 max-w-screen-xl mx-auto mt-4"
+      className="flex flex-col md:flex-row gap-12 px-4 py-6 max-w-screen-xl mx-auto mt-6"
       keyValue="BlogListPage"
     >
       <TagsTable
@@ -60,15 +65,22 @@ const Main = ({ allPosts }: MainProps) => {
         setSelectedCategory={setSelectedCategory}
         setCurrentPage={setCurrentPage}
       />
-      <div className="flex flex-col md:flex-[3]">
-        <PostList posts={displayPosts} />
-        {totalPages > 1 && (
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
-        )}
+
+      {/* RIGHT CONTENT AREA */}
+      <div className="flex-1 flex justify-center">
+        <div className="w-full max-w-3xl">
+          <PostList posts={displayPosts} />
+
+          {totalPages > 1 && (
+            <div className="mt-12 flex justify-center">
+              <Pagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </AnimationWrapper>
   );

@@ -85,7 +85,7 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function Blog({ params }: PageProps) {
-  const { slug } = await params; // ⬅️ KRİTİK DEĞİŞİKLİK
+  const { slug } = await params;
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
   const urlSlug = decodeURIComponent(slug);
 

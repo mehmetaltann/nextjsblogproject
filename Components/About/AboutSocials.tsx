@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   FaGithub,
   FaLinkedinIn,
@@ -23,13 +22,17 @@ interface AboutSocialsProps {
 const AboutSocials = ({ containerStyles, iconStyles }: AboutSocialsProps) => {
   return (
     <div className={containerStyles}>
-      {socials.map((item, index) => {
-        return (
-          <Link key={index} href={item.path} className={iconStyles}>
-            {item.icon}
-          </Link>
-        );
-      })}
+      {socials.map((item, index) => (
+        <a
+          key={index}
+          href={item.path}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={iconStyles}
+        >
+          {item.icon}
+        </a>
+      ))}
     </div>
   );
 };

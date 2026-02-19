@@ -1,11 +1,5 @@
-import dynamic from "next/dynamic";
 import { PostType } from "@/lib/types/types";
-import { useMemo } from "react";
-
-const SimilarPostItem = dynamic(() => import("./SimilarPostItem"), {
-  ssr: false,
-  loading: () => <p>Bekleyiniz ...</p>,
-});
+import SimilarPostItem from "./SimilarPostItem";
 
 interface SimilarPostsProps {
   similarposts: PostType[];
@@ -16,16 +10,14 @@ const SimilarPosts = ({
   similarposts,
   displayCount = 2,
 }: SimilarPostsProps) => {
-  if (!similarposts || similarposts.length === 0) return <div></div>;
+  if (!similarposts || similarposts.length === 0) return null;
 
-  const randomPosts = useMemo(() => {
-    return [...similarposts].sort(() => 0.5 - Math.random());
-  }, [similarposts]);
+  const postsToShow = similarposts.slice(0, displayCount);
 
   return (
-    <div className="flex flex-col w-full md:flex-row gap-2">
-      {randomPosts.slice(0, displayCount).map((post) => (
-        <SimilarPostItem key={post._id} post={post} />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {postsToShow.map((post) => (
+        <SimilarPostItem key={post.slug} post={post} />
       ))}
     </div>
   );

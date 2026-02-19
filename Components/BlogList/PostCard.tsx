@@ -14,51 +14,48 @@ interface PostCardProps {
 
 export default function PostCard({ data }: PostCardProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="group flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md">
       {data.cloudinaryImageId && (
-        <Link href={`/home/blog/${data.slug}`}>
-          <CldImage
-            src={data.cloudinaryImageId}
-            alt={data.title}
-            width={400}
-            height={300}
-            className="mb-3 h-[400px] w-full rounded-xl bg-no-repeat object-cover object-center transition-transform duration-200 ease-out hover:scale-[1.02]"
-            priority={true}
-          />
+        <Link href={`/home/blog/${data.slug}`} className="block">
+          <div className="relative w-full aspect-[4/3] overflow-hidden rounded-xl bg-gray-50 flex items-center justify-center">
+            <CldImage
+              src={data.cloudinaryImageId}
+              alt={data.title}
+              fill
+              className="object-contain transition-transform duration-300 ease-out group-hover:scale-[1.04]"
+              sizes="(max-width: 768px) 100vw, 768px"
+              priority={false}
+            />
+          </div>
         </Link>
       )}
-      <h2 className="text-xl font-semibold tracking-tight text-zinc-800 ">
-        <Link href={`/home/blog/${data.slug}`}>{data.title}</Link>
-      </h2>
-      <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
-        <div className="flex select-none justify-start space-x-2 md:hidden md:justify-end">
-          {data.category &&
-            data.category.map((category) => (
-              <div key={category.name} className="flex mt-2">
-                <span className="pt-[3px] text-xs leading-none text-color9 ">
-                  #{category.name}
-                </span>
-              </div>
-            ))}
-        </div>
-      </div>
-      <RenderHTML HTML={data.description} />
-      <div className="flex items-center justify-between font-medium text-color9">
+
+      <h2 className="text-lg font-semibold tracking-tight text-zinc-800">
         <Link
           href={`/home/blog/${data.slug}`}
-          className="flex items-center space-x-2"
+          className="hover:text-color10 transition-colors"
+        >
+          {data.title}
+        </Link>
+      </h2>
+
+      <RenderHTML HTML={data.description} />
+
+      <div className="flex items-center justify-between text-sm font-medium text-color9">
+        <Link
+          href={`/home/blog/${data.slug}`}
+          className="flex items-center gap-2 hover:text-color10 transition-colors"
         >
           <span>Devamı</span>
-          <FaArrowRight className="h-4 w-4 text-inherit" />
+          <FaArrowRight className="h-4 w-4" />
         </Link>
-        <div className="hidden select-none justify-end space-x-2 md:flex ">
+
+        <div className="flex flex-wrap gap-2">
           {data.category &&
             data.category.map((category) => (
-              <div key={category.name} className="flex">
-                <span className="pt-[3px] text-xs leading-none text-color9 ">
-                  #{category.name}
-                </span>
-              </div>
+              <span key={category.name} className="text-xs text-gray-500">
+                #{category.name}
+              </span>
             ))}
         </div>
       </div>

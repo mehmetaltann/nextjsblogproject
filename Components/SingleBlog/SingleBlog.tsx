@@ -4,7 +4,6 @@ import Comments from "./Comments/Comments";
 import SocialMediaShareSet from "../Layouts/SocialMediaShareSet";
 import parse from "html-react-parser";
 import SimilarPosts from "./SimilarPosts";
-import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 import { CldImage } from "next-cloudinary";
 import { getFormatDate } from "@/lib/utils/helpers";
 import { CommentType, PostType } from "@/lib/types/types";
@@ -13,7 +12,7 @@ interface SingleBlogProps {
   blog: PostType;
   sameCategoryBlogs: PostType[];
   siteUrl: string;
-  comments: CommentType[] | [];
+  comments: CommentType[];
 }
 
 const SingleBlog = ({
@@ -22,62 +21,95 @@ const SingleBlog = ({
   comments,
   siteUrl,
 }: SingleBlogProps) => {
-  const filteredBlogsByCategory = sameCategoryBlogs.filter(
-    (item) => item._id !== blog._id
+  const filteredBlogs = sameCategoryBlogs.filter(
+    (item) => item._id !== blog._id,
   );
 
+  const normalizedHtml = blog.description
+    .replace(/,\s*"/g, '"')
+    .replace(/,\s*>/g, ">")
+    .replace(/width=['"]100%['"],?/g, 'width="100%"');
+
   return (
-    <AnimationWrapper
-      keyValue="singlePostPage"
-      className="relative m-auto flex max-w-[960px] w-full lg:w-3/4 xl:w-2/4 px-4 lg:px-0 flex-col items-start my-8"
-    >
-      <h1 className="mb-8 text-3xl font-extrabold leading-tight tracking-tighter text-color1 md:text-4xl">
-        {blog.title}
-      </h1>
-      <div className="mb-4 w-full overflow-hidden rounded-xl">
-        <CldImage
-          src={blog.cloudinaryImageId}
-          alt={blog.title}
-          width={960}
-          height={720}
-          className="aspect-video w-full object-cover"
-          priority={true}
-        />
-      </div>
-      <div className="mb-6 md:flex items-center">
-        <div className="flex flex-col ">
-          <span className="text-zinc-500">{getFormatDate(blog.date)}</span>
-        </div>
-        <div className="flex md:absolute mt-2 md:right-0  md:mt-0">
-          <div>
-            {blog.category.map((item, index) => (
+    <div className="w-full px-4 py-6">
+      <div className="mx-auto max-w-3xl w-full">
+        <header className="mb-6">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight text-zinc-900">
+            {blog.title}
+          </h1>
+
+          <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+            <span>{getFormatDate(blog.date)}</span>
+
+            <span className="h-1 w-1 rounded-full bg-zinc-400" />
+
+            {blog.category.map((item) => (
               <span
-                className={`mb-1 mr-1 rounded-xl px-1 py-1 opacity-60 hover:opacity-100 text-color6`}
-                key={index}
+                key={item.name}
+                className="hover:text-zinc-900 transition-colors"
               >
                 #{item.name}
               </span>
             ))}
           </div>
-        </div>
-      </div>
-      <div className="space-y-4 text-zinc-700 mb-4 w-full">
-        {parse(blog.description)}
-      </div>
-      <div className="mt-2 self-end">
-        <SocialMediaShareSet
-          shareURL={`${siteUrl}/home/blog/${blog.slug}`}
-          title={blog.title}
-          size={20}
+        </header>
+
+        {blog.cloudinaryImageId && (
+          <div
+            className="mb-6 w-full overflow-hidden rounded-xl
+                  max-h-[320px] sm:max-h-[380px] md:max-h-[460px] lg:max-h-[520px]"
+          >
+            <CldImage
+              src={blog.cloudinaryImageId}
+              alt={blog.title}
+              width={1200}
+              height={800}
+              className="w-full h-auto object-cover"
+              sizes="(max-width: 768px) 100vw, 900px"
+              priority
+            />
+          </div>
+        )}
+
+        <article
+          className="
+                      prose prose-sm sm:prose-base lg:prose-lg
+                      prose-zinc mt-8 max-w-none
+                      prose-headings:font-semibold
+                      prose-p:leading-relaxed
+                      prose-a:text-color1
+                      prose-a:no-underline hover:prose-a:underline
+                      prose-img:rounded-xl
+                      prose-img:max-w-full
+                      prose-pre:overflow-x-auto
+                      prose-code:break-words
+                      break-words
+                    "
+          dangerouslySetInnerHTML={{ __html: normalizedHtml }}
         />
+        <div className="mt-8 pt-6 border-t border-zinc-200 flex justify-center">
+          <SocialMediaShareSet
+            shareURL={`${siteUrl}/home/blog/${blog.slug}`}
+            title={blog.title}
+            size={20}
+          />
+        </div>
+
+        <section className="mx-auto w-full max-w-3xl px-4 mt-8">
+          <Comments
+            postId={blog._id}
+            postTitle={blog.slug}
+            comments={comments}
+          />
+        </section>
       </div>
-      <hr />
-      <Comments postId={blog._id} postTitle={blog.slug} comments={comments} />
-      <div className="font-semibold text-xl py-4 opacity-80 text-color1">
-        Benzer Yazılar
-      </div>
-      <SimilarPosts similarposts={filteredBlogsByCategory} />
-    </AnimationWrapper>
+
+      {filteredBlogs.length > 0 && (
+        <section className="mx-auto w-full max-w-4xl px-4 mt-6 pt-10 border-t border-zinc-200">
+          <SimilarPosts similarposts={filteredBlogs} />
+        </section>
+      )}
+    </div>
   );
 };
 

@@ -1,10 +1,10 @@
 import siteConfig from "@/lib/config/seo.config";
 import localFont from "next/font/local";
+import AuthProvider from "./provider";
 import { fetchCategories } from "@/app/actions/fetchDatas";
-import { CategoryType } from "@/lib/types/types";
-import { AuthProvider } from "./provider";
 import { ClientContextProvider } from "@/store/ClientContext";
 import { ToastContainer } from "react-toastify";
+import { auth } from "@/auth";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
@@ -14,9 +14,14 @@ const myFont = localFont({
 });
 
 export async function generateMetadata() {
-  let allCategories: CategoryType[] = [];
+  let categoryNames: string[] = [];
+
   try {
-    allCategories = (await fetchCategories()) as CategoryType[];
+    const categories = await fetchCategories();
+
+    if (Array.isArray(categories)) {
+      categoryNames = categories.map((i) => i.name);
+    }
   } catch (error) {
     console.error("Global kategoriler çekilemedi:", error);
   }
@@ -27,7 +32,7 @@ export async function generateMetadata() {
       template: "%s - Altan's Blog",
     },
     description: siteConfig.description,
-    keywords: [...siteConfig.keywords, ...allCategories.map((i) => i.name)],
+    keywords: [...siteConfig.keywords, ...categoryNames],
     metadataBase: new URL(siteConfig.siteUrl!),
     authors: [{ name: siteConfig.author }],
     publisher: siteConfig.publisher,
@@ -49,11 +54,13 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <body className={myFont.className}>
-        <AuthProvider>
+        <AuthProvider session={session}>
           <ClientContextProvider>
             {children}
             <ToastContainer

@@ -1,7 +1,7 @@
 import React from "react";
 import CommentForm from "./CommentForm";
 import { CgProfile } from "react-icons/cg";
-import { getFormatLeftTime, getFormatLongDate } from "@/lib/utils/helpers";
+import { getFormatLeftTime } from "@/lib/utils/helpers";
 import { useSession } from "next-auth/react";
 import { FiMessageSquare, FiTrash, FiEdit2 } from "react-icons/fi";
 import { updateComment, deleteComment } from "@/app/actions/actions";
@@ -43,24 +43,18 @@ const CommentItem = ({
   replies,
   postTitle,
 }: CommentItemProps) => {
-  const { authorName, content, date, _id, parentCommentId: parent } = comment;
-  const isReplying =
-    affectedComment &&
-    affectedComment._id === _id &&
-    affectedComment.type === "replying";
-  const isEditing =
-    affectedComment &&
-    affectedComment._id === _id &&
-    affectedComment.type === "editing";
-  const parentCommentId = parentId ? parentId : _id;
+  const { authorName, content, date, _id, parentCommentId } = comment;
   const { data: session } = useSession();
 
+  const isReplying =
+    affectedComment?._id === _id && affectedComment.type === "replying";
+  const isEditing =
+    affectedComment?._id === _id && affectedComment.type === "editing";
+
   const handleAffectedComment = (type: "replying" | "editing") => {
-    if (affectedComment === null) {
-      setAffectedComment({ type, _id });
-    } else {
-      setAffectedComment(null);
-    }
+    setAffectedComment(
+      affectedComment?._id === _id ? null : { type, _id }
+    );
   };
 
   const handleDeleteClick = async () => {
@@ -68,83 +62,89 @@ const CommentItem = ({
       await deleteComment(_id, postTitle);
       setAffectedComment(null);
     } catch (error) {
-      console.error(error);
+      toast.error("Silinemedi.");
     }
   };
 
   return (
-    <div className="mb-2 flex flex-col rounded-xl border border-color7 p-4 pb-6 ">
-      <div className="mb-4 flex w-full flex-col md:items-center justify-between gap-2 text-gray-500 sm:flex-row">
-        <div className="flex items-center gap-2 opacity-80 text-black">
-          <CgProfile className="text-color9" />
-          <p className="text-lg">{authorName}</p>
+    <div className="py-6">
+
+      <div className="flex items-center justify-between text-sm text-muted-foreground">
+        <div className="flex items-center gap-2 font-medium text-zinc-900">
+          <CgProfile className="text-zinc-400" />
+          {authorName}
         </div>
-        <div className="text-xs">
-          <span className="font-semibold">{getFormatLeftTime(date)}</span> -{" "}
-          {getFormatLongDate(date)}
-        </div>
+        <span>{getFormatLeftTime(date)}</span>
       </div>
-      {!isEditing && <div className="pr-6 text-zinc-700">{content}</div>}
+
+      {!isEditing && (
+        <div className="mt-3 text-zinc-700 leading-relaxed">
+          {content}
+        </div>
+      )}
 
       {isEditing && (
         <CommentForm
           btnLabel="Güncelle"
-          formSubmitHandler={async (value: FormData) => {
-            const response = await updateComment(
-              {
-                content: value.content,
-                _id,
-              },
+          formSubmitHandler={async (value) => {
+            const res = await updateComment(
+              { content: value.content, _id },
               postTitle
             );
-            const { msg } = response as { msg: string };
+            toast.success(res?.msg);
             setAffectedComment(null);
-            toast.success(msg);
           }}
           formCancelHandler={() => handleAffectedComment("editing")}
           initialText={content}
         />
       )}
-      <div className="flex items-center gap-x-4 font-roboto text-color9 text-sm mt-3 opacity-80">
-        {!parent && (
+
+      <div className="flex items-center gap-5 text-sm text-muted-foreground mt-4">
+        {!parentCommentId && (
           <button
-            className="flex items-center space-x-2"
             onClick={() => handleAffectedComment("replying")}
+            className="flex items-center gap-2 hover:text-zinc-900 transition"
           >
-            <FiMessageSquare className="w-4 h-auto" />
-            <span>Yanıtla</span>
+            <FiMessageSquare size={16} />
+            Yanıtla
           </button>
         )}
+
         {session && (
           <>
             <button
-              className="flex items-center space-x-2"
               onClick={() => handleAffectedComment("editing")}
+              className="flex items-center gap-2 hover:text-zinc-900 transition"
             >
-              <FiEdit2 className="w-4 h-auto" />
-              <span>Güncelle</span>
+              <FiEdit2 size={16} />
+              Güncelle
             </button>
+
             <button
-              className="flex items-center space-x-2"
               onClick={handleDeleteClick}
+              className="flex items-center gap-2 hover:text-red-600 transition"
             >
-              <FiTrash className="w-4 h-auto" />
-              <span>Sil</span>
+              <FiTrash size={16} />
+              Sil
             </button>
           </>
         )}
       </div>
+
       {isReplying && (
-        <CommentForm
-          btnLabel="Yanıtla"
-          formSubmitHandler={(value: FormData) =>
-            addCommentHandler(value, parentCommentId)
-          }
-          formCancelHandler={() => handleAffectedComment("replying")}
-        />
+        <div className="mt-4">
+          <CommentForm
+            btnLabel="Yanıtla"
+            formSubmitHandler={(value) =>
+              addCommentHandler(value, parentId || _id)
+            }
+            formCancelHandler={() => handleAffectedComment("replying")}
+          />
+        </div>
       )}
+
       {replies?.length > 0 && (
-        <div className="mt-6 ms-6 md:ms-24">
+        <div className="mt-6 ml-6 md:ml-10 border-l border-zinc-200 pl-6">
           {replies.map((reply) => (
             <CommentItem
               key={reply._id}
@@ -153,7 +153,7 @@ const CommentItem = ({
               setAffectedComment={setAffectedComment}
               addCommentHandler={addCommentHandler}
               replies={[]}
-              parentId={comment._id}
+              parentId={_id}
               postTitle={postTitle}
             />
           ))}

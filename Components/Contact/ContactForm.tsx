@@ -37,62 +37,67 @@ const ContactForm = ({ content }: ContactFormProps) => {
           <p className="mb-8 lg:mb-12 font-light text-center text-gray-500 sm:text-xl">
             {content}
           </p>
-          <form
-            id="myform"
-            action={formAction}
-            className="flex flex-col gap-3 mb-8 lg:mb-10"
-          >
+          <form id="myform" action={formAction} className="flex flex-col gap-4">
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-color1"
-              >
+              <label className="block mb-1 text-sm font-medium text-color1">
                 Mail Adresiniz
               </label>
               <input
                 type="email"
-                id="email"
                 name="email"
-                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                placeholder="Email ..."
                 required
+                placeholder="Email..."
+                className="
+        w-full rounded-lg border border-gray-300 bg-gray-50
+        px-4 py-3 text-sm
+        focus:outline-none focus:ring-2 focus:ring-color1/40
+        transition
+      "
               />
             </div>
+
             <div>
-              <label
-                htmlFor="title"
-                className="block text-sm font-medium text-color1"
-              >
+              <label className="block mb-1 text-sm font-medium text-color1">
                 Konu
               </label>
               <input
                 type="text"
-                id="title"
                 name="title"
-                className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500"
-                placeholder="Başlık ..."
                 required
+                placeholder="Başlık..."
+                className="
+        w-full rounded-lg border border-gray-300 bg-gray-50
+        px-4 py-3 text-sm
+        focus:outline-none focus:ring-2 focus:ring-color1/40
+        transition
+      "
               />
             </div>
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="message"
-                className="block mb-1 text-sm font-medium text-color1"
-              >
+
+            <div>
+              <label className="block mb-1 text-sm font-medium text-color1">
                 Mesajınız
               </label>
               <textarea
-                id="message"
-                rows={6}
                 name="message"
+                rows={6}
                 required
-                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
-                placeholder="Nasıl Yardımcı Olabiliriz..."
-              ></textarea>
+                placeholder="Nasıl yardımcı olabiliriz..."
+                className="
+        w-full rounded-lg border border-gray-300 bg-gray-50
+        px-4 py-3 text-sm resize-none
+        focus:outline-none focus:ring-2 focus:ring-color1/40
+        transition
+      "
+              />
             </div>
+
             <button
               type="submit"
-              className="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-color1 sm:w-fit hover:bg-color5 "
+              className="
+      mt-2 rounded-lg bg-color1 px-6 py-3 text-sm font-medium
+      text-white transition hover:bg-color5
+    "
             >
               Gönder
             </button>

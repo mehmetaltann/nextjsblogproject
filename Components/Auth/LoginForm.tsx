@@ -1,12 +1,9 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import AnimationWrapper from "@/Components/Layouts/AnimationWrapper";
 
 const LoginForm = () => {
-  const router = useRouter();
-
   const submitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -17,6 +14,7 @@ const LoginForm = () => {
         email: formData.get("email") as string,
         password: formData.get("password") as string,
         redirect: false,
+        callbackUrl: "/",
       });
 
       if (response?.error) {
@@ -24,7 +22,9 @@ const LoginForm = () => {
         return;
       }
 
-      router.replace("admin");
+      if (response?.ok && response.url) {
+        window.location.href = response.url;
+      }
     } catch (error) {
       toast.error(
         "Bir hata oluştu: " +
@@ -40,13 +40,12 @@ const LoginForm = () => {
     >
       <form
         className="flex flex-col bg-[white] w-full md:w-2/3 lg:w-1/4 gap-5 p-[50px]"
-        onSubmit={submitLogin} // action yerine onSubmit kullanıldı
+        onSubmit={submitLogin}
       >
         <input
           required
           type="email"
           name="email"
-          id="email"
           placeholder="Email ..."
           className="p-2.5 border-b-[gray] border-[none] border-b border-solid"
         />
@@ -54,7 +53,6 @@ const LoginForm = () => {
           required
           type="password"
           name="password"
-          id="password"
           placeholder="Şifre ..."
           className="p-2.5 border-b-[gray] border-[none] border-b border-solid"
         />
