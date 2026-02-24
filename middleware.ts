@@ -6,6 +6,7 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({
     req,
     secret: process.env.NEXTAUTH_SECRET,
+    cookieName: "__Secure-authjs.session-token",
   });
 
   if (!token) {
@@ -16,5 +17,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin", "/admin/register", "/admin/categories", "/admin/write"],
+  matcher: ["/admin", "/admin/:path*"],
 };
