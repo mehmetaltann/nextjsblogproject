@@ -25,6 +25,7 @@ const { handlers, auth, signIn, signOut } = NextAuth({
 
         if (!user) return null;
 
+        if (!user.password) return null;
         const match = await bcrypt.compare(password, user.password);
         if (!match) return null;
 

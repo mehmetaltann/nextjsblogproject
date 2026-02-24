@@ -9,27 +9,20 @@ const LoginForm = () => {
 
     const formData = new FormData(event.currentTarget);
 
-    try {
-      const response = await signIn("credentials", {
-        email: formData.get("email") as string,
-        password: formData.get("password") as string,
-        redirect: false,
-        callbackUrl: "/",
-      });
+    const response = await signIn("credentials", {
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+      redirect: false,
+      callbackUrl: "/admin",
+    });
 
-      if (response?.error) {
-        toast.error("Böyle bir kullanıcı bulunmamaktadır");
-        return;
-      }
+    if (response?.error) {
+      toast.error("Kullanıcı bulunamadı");
+      return;
+    }
 
-      if (response?.ok && response.url) {
-        window.location.href = response.url;
-      }
-    } catch (error) {
-      toast.error(
-        "Bir hata oluştu: " +
-          (error instanceof Error ? error.message : String(error))
-      );
+    if (response?.ok && response.url) {
+      window.location.href = response.url;
     }
   };
 
@@ -39,7 +32,7 @@ const LoginForm = () => {
       className="flex flex-col items-center justify-center w-full h-screen bg-color7"
     >
       <form
-        className="flex flex-col bg-[white] w-full md:w-2/3 lg:w-1/4 gap-5 p-[50px]"
+        className="flex flex-col bg-white w-full md:w-2/3 lg:w-1/4 gap-5 p-[50px]"
         onSubmit={submitLogin}
       >
         <input
@@ -47,18 +40,18 @@ const LoginForm = () => {
           type="email"
           name="email"
           placeholder="Email ..."
-          className="p-2.5 border-b-[gray] border-[none] border-b border-solid"
+          className="p-2.5 border-b border-gray-300"
         />
         <input
           required
           type="password"
           name="password"
           placeholder="Şifre ..."
-          className="p-2.5 border-b-[gray] border-[none] border-b border-solid"
+          className="p-2.5 border-b border-gray-300"
         />
         <button
           type="submit"
-          className="bg-red-700 cursor-pointer text-white p-2.5 border-[none] font-semibold"
+          className="bg-red-700 text-white p-2.5 font-semibold"
         >
           Giriş Yap
         </button>
